@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
   <POU Name="MAIN" Id="{9779ac30-3bb2-408e-a339-e7064e52c5d5}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
 	fbCoalDrill 	: FB_Drill ; 
 	fbcopperDrill	: FB_Drill ;
 	fbIronDrill		: FB_Drill ;
+	test : int;
 		
 	iCoalStash 		: UINT ; // total amount of coal
 	iCopperOreStash : UINT ; // total amount of copper stored
@@ -20,7 +21,8 @@ END_VAR
       <ST><![CDATA[
 CollectOre();
 ProduceIron();
-CollectCopperOre();]]></ST>
+CollectCopperOre();
+test:=1;]]></ST>
     </Implementation>
     <Method Name="CollectCopperOre" Id="{926e8480-a214-43ab-89e0-27855abfcb55}">
       <Declaration><![CDATA[METHOD CollectCopperOre : BOOL
@@ -63,7 +65,7 @@ END_VAR
     <LineIds Name="MAIN">
       <LineId Id="3" Count="1" />
       <LineId Id="2" Count="0" />
-      <LineId Id="19" Count="0" />
+      <LineId Id="19" Count="1" />
     </LineIds>
     <LineIds Name="MAIN.CollectCopperOre">
       <LineId Id="2" Count="0" />
