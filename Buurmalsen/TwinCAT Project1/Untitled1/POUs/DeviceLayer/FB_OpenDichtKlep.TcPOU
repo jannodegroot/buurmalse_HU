@@ -26,13 +26,12 @@ END_VAR
     <Implementation>
       <ST><![CDATA[//mijn code
 //help
-//testen
 
 IF currentMode = E_Bedrijfstoestand.off THEN
 	output.set(FALSE);
 	expectedState := E_OpenDichtKlepState.closed;
 END_IF
-
+//testen
 IF currentMode = E_Bedrijfstoestand.manual THEN
 	IF manOpen THEN
 		openManual();
@@ -169,7 +168,8 @@ END_VAR
       </Get>
     </Property>
     <LineIds Name="FB_OpenDichtKlep">
-      <LineId Id="1" Count="48" />
+      <LineId Id="1" Count="1" />
+      <LineId Id="4" Count="45" />
     </LineIds>
     <LineIds Name="FB_OpenDichtKlep.close">
       <LineId Id="5" Count="0" />
