@@ -170,7 +170,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[///hoi doei dag]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_OpenDichtKlep">
