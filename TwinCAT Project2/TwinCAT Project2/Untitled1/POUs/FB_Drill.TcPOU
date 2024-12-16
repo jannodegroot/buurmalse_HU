@@ -6,7 +6,7 @@ VAR
 	tProductionTime		: TIME := T#1S; 
 	tonProductionPulse 	: TON  ; // productie tick
 	cProducedProducts :  CTUD := (PV := 100) ; // total units produced
-	test : int;
+	test : INT;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -15,7 +15,7 @@ tonProductionPulse(pt := tProductionTime , IN := NOT tonProductionPulse.Q);
 // produce part
 cProducedProducts.RESET := FALSE;
 cProducedProducts.CU := tonProductionPulse.Q;
-]]></ST>
+test :=1;]]></ST>
     </Implementation>
     <Property Name="ProductsOut" Id="{9afa9b60-be3b-430f-bb61-66cafa15a896}">
       <Declaration><![CDATA[{warning 'Add property implementation'}
