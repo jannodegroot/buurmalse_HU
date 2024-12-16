@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
+  <POU Name="FB_Wirefabricator" Id="{5876c030-de8a-45f1-8f9e-e7f8eb8e019f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Wirefabricator EXTENDS FB_StoneFurnace IMPLEMENTS I_2InputConversion
+VAR
+	test: int;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[tProductionTime := T#0.5S;
+test :=2;
+SUPER^();]]></ST>
+    </Implementation>
+    <Property Name="ProductsOut" Id="{06e8bf58-1955-493c-8791-796cb3ec5297}">
+      <Declaration><![CDATA[{error 'add property implementation or delete property to use base implementation'}
+PROPERTY ProductsOut : UINT
+]]></Declaration>
+      <Get Name="Get" Id="{bd177913-e17e-4ff5-9554-89466941e9c9}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="FB_Wirefabricator">
+      <LineId Id="10" Count="1" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Wirefabricator.ProductsOut.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

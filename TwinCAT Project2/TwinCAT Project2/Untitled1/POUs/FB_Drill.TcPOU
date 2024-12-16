@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="FB_Drill" Id="{4a272c19-a7a2-41f9-ab02-d976772d0eef}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Drill IMPLEMENTS I_Drill
+VAR
+	tProductionTime		: TIME := T#1S; 
+	tonProductionPulse 	: TON  ; // productie tick
+	cProducedProducts :  CTUD := (PV := 100) ; // total units produced
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// production tick
+tonProductionPulse(pt := tProductionTime , IN := NOT tonProductionPulse.Q);
+// produce part
+cProducedProducts.RESET := FALSE;
+cProducedProducts.CU := tonProductionPulse.Q;
+]]></ST>
+    </Implementation>
+    <Property Name="ProductsOut" Id="{9afa9b60-be3b-430f-bb61-66cafa15a896}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY ProductsOut : UINT
+]]></Declaration>
+      <Get Name="Get" Id="{8ddbff59-4e9c-4c09-9e21-4ad225626140}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ProductsOut := cProducedProducts.CV;
+cProducedProducts.RESET := TRUE;
+
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="FB_Drill">
+      <LineId Id="3" Count="4" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Drill.ProductsOut.Get">
+      <LineId Id="3" Count="2" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

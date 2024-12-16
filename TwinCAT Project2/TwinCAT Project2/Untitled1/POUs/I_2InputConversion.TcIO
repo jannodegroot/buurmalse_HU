@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <Itf Name="I_2InputConversion" Id="{c30a2ae5-d713-4659-8233-3092da60a836}">
+    <Declaration><![CDATA[INTERFACE I_2InputConversion EXTENDS I_Drill
+]]></Declaration>
+    <Method Name="Input_1" Id="{fe7477e6-209b-499b-8c29-e77c10efc5be}">
+      <Declaration><![CDATA[METHOD Input_1 : uint
+VAR_INPUT
+	Amount : UINT ; // coal infeed amount 
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Input_2" Id="{3ef8f6ea-19d2-47d5-9e73-f3bac6c2d130}">
+      <Declaration><![CDATA[METHOD Input_2 : uint
+VAR_INPUT
+	Amount : UINT ; // coal infeed amount 
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

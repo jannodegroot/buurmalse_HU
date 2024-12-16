@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="FB_SteelFurnace" Id="{ef0b8919-7282-4bed-bf91-0ac177b2cb7b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_SteelFurnace EXTENDS FB_StoneFurnace
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[tProductionTime := T#1.6S;
+SUPER^();]]></ST>
+    </Implementation>
+    <Property Name="ProductsOut" Id="{0e2364c7-469b-47d1-b20f-71e6c2bc9865}">
+      <Declaration><![CDATA[{error 'Add property implementation or delete property to use base implementation'}
+PROPERTY ProductsOut : UINT
+]]></Declaration>
+      <Get Name="Get" Id="{e5a839ce-ed02-4083-bec7-ff54c22f625e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="FB_SteelFurnace">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_SteelFurnace.ProductsOut.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
