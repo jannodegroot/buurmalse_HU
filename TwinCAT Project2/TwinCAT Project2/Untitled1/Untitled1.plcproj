@@ -21,24 +21,6 @@
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FB_Drill.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\FB_SteelFurnace.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\FB_StoneFurnace.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\FB_Wirefabricator.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\I_2InputConversion.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\I_Drill.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -64,15 +46,6 @@
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
-    <SubObject Include="FB_StoneFurnace.Convert" />
-    <SubObject Include="FB_StoneFurnace.Input_1" />
-    <SubObject Include="FB_StoneFurnace.Input_2" />
-    <SubObject Include="FB_StoneFurnace.ProductsOut" />
-    <SubObject Include="FB_StoneFurnace.ProductsOut.Get" />
-    <SubObject Include="I_2InputConversion.Input_1" />
-    <SubObject Include="I_2InputConversion.Input_2" />
-    <SubObject Include="I_Drill.ProductsOut" />
-    <SubObject Include="I_Drill.ProductsOut.Get" />
     <SubObject Include="MAIN.CollectCopperOre" />
     <SubObject Include="MAIN.CollectOre" />
     <SubObject Include="MAIN.ProduceIron" />
