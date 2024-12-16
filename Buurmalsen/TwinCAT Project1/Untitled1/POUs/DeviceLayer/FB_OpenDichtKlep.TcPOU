@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
   <POU Name="FB_OpenDichtKlep" Id="{597afe0b-37eb-493c-b9b2-2a9a1ab418c3}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_OpenDichtKlep IMPLEMENTS ITF_OpenDichtKlep
 VAR
@@ -165,25 +165,42 @@ END_VAR
       </Get>
     </Property>
     <LineIds Name="FB_OpenDichtKlep">
-      <LineId Id="1" Count="44" />
+      <LineId Id="367" Count="3" />
+      <LineId Id="419" Count="0" />
+      <LineId Id="418" Count="0" />
+      <LineId Id="428" Count="6" />
+      <LineId Id="427" Count="0" />
+      <LineId Id="421" Count="0" />
+      <LineId Id="371" Count="28" />
+      <LineId Id="16" Count="0" />
     </LineIds>
     <LineIds Name="FB_OpenDichtKlep.close">
-      <LineId Id="1" Count="7" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="13" Count="3" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="FB_OpenDichtKlep.closeManual">
-      <LineId Id="1" Count="7" />
+      <LineId Id="19" Count="6" />
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_OpenDichtKlep.FB_init">
-      <LineId Id="1" Count="3" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="11" Count="1" />
     </LineIds>
     <LineIds Name="FB_OpenDichtKlep.open">
-      <LineId Id="1" Count="6" />
+      <LineId Id="9" Count="5" />
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_OpenDichtKlep.openManual">
-      <LineId Id="1" Count="6" />
+      <LineId Id="18" Count="5" />
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_OpenDichtKlep.state.Get">
-      <LineId Id="1" Count="1" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

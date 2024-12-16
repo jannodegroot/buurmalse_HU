@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="FB_AlarmHandler" Id="{be54b949-3e78-4cf0-a2a1-cf3bd0f957b8}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_AlarmHandler
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Append" Id="{10c19d97-2d21-49c7-a4e0-a87ea15bc7dd}">
+      <Declaration><![CDATA[METHOD Append : BOOL
+VAR_INPUT
+	tag : STRING;
+	msg : STRING;
+END_VAR
+VAR
+	str : STRING;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[str := CONCAT(tag, ': ');
+str := CONCAT(str, msg);
+ADSLOGSTR(msgCtrlMask := ADSLOG_MSGTYPE_WARN OR ADSLOG_MSGTYPE_MSGBOX, msgFmtStr := '%s!', strArg := str);]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_AlarmHandler">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AlarmHandler.Append">
+      <LineId Id="5" Count="0" />
+      <LineId Id="11" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
