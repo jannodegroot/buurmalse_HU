@@ -164,15 +164,6 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Method Name="test" Id="{9b99672f-ada9-4bfd-bce5-7ab82a483c76}" FolderPath="Methods\">
-      <Declaration><![CDATA[METHOD test : BOOL
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[///hoi doei dag]]></ST>
-      </Implementation>
-    </Method>
     <LineIds Name="FB_OpenDichtKlep">
       <LineId Id="367" Count="3" />
       <LineId Id="419" Count="0" />
@@ -210,9 +201,6 @@ END_VAR
     <LineIds Name="FB_OpenDichtKlep.state.Get">
       <LineId Id="2" Count="0" />
       <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_OpenDichtKlep.test">
-      <LineId Id="1" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
