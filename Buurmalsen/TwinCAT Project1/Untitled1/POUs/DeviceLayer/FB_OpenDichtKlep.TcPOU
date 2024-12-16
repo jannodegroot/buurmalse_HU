@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
   <POU Name="FB_OpenDichtKlep" Id="{597afe0b-37eb-493c-b9b2-2a9a1ab418c3}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_OpenDichtKlep IMPLEMENTS ITF_OpenDichtKlep
 VAR
@@ -164,6 +164,15 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Method Name="test" Id="{9b99672f-ada9-4bfd-bce5-7ab82a483c76}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD test : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
     <LineIds Name="FB_OpenDichtKlep">
       <LineId Id="367" Count="3" />
       <LineId Id="419" Count="0" />
@@ -201,6 +210,9 @@ END_VAR
     <LineIds Name="FB_OpenDichtKlep.state.Get">
       <LineId Id="2" Count="0" />
       <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_OpenDichtKlep.test">
+      <LineId Id="1" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
