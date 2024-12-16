@@ -26,6 +26,7 @@ END_VAR
     <Implementation>
       <ST><![CDATA[//mijn code
 //help
+//ik ben een test
 
 IF currentMode = E_Bedrijfstoestand.off THEN
 	output.set(FALSE);
@@ -169,7 +170,7 @@ END_VAR
     </Property>
     <LineIds Name="FB_OpenDichtKlep">
       <LineId Id="435" Count="0" />
-      <LineId Id="437" Count="0" />
+      <LineId Id="437" Count="1" />
       <LineId Id="436" Count="0" />
       <LineId Id="367" Count="3" />
       <LineId Id="419" Count="0" />
@@ -205,8 +206,7 @@ END_VAR
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_OpenDichtKlep.state.Get">
-      <LineId Id="2" Count="0" />
-      <LineId Id="5" Count="0" />
+      <LineId Id="1" Count="1" />
     </LineIds>
   </POU>
 </TcPlcObject>
