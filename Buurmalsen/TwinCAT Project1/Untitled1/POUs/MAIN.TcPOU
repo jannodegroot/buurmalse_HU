@@ -29,7 +29,8 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[digIn_V2012_1();
+      <ST><![CDATA[//start functions appeltjes
+digIn_V2012_1();
 digIn_V2012_2();
 digOut_V2012();
 
@@ -48,9 +49,21 @@ digOut_V2024();
 V2012();
 V2021();
 V2023();
-V2024();]]></ST>
+V2024();
+//end functions appeltjes
+
+
+//start functions AirForceOne
+//end functions AirForceOne
+
+//start functions queens of hearts
+//end functions queens of hearts
+
+//start functions DonyellGemalen
+//end functions DonyellGemalen]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
+      <LineId Id="161" Count="0" />
       <LineId Id="69" Count="2" />
       <LineId Id="158" Count="0" />
       <LineId Id="123" Count="1" />
@@ -65,6 +78,14 @@ V2024();]]></ST>
       <LineId Id="75" Count="0" />
       <LineId Id="125" Count="0" />
       <LineId Id="155" Count="1" />
+      <LineId Id="162" Count="0" />
+      <LineId Id="164" Count="1" />
+      <LineId Id="163" Count="0" />
+      <LineId Id="166" Count="0" />
+      <LineId Id="168" Count="1" />
+      <LineId Id="167" Count="0" />
+      <LineId Id="171" Count="1" />
+      <LineId Id="170" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
