@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
+  <Itf Name="ITF_Regelschuif" Id="{5835ea1b-cb06-4d0c-8b0b-1d1de08323d4}">
+    <Declaration><![CDATA[INTERFACE ITF_Regelschuif
+]]></Declaration>
+    <Method Name="stand" Id="{b4e1402f-b8e6-4125-ba32-d0db3054557e}">
+      <Declaration><![CDATA[METHOD stand : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="standPercentage" Id="{2bdfaf7b-06fe-424b-b87a-8a6a522237b4}">
+      <Declaration><![CDATA[PROPERTY standPercentage : INT]]></Declaration>
+      <Get Name="Get" Id="{3e850e05-1b57-4fa6-8cc3-9f72853cc09b}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{058a81a4-7baf-4685-963b-30de0a6a35bd}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="state" Id="{0a0d0f8e-7cab-4512-b84f-11e999984816}">
+      <Declaration><![CDATA[PROPERTY state : E_OpenDichtKlepState]]></Declaration>
+      <Get Name="Get" Id="{f0473bf5-7455-419d-b7f5-b57976e0ba97}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

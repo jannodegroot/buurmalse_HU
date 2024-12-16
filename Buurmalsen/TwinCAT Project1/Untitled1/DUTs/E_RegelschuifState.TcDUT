@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
+  <DUT Name="E_RegelschuifState" Id="{49f30dcf-8fc9-4fb3-ae32-429dedd0549c}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+{attribute 'to_string'}
+TYPE E_RegelschuifState :
+(
+	standby := 0,
+	opening,
+	closing,
+	error
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

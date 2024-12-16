@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
+  <Itf Name="ITF_Pomp" Id="{9239626d-ca85-4ec3-a975-4f64db65a75e}">
+    <Declaration><![CDATA[INTERFACE ITF_Pomp
+]]></Declaration>
+    <Method Name="aan" Id="{fb7ba90f-1f74-42ae-9d84-91cdcf6dd501}">
+      <Declaration><![CDATA[METHOD aan : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="state" Id="{cbc8c4f2-cdd3-44a7-8a47-7d5037233564}">
+      <Declaration><![CDATA[PROPERTY state : E_OpenDichtKlepState]]></Declaration>
+      <Get Name="Get" Id="{94e302db-8ffc-4a0a-823a-8594f6a6d6d8}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="Toerental" Id="{16e3d46a-1cd6-4502-9853-b551cb888bb5}">
+      <Declaration><![CDATA[PROPERTY Toerental : INT]]></Declaration>
+      <Get Name="Get" Id="{f22f89f8-c4ed-4b0b-bfaf-bfa378348d2e}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{2c46f65c-327b-4dfb-b596-be61554caa50}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Method Name="uit" Id="{5d0a10ea-fe93-4bdb-9c23-a79a7a2b204c}">
+      <Declaration><![CDATA[METHOD uit
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

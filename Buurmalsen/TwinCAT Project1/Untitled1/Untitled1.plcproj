@@ -23,16 +23,49 @@
     <Compile Include="DUTs\E_OpenDichtKlepState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\E_RegelschuifState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\E_PompState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\E_Besturingsmodus.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GlobalTextList.TcGTLO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\ControlLayer\FB_Inmalen.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\ControlLayer\FB_Regelingen.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\ControlLayer\FB_Uitlaten.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\ControlLayer\FB_Uitmalen.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\DeviceLayer\FB_OpenDichtKlep.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\DeviceLayer\FB_Pomp.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\DeviceLayer\FB_Regelschuif.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\DeviceLayer\ITF_OpenDichtKlep.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\DeviceLayer\ITF_Regelschuif.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\DeviceLayer\ITF_Pomp.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FB_AlarmHandler.TcPOU">
