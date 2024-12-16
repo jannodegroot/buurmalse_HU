@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
+  <POU Name="FB_OpenDichtKlep" Id="{597afe0b-37eb-493c-b9b2-2a9a1ab418c3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_OpenDichtKlep IMPLEMENTS ITF_OpenDichtKlep
+VAR
+    tagName : STRING;
+    inputOpen : ITF_DigIn;
+	inputClosed : ITF_DigIn;
+	output : ITF_DigOut;
+	
+	feedbackOpen : BOOL := FALSE;
+	feedbackClosed : BOOL := FALSE;
+	feedbackError : BOOL := FALSE;
+	
+	manOpen : BOOL := FALSE;
+	manClose : BOOL := FALSE;
+
+	currentMode : E_Bedrijfstoestand := E_Bedrijfstoestand.off;
+	currentState : E_OpenDichtKlepState := E_OpenDichtKlepState.closed;
+	expectedState : E_OpenDichtKlepState := E_OpenDichtKlepState.closed;
+	
+	timeOut : TON;
+	errorTrigger : R_TRIG;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF currentMode = E_Bedrijfstoestand.off THEN
+	output.set(FALSE);
+	expectedState := E_OpenDichtKlepState.closed;
+END_IF
+
+IF currentMode = E_Bedrijfstoestand.manual THEN
+	IF manOpen THEN
+		openManual();
+		manOpen:= FALSE;
+	END_IF
+	IF manClose THEN
+		closeManual();
+		manClose:= FALSE;
+	END_IF
+END_IF
+
+feedbackOpen := inputOpen.get() AND NOT inputClosed.get();
+feedbackClosed := inputClosed.get() AND NOT inputOpen.get();
+feedbackError := inputClosed.get() AND inputOpen.get();
+
+timeOut(IN := NOT(expectedState = currentState), PT := T#5S);
+errorTrigger(CLK := (timeOut.Q OR feedbackError));
+
+IF errorTrigger.Q THEN
+	currentState := E_OpenDichtKlepState.error;
+	main.alarms.append(tag := tagName, msg := 'Klepstoring gedetecteerd');
+END_IF
+
+CASE expectedState OF
+E_OpenDichtKlepState.closed :
+	IF feedbackClosed THEN
+		currentState := E_OpenDichtKlepState.closed;
+	ELSIF NOT(currentState = E_OpenDichtKlepState.error) THEN
+		currentState := E_OpenDichtKlepState.closing;
+	END_IF
+E_OpenDichtKlepState.open :
+	IF feedbackOpen THEN
+		currentState := E_OpenDichtKlepState.open;
+	ELSIF NOT(currentState = E_OpenDichtKlepState.error) THEN
+		currentState := E_OpenDichtKlepState.opening;
+	END_IF
+END_CASE
+
+
+]]></ST>
+    </Implementation>
+    <Folder Name="Methods" Id="{e673a8db-7aa9-4caf-957a-24ea31a29447}" />
+    <Folder Name="Properties" Id="{3447b9dd-f8e7-4a65-ae2f-06d0f9ed87d9}" />
+    <Method Name="close" Id="{841e3678-01f2-478f-b5f7-48fab7b518c4}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD close : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF currentMode = E_Bedrijfstoestand.auto THEN
+	output.set(FALSE);
+	expectedState := E_OpenDichtKlepState.closed;
+	close := TRUE;
+ELSE
+	close := FALSE;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="closeManual" Id="{a0f99bdb-807c-4a9f-bc4f-fb9f30b49ad7}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD closeManual : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF currentMode = E_Bedrijfstoestand.manual THEN
+	output.set(FALSE);
+	expectedState := E_OpenDichtKlepState.closed;
+	closeManual := TRUE;
+ELSE
+	closeManual := FALSE;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{59d236bd-5db4-40e4-9c4f-7fbfbb3340bf}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	tag : STRING;
+	DigInClosed : ITF_DigIn;
+	DigInOpened : ITF_DigIn;
+	DigOut : ITF_DigOut;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[tagname := tag;
+inputClosed := DigInClosed;
+inputOpen := DigInOpened;
+output := DigOut;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="open" Id="{73bd00fb-de75-4e64-9d6c-c02978ae6b69}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD open : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF currentMode = E_Bedrijfstoestand.auto THEN
+	output.set(TRUE);
+	expectedState := E_OpenDichtKlepState.open;
+	open := TRUE;
+ELSE
+	open := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="openManual" Id="{e05b5e1e-f0ca-44c7-83da-611984da93aa}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD openManual : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF currentMode = E_Bedrijfstoestand.manual THEN
+	output.set(TRUE);
+	expectedState := E_OpenDichtKlepState.open;
+	openManual := TRUE;
+ELSE
+	openManual := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="state" Id="{c5b6a438-a407-4476-b778-6ca0016d8482}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY state : E_OpenDichtKlepState]]></Declaration>
+      <Get Name="Get" Id="{529f5fa6-f344-4663-bdad-a7ab966a373e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[state := currentState;
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="FB_OpenDichtKlep">
+      <LineId Id="1" Count="44" />
+    </LineIds>
+    <LineIds Name="FB_OpenDichtKlep.close">
+      <LineId Id="1" Count="7" />
+    </LineIds>
+    <LineIds Name="FB_OpenDichtKlep.closeManual">
+      <LineId Id="1" Count="7" />
+    </LineIds>
+    <LineIds Name="FB_OpenDichtKlep.FB_init">
+      <LineId Id="1" Count="3" />
+    </LineIds>
+    <LineIds Name="FB_OpenDichtKlep.open">
+      <LineId Id="1" Count="6" />
+    </LineIds>
+    <LineIds Name="FB_OpenDichtKlep.openManual">
+      <LineId Id="1" Count="6" />
+    </LineIds>
+    <LineIds Name="FB_OpenDichtKlep.state.Get">
+      <LineId Id="1" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
