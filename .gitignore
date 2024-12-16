@@ -25,9 +25,25 @@ LineIDs.dbg.bak
 *.tsproj.b?k
 *.tsproj.orig
 *.xti.bak
-LineIDs.dbg
-LineIDs.dbg.bak
-_Boot/
-_CompileInfo/
-_Libraries/
-_ModuleInstall/
+*.xti.bk?
+*.xti.orig
+*.xtv
+*.xtv.bak
+*.xtv.bk?
+
+# Multiuser specific
+**/.TcGit/
+
+# exclude not required folders
+**/_Boot/
+**/_CompileInfo/
+**/_Libraries/
+**/_ModuleInstall/
+**/_Deployment/
+**/_Repository/
+
+# VS Shell project specific files and folders
+**/.vs/
+*.~u
+*.project.~u
+*.suo
