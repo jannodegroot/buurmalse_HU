@@ -31,7 +31,7 @@ IF currentMode = E_Bedrijfstoestand.off THEN
 	output.set(FALSE);
 	expectedState := E_OpenDichtKlepState.closed;
 END_IF
-//testen
+
 IF currentMode = E_Bedrijfstoestand.manual THEN
 	IF manOpen THEN
 		openManual();
