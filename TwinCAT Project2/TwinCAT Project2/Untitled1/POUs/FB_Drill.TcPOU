@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
   <POU Name="FB_Drill" Id="{4a272c19-a7a2-41f9-ab02-d976772d0eef}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Drill IMPLEMENTS I_Drill
 VAR
 	tProductionTime		: TIME := T#1S; 
 	tonProductionPulse 	: TON  ; // productie tick
 	cProducedProducts :  CTUD := (PV := 100) ; // total units produced
+	test : int;
 END_VAR
 ]]></Declaration>
     <Implementation>
