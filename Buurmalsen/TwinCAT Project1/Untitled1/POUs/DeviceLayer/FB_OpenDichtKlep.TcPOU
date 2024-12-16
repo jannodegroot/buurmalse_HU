@@ -52,23 +52,15 @@ IF errorTrigger.Q THEN
 	main.alarms.append(tag := tagName, msg := 'Klepstoring gedetecteerd');
 END_IF
 
-CASE expectedState OF
-E_OpenDichtKlepState.closed :
-	IF feedbackClosed THEN
-		currentState := E_OpenDichtKlepState.closed;
-	ELSIF NOT(currentState = E_OpenDichtKlepState.error) THEN
-		currentState := E_OpenDichtKlepState.closing;
-	END_IF
-E_OpenDichtKlepState.open :
-	IF feedbackOpen THEN
-		currentState := E_OpenDichtKlepState.open;
-	ELSIF NOT(currentState = E_OpenDichtKlepState.error) THEN
-		currentState := E_OpenDichtKlepState.opening;
-	END_IF
-END_CASE
-
-
-]]></ST>
+IF feedbackClosed THEN
+	currentState := E_OpenDichtKlepState.closed;
+ELSIF NOT(currentState = E_OpenDichtKlepState.error) AND expectedState = E_OpenDichtKlepState.closed THEN
+	currentState := E_OpenDichtKlepState.closing;
+ELSIF feedbackOpen THEN
+	currentState := E_OpenDichtKlepState.open;
+ELSIF NOT(currentState = E_OpenDichtKlepState.error)AND expectedState = E_OpenDichtKlepState.open THEN
+	currentState := E_OpenDichtKlepState.opening;
+END_IF]]></ST>
     </Implementation>
     <Folder Name="Methods" Id="{e673a8db-7aa9-4caf-957a-24ea31a29447}" />
     <Folder Name="Properties" Id="{3447b9dd-f8e7-4a65-ae2f-06d0f9ed87d9}" />
@@ -165,7 +157,9 @@ END_VAR
       </Get>
     </Property>
     <LineIds Name="FB_OpenDichtKlep">
-      <LineId Id="3" Count="44" />
+      <LineId Id="3" Count="26" />
+      <LineId Id="32" Count="4" />
+      <LineId Id="39" Count="4" />
     </LineIds>
     <LineIds Name="FB_OpenDichtKlep.close">
       <LineId Id="5" Count="0" />
