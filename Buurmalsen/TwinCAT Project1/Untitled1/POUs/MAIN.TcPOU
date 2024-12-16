@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
   <POU Name="MAIN" Id="{e75b5398-c694-4eee-851b-9c5873361745}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
@@ -49,7 +49,7 @@ V2012();
 V2021();
 V2023();
 V2024();
-
+//sterf
 ]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
