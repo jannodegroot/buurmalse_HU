@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <Itf Name="ITF_DigIn" Id="{ab9d6dbd-257f-46c0-83cf-c5d16120bcd5}">
+    <Declaration><![CDATA[INTERFACE ITF_DigIn
+]]></Declaration>
+    <Method Name="get" Id="{e5922c22-5820-401b-8741-c4a519e8766c}">
+      <Declaration><![CDATA[METHOD get : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

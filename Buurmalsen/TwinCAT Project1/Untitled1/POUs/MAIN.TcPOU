@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="MAIN" Id="{e75b5398-c694-4eee-851b-9c5873361745}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	alarms  : FB_AlarmHandler;
+
+	digIn_V2012_1 : FB_SimulatedDigIn;
+	digIn_V2012_2 : FB_SimulatedDigIn;
+	digOut_V2012 : FB_SimulatedDigOut;
+	
+	digIn_V2021_1 : FB_SimulatedDigIn;
+	digIn_V2021_2 : FB_SimulatedDigIn;
+	digOut_V2021 : FB_SimulatedDigOut;
+	
+	digIn_V2023_1 : FB_SimulatedDigIn;
+	digIn_V2023_2 : FB_SimulatedDigIn;
+	digOut_V2023 : FB_SimulatedDigOut;
+	
+	digIn_V2024_1 : FB_SimulatedDigIn;
+	digIn_V2024_2 : FB_SimulatedDigIn;
+	digOut_V2024 : FB_SimulatedDigOut;
+
+	V2012 : FB_OpenDichtKlep(tag := 'V2012', DigInClosed := digIn_V2012_1, DigInOpened := digIn_V2012_2, DigOut := digOut_V2012);
+	V2021 : FB_OpenDichtKlep(tag := 'V2021', DigInClosed := digIn_V2021_1, DigInOpened := digIn_V2021_2, DigOut := digOut_V2021);
+	V2023 : FB_OpenDichtKlep(tag := 'V2023', DigInClosed := digIn_V2023_1, DigInOpened := digIn_V2023_2, DigOut := digOut_V2023);
+	V2024 : FB_OpenDichtKlep(tag := 'V2024', DigInClosed := digIn_V2024_1, DigInOpened := digIn_V2024_2, DigOut := digOut_V2024);  
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[digIn_V2012_1();
+digIn_V2012_2();
+digOut_V2012();
+
+digIn_V2021_1();
+digIn_V2021_2();
+digOut_V2021();
+
+digIn_V2023_1();
+digIn_V2023_2();
+digOut_V2023();
+
+digIn_V2024_1();
+digIn_V2024_2();
+digOut_V2024();
+
+V2012();
+V2021();
+V2023();
+V2024();
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="69" Count="2" />
+      <LineId Id="158" Count="0" />
+      <LineId Id="123" Count="1" />
+      <LineId Id="122" Count="0" />
+      <LineId Id="159" Count="0" />
+      <LineId Id="150" Count="1" />
+      <LineId Id="149" Count="0" />
+      <LineId Id="160" Count="0" />
+      <LineId Id="153" Count="1" />
+      <LineId Id="152" Count="0" />
+      <LineId Id="157" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="125" Count="0" />
+      <LineId Id="155" Count="1" />
+      <LineId Id="173" Count="0" />
+      <LineId Id="93" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
