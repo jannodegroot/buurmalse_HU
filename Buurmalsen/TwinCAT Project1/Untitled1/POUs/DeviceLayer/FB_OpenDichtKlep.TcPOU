@@ -24,9 +24,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//mijn code
-//help
-//ik ben
+      <ST><![CDATA[//ik test me helemaal suf
 
 IF currentMode = E_Bedrijfstoestand.off THEN
 	output.set(FALSE);
@@ -169,7 +167,7 @@ END_VAR
       </Get>
     </Property>
     <LineIds Name="FB_OpenDichtKlep">
-      <LineId Id="1" Count="48" />
+      <LineId Id="1" Count="46" />
     </LineIds>
     <LineIds Name="FB_OpenDichtKlep.close">
       <LineId Id="5" Count="0" />
