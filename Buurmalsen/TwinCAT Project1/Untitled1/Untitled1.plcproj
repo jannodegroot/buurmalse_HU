@@ -56,7 +56,10 @@
     <Compile Include="POUs\DeviceLayer\FB_Pomp.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\DeviceLayer\FB_Regelschuif.TcPOU">
+    <Compile Include="POUs\DeviceLayer\FB_Regelschuif_DG.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\DeviceLayer\FB_Regelschuif_AFO.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\DeviceLayer\ITF_OpenDichtKlep.TcIO">

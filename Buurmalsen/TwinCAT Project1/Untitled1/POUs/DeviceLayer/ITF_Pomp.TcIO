@@ -3,32 +3,29 @@
   <Itf Name="ITF_Pomp" Id="{9239626d-ca85-4ec3-a975-4f64db65a75e}">
     <Declaration><![CDATA[INTERFACE ITF_Pomp
 ]]></Declaration>
-    <Method Name="aan" Id="{fb7ba90f-1f74-42ae-9d84-91cdcf6dd501}">
-      <Declaration><![CDATA[METHOD aan : BOOL
-VAR_INPUT
-END_VAR
-]]></Declaration>
-    </Method>
-    <Property Name="state" Id="{cbc8c4f2-cdd3-44a7-8a47-7d5037233564}">
-      <Declaration><![CDATA[PROPERTY state : E_OpenDichtKlepState]]></Declaration>
-      <Get Name="Get" Id="{94e302db-8ffc-4a0a-823a-8594f6a6d6d8}">
+    <Property Name="ActueelToerental" Id="{54c501b4-4fec-4cb7-abfd-20b8f37ebed2}">
+      <Declaration><![CDATA[PROPERTY ActueelToerental : INT]]></Declaration>
+      <Get Name="Get" Id="{cabaeb82-23e1-4a32-bf5f-6f61d552673b}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
-    </Property>
-    <Property Name="Toerental" Id="{16e3d46a-1cd6-4502-9853-b551cb888bb5}">
-      <Declaration><![CDATA[PROPERTY Toerental : INT]]></Declaration>
-      <Get Name="Get" Id="{f22f89f8-c4ed-4b0b-bfaf-bfa378348d2e}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
-      <Set Name="Set" Id="{2c46f65c-327b-4dfb-b596-be61554caa50}">
+      <Set Name="Set" Id="{85781121-3548-42f7-a59a-9b095738f2c6}">
         <Declaration><![CDATA[]]></Declaration>
       </Set>
     </Property>
-    <Method Name="uit" Id="{5d0a10ea-fe93-4bdb-9c23-a79a7a2b204c}">
-      <Declaration><![CDATA[METHOD uit
+    <Method Name="PompGoTo" Id="{79f0a90a-1cff-424f-80fb-af47f655734a}">
+      <Declaration><![CDATA[METHOD PompGoTo : INT
 VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
+    <Property Name="StatePomp" Id="{4a6177c8-326d-40bd-9103-d1160ee0e1b5}">
+      <Declaration><![CDATA[PROPERTY StatePomp : E_PompState]]></Declaration>
+      <Get Name="Get" Id="{745e4efc-864f-4cd5-8b99-52464470cbad}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{bd88271f-02b4-40dc-b0b3-eee74b98a7c6}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
   </Itf>
 </TcPlcObject>
