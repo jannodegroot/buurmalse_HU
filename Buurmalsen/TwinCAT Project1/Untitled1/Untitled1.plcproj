@@ -86,6 +86,24 @@
     <Compile Include="POUs\FieldLayer\ITF_DigOut.TcIO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\FieldLayer\Regelschuif_AFO\FB_SimulatedAnaIn_AFO.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FieldLayer\Regelschuif_AFO\FB_SimulatedDigOutClose_AFO.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FieldLayer\Regelschuif_AFO\FB_SimulatedDigOutOpen_AFO.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FieldLayer\Regelschuif_AFO\ITF_Schuif_AnaIn_AFO.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FieldLayer\Regelschuif_AFO\ITF_Schuif_DigOutClose_AFO.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FieldLayer\Regelschuif_AFO\ITF_Schuif_DigOutOpen_AFO.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -103,6 +121,7 @@
     <Folder Include="POUs\ControlLayer" />
     <Folder Include="POUs\DeviceLayer" />
     <Folder Include="POUs\FieldLayer" />
+    <Folder Include="POUs\FieldLayer\Regelschuif_AFO" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
