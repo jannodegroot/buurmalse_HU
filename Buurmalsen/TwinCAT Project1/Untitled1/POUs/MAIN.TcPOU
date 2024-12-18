@@ -63,29 +63,7 @@ V2024();
 //end functions DonyellGemalen]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="161" Count="0" />
-      <LineId Id="69" Count="2" />
-      <LineId Id="158" Count="0" />
-      <LineId Id="123" Count="1" />
-      <LineId Id="122" Count="0" />
-      <LineId Id="159" Count="0" />
-      <LineId Id="150" Count="1" />
-      <LineId Id="149" Count="0" />
-      <LineId Id="160" Count="0" />
-      <LineId Id="153" Count="1" />
-      <LineId Id="152" Count="0" />
-      <LineId Id="157" Count="0" />
-      <LineId Id="75" Count="0" />
-      <LineId Id="125" Count="0" />
-      <LineId Id="155" Count="1" />
-      <LineId Id="162" Count="0" />
-      <LineId Id="164" Count="1" />
-      <LineId Id="163" Count="0" />
-      <LineId Id="166" Count="0" />
-      <LineId Id="168" Count="1" />
-      <LineId Id="167" Count="0" />
-      <LineId Id="171" Count="1" />
-      <LineId Id="170" Count="0" />
+      <LineId Id="1" Count="31" />
     </LineIds>
   </POU>
 </TcPlcObject>
