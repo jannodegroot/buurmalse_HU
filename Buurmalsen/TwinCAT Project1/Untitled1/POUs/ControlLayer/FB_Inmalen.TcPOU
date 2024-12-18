@@ -7,13 +7,73 @@ END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
+	CurrentModus : E_Besturingsmodus := E_Besturingsmodus.uitlaten;
+	KlepV2012 : ITF_OpenDichtKlep;
+	KlepV2021 : ITF_OpenDichtKlep;
+	KlepV2023 : ITF_OpenDichtKlep;
+	KlepV2024 : ITF_OpenDichtKlep;
+	
+	SchuifV2013_AFG : ITF_Regelschuif;
+	SchuifV2022_AFG : ITF_Regelschuif;
+	
+	SchuifV2013_DG : ITF_Regelschuif;
+	SchuifV2022_DG : ITF_Regelschuif;
+	
+	pomp1_P2011 : ITF_Pomp;
+	pomp2_P2021 : ITF_Pomp;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[IF CurrentModus = E_Besturingsmodus.inmalen THEN
+	KlepV2012.close();
+END_IF]]></ST>
     </Implementation>
+    <Method Name="FB_init" Id="{292cdf7f-9fce-4ac5-8a23-a71cd6cbd45e}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	OpenDichtKlepV2012 : ITF_OpenDichtKlep; 
+	OpenDichtKlepV2021 : ITF_OpenDichtKlep; 
+	OpenDichtKlepV2023 : ITF_OpenDichtKlep; 
+	OpenDichtKlepV2024 : ITF_OpenDichtKlep; 
+	
+	RegelschuifV2013_AFO : ITF_Regelschuif; 
+	RegelschuifV2022_AFO : ITF_Regelschuif;
+	
+	RegelschuifV2013_DG : ITF_Regelschuif;
+	RegelschuifV2022_DG : ITF_Regelschuif;
+	
+	PompP2011 : ITF_Pomp;
+	PompP2021 : ITF_Pomp;
+	
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[KlepV2012 := OpenDichtKlepV2012;
+KlepV2021 := OpenDichtKlepV2021;
+KlepV2023 := OpenDichtKlepV2023;
+KlepV2024 := OpenDichtKlepV2024;
+
+SchuifV2013_AFG := RegelschuifV2013_AFO;
+SchuifV2022_AFG := RegelschuifV2013_AFO;
+SchuifV2013_DG := RegelschuifV2013_AFO;
+SchuifV2022_DG := RegelschuifV2013_AFO;
+
+pomp1_P2011 := PompP2011;
+pomp2_P2021 := PompP2011;
+
+]]></ST>
+      </Implementation>
+    </Method>
     <LineIds Name="FB_Inmalen">
       <LineId Id="1" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Inmalen.FB_init">
+      <LineId Id="1" Count="13" />
     </LineIds>
   </POU>
 </TcPlcObject>

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
   <POU Name="FB_Pomp" Id="{06ecb101-bef7-4b99-b37c-3c3f30794da2}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_Pomp
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Pomp IMPLEMENTS ITF_Pomp
 VAR_INPUT
 END_VAR
 VAR_OUTPUT
@@ -12,7 +12,85 @@ END_VAR
     <Implementation>
       <ST><![CDATA[//ik kan niet spellen]]></ST>
     </Implementation>
+    <Folder Name="Methods" Id="{bf5cf5ca-668b-48c9-b584-364735c4887e}" />
+    <Folder Name="Properties" Id="{2eec5991-7c1f-49f7-b0b9-e395ab7feb87}" />
+    <Property Name="ActueelToerental" Id="{9f7f6be0-cc49-43e6-9ba0-15944b007ef7}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY ActueelToerental : INT]]></Declaration>
+      <Get Name="Get" Id="{02a0d250-19cf-43cf-a5bb-c11df1732129}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{ed9a36bf-c121-4d2c-bf1e-37bf3406435d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="FB_init" Id="{6705a958-bed7-4e7a-b547-345465bc72f1}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="PompGoTo" Id="{0a193336-072e-4c95-8c7d-149f5980641c}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD PompGoTo : INT
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="StatePomp" Id="{9f61f7b6-68ab-4376-bfb3-7539fda23f5a}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY StatePomp : E_PompState]]></Declaration>
+      <Get Name="Get" Id="{b4d31f6f-5daf-49e6-8af1-299aa0f7bb54}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{bb515b49-55af-457c-a198-ea5d97b71a3e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <LineIds Name="FB_Pomp">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Pomp.ActueelToerental.Get">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Pomp.ActueelToerental.Set">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Pomp.FB_init">
+      <LineId Id="1" Count="2" />
+    </LineIds>
+    <LineIds Name="FB_Pomp.PompGoTo">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Pomp.StatePomp.Get">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Pomp.StatePomp.Set">
       <LineId Id="1" Count="0" />
     </LineIds>
   </POU>
