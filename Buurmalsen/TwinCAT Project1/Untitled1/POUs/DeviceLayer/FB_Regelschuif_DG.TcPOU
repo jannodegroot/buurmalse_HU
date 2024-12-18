@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
   <POU Name="FB_Regelschuif_DG" Id="{197a057b-7e77-4001-97d3-497a9b935830}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_Regelschuif_DG
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Regelschuif_DG IMPLEMENTS ITF_Regelschuif
 VAR_INPUT
 END_VAR
 VAR_OUTPUT
@@ -12,7 +12,85 @@ END_VAR
     <Implementation>
       <ST><![CDATA[//test]]></ST>
     </Implementation>
+    <Folder Name="Methods" Id="{a5c8f5f8-d7b2-406e-83cb-5c27f5fd8301}" />
+    <Folder Name="Properties" Id="{b6eb3f6c-3011-4a7e-8816-c7f569303f45}" />
+    <Property Name="ActueelPosition" Id="{e5264e59-d7b3-4d52-85a9-01c31af68424}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY ActueelPosition : SINT]]></Declaration>
+      <Get Name="Get" Id="{9fd5639f-907b-4f81-9ddb-25b621dd3e75}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{905c9011-2b5d-48ef-959c-c4e2af0ee1b8}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="FB_init" Id="{f3ca1436-908a-411d-9d51-011caa116cfc}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RegelschuifGoTo" Id="{a4a1d9ca-2482-46aa-ba66-9fb460cea5bb}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD RegelSchuifGoTo : SINT
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="StateRegelschuif" Id="{6308ac59-5f2f-4aa8-a02c-ba74a875ce56}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY StateRegelschuif : E_RegelschuifState]]></Declaration>
+      <Get Name="Get" Id="{9fed2dd4-a8a2-4e9a-a768-d82a5581c148}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{39e89b3f-9284-4275-8393-d34cd7d64bd6}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <LineIds Name="FB_Regelschuif_DG">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Regelschuif_DG.ActueelPosition.Get">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Regelschuif_DG.ActueelPosition.Set">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Regelschuif_DG.FB_init">
+      <LineId Id="1" Count="2" />
+    </LineIds>
+    <LineIds Name="FB_Regelschuif_DG.RegelschuifGoTo">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Regelschuif_DG.StateRegelschuif.Get">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Regelschuif_DG.StateRegelschuif.Set">
       <LineId Id="1" Count="0" />
     </LineIds>
   </POU>
