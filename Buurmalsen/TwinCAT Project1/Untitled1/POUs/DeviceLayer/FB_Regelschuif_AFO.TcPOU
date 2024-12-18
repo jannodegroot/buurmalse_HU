@@ -10,7 +10,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[//testvoormain]]></ST>
     </Implementation>
     <LineIds Name="FB_Regelschuif_AFO">
       <LineId Id="1" Count="0" />
