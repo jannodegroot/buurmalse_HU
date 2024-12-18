@@ -7,7 +7,7 @@ END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
-	actualMode : E_Besturingsmodus := E_Besturingsmodus.uitlaten;
+	CurrentModus : E_Besturingsmodus := E_Besturingsmodus.uitlaten;
 	KlepV2012 : ITF_OpenDichtKlep;
 	KlepV2021 : ITF_OpenDichtKlep;
 	KlepV2023 : ITF_OpenDichtKlep;
@@ -25,7 +25,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF actualMode = E_Besturingsmodus.inmalen THEN
+      <ST><![CDATA[IF CurrentModus = E_Besturingsmodus.inmalen THEN
 	KlepV2012.close();
 END_IF]]></ST>
     </Implementation>
