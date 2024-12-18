@@ -1,2 +1,2 @@
 lays
-luuk is gay
+ay nah
