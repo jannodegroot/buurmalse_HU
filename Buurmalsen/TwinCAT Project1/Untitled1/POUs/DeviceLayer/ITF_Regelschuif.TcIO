@@ -3,26 +3,29 @@
   <Itf Name="ITF_Regelschuif" Id="{5835ea1b-cb06-4d0c-8b0b-1d1de08323d4}">
     <Declaration><![CDATA[INTERFACE ITF_Regelschuif
 ]]></Declaration>
-    <Method Name="stand" Id="{b4e1402f-b8e6-4125-ba32-d0db3054557e}">
-      <Declaration><![CDATA[METHOD stand : BOOL
+    <Property Name="ActueelPosition" Id="{5d83e03f-02e3-4523-8fa3-9e754d6ad63b}">
+      <Declaration><![CDATA[PROPERTY ActueelPosition : SINT]]></Declaration>
+      <Get Name="Get" Id="{e4b8c534-91c6-451c-baf1-f242802d57c7}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{b68299bb-4098-4290-9ff5-b5c633f37052}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Method Name="RegelSchuifGoTo" Id="{99e424e3-8256-42ae-9d72-9807e7acbee4}">
+      <Declaration><![CDATA[METHOD RegelSchuifGoTo : SINT
 VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Property Name="standPercentage" Id="{2bdfaf7b-06fe-424b-b87a-8a6a522237b4}">
-      <Declaration><![CDATA[PROPERTY standPercentage : INT]]></Declaration>
-      <Get Name="Get" Id="{3e850e05-1b57-4fa6-8cc3-9f72853cc09b}">
+    <Property Name="StateRegelSchuif" Id="{a07702d6-cb7e-47f4-a92d-65515d794b7e}">
+      <Declaration><![CDATA[PROPERTY StateRegelSchuif : E_RegelschuifState]]></Declaration>
+      <Get Name="Get" Id="{3b94f187-ca1a-443e-b74f-f30c396f267c}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
-      <Set Name="Set" Id="{058a81a4-7baf-4685-963b-30de0a6a35bd}">
+      <Set Name="Set" Id="{bd4b0c98-c695-47b2-85e7-4f9d7b9d110c}">
         <Declaration><![CDATA[]]></Declaration>
       </Set>
-    </Property>
-    <Property Name="state" Id="{0a0d0f8e-7cab-4512-b84f-11e999984816}">
-      <Declaration><![CDATA[PROPERTY state : E_OpenDichtKlepState]]></Declaration>
-      <Get Name="Get" Id="{f0473bf5-7455-419d-b7f5-b57976e0ba97}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
     </Property>
   </Itf>
 </TcPlcObject>
