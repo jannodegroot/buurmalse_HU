@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
+  <POU Name="FB_SimulatedAnaIn_AFO" Id="{66b4703f-d915-4b8e-9b88-0961f5bebfdd}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_SimulatedAnaIn_AFO IMPLEMENTS ITF_Schuif_AnaIn_AFO
+
+VAR
+	internalState : sint;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="get" Id="{4a3c7f0e-0e25-4947-87b3-c04699a27469}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD get : SINT
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[get := internalState;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_SimulatedAnaIn_AFO">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_SimulatedAnaIn_AFO.get">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
