@@ -24,7 +24,9 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF currentMode = E_Bedrijfstoestand.off THEN
+      <ST><![CDATA[//ik test me helemaal suf
+
+IF currentMode = E_Bedrijfstoestand.off THEN
 	output.set(FALSE);
 	expectedState := E_OpenDichtKlepState.closed;
 END_IF
@@ -165,14 +167,7 @@ END_VAR
       </Get>
     </Property>
     <LineIds Name="FB_OpenDichtKlep">
-      <LineId Id="367" Count="3" />
-      <LineId Id="419" Count="0" />
-      <LineId Id="418" Count="0" />
-      <LineId Id="428" Count="6" />
-      <LineId Id="427" Count="0" />
-      <LineId Id="421" Count="0" />
-      <LineId Id="371" Count="28" />
-      <LineId Id="16" Count="0" />
+      <LineId Id="1" Count="46" />
     </LineIds>
     <LineIds Name="FB_OpenDichtKlep.close">
       <LineId Id="5" Count="0" />
