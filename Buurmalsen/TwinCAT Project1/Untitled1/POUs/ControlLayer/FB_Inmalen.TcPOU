@@ -19,14 +19,56 @@ VAR
 	SchuifV2013_DG : ITF_Regelschuif;
 	SchuifV2022_DG : ITF_Regelschuif;
 	
-	pomp1_P2011 : ITF_Pomp;
 	pomp2_P2021 : ITF_Pomp;
+	
+	pompP2021 : INT;
+	
 	
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF CurrentModus = E_Besturingsmodus.inmalen THEN
+	//set stand
+	SchuifV2013_AFG.ActueelPosition := 0;
+	SchuifV2013_DG.ActueelPosition := 0;	
+
+	//set position
 	KlepV2012.close();
+	KlepV2021.Close();
+	KlepV2024.Close();
+	
+	SchuifV2013_AFG.RegelSchuifGoTo();
+	SchuifV2013_DG.RegelSchuifGoTo();
+	
+	IF (KlepV2012.StateKlep = E_OpenDichtKlepState.closed AND
+		KlepV2021.StateKlep = E_OpenDichtKlepState.closed AND
+		KlepV2024.StateKlep = E_OpenDichtKlepState.closed AND
+		SchuifV2013_AFG.StateRegelSchuif = E_RegelschuifState.standby AND
+		SchuifV2013_DG.StateRegelSchuif = E_RegelschuifState.standby) THEN
+		
+		//set stand
+		SchuifV2022_AFG.ActueelPosition := 100;
+		SchuifV2022_DG.ActueelPosition := 100;
+	
+		//set position
+		KlepV2023.Open();
+		SchuifV2022_AFG.RegelSchuifGoTo();
+		SchuifV2022_DG.RegelSchuifGoTo();
+		
+		IF (KlepV2023.StateKlep = E_OpenDichtKlepState.open AND
+			SchuifV2022_AFG.StateRegelSchuif = E_RegelschuifState.standby AND
+			SchuifV2022_DG.StateRegelSchuif = E_RegelschuifState.standby) THEN
+			
+			//Get toerental
+			pompP2021 := main.Regelingen.ToerentalP2021;
+			
+			//Set toerental
+			pomp2_P2021.ActueelToerental := pompP2021;
+			
+			//set position
+			pomp2_P2021.PompGoTo();
+		END_IF	
+	END_IF	
 END_IF]]></ST>
     </Implementation>
     <Method Name="FB_init" Id="{292cdf7f-9fce-4ac5-8a23-a71cd6cbd45e}">
@@ -45,7 +87,6 @@ VAR_INPUT
 	RegelschuifV2013_DG : ITF_Regelschuif;
 	RegelschuifV2022_DG : ITF_Regelschuif;
 	
-	PompP2011 : ITF_Pomp;
 	PompP2021 : ITF_Pomp;
 	
 END_VAR
@@ -61,19 +102,40 @@ SchuifV2022_AFG := RegelschuifV2013_AFO;
 SchuifV2013_DG := RegelschuifV2013_AFO;
 SchuifV2022_DG := RegelschuifV2013_AFO;
 
-pomp1_P2011 := PompP2011;
-pomp2_P2021 := PompP2011;
+pomp2_P2021 := PompP2021;
 
 ]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_Inmalen">
       <LineId Id="1" Count="0" />
+      <LineId Id="23" Count="1" />
       <LineId Id="5" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="9" Count="1" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="11" Count="1" />
+      <LineId Id="29" Count="1" />
+      <LineId Id="62" Count="0" />
+      <LineId Id="35" Count="3" />
+      <LineId Id="40" Count="4" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="45" Count="1" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="47" Count="2" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="54" Count="5" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="32" Count="0" />
       <LineId Id="4" Count="0" />
     </LineIds>
     <LineIds Name="FB_Inmalen.FB_init">
-      <LineId Id="1" Count="13" />
+      <LineId Id="1" Count="8" />
+      <LineId Id="11" Count="3" />
     </LineIds>
   </POU>
 </TcPlcObject>
