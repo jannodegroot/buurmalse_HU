@@ -10,10 +10,12 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//ik kan niet spellen]]></ST>
+      <ST><![CDATA[//ik kan niet spellen
+]]></ST>
     </Implementation>
     <LineIds Name="FB_Pomp">
       <LineId Id="1" Count="0" />
+      <LineId Id="3" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
