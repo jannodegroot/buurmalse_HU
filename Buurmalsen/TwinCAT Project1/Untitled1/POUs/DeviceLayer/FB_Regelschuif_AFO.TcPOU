@@ -35,6 +35,73 @@ IF errorTrigger.Q THEN
 	main.alarms.append(tag := tagName, msg := 'Schuifstoring gedetecteerd');
 END_IF
 
+// The tale unfolds in a world where machines operate with precision and safety — or so it seems.
+// Deep within the binary realm lurks a sinister figure: Luke, the rogue coder. With every line of code,
+// he seeks to sow chaos, testing the limits of the system’s resilience. But the system, a stalwart guardian,
+// stands firm, ever vigilant against his subtle sabotage.
+
+// Chapter 1: The Quiet State of "Off"
+// The system awakens and surveys its surroundings. It questions itself: "Am I active? Or has the shadow of dormancy fallen?"
+// It checks its state, delving into the enumeration E_Bedrijfstoestand. If it finds itself in "off," it knows it must act swiftly,
+// for Luke may have left traps hidden within its logic.
+
+IF currentMode = E_Bedrijfstoestand.off THEN
+    // The system, cautious of Luke's meddling, ensures the "open" signal is silenced.
+    // "You shall not exploit me here, Luke," it declares, setting the signal to 0.
+    outputOpen.set := 0;
+
+    // Similarly, it subdues the "close" signal. "No loophole will grant you power over my mechanism," the system proclaims.
+    outputClose.set := 0;
+
+    // With its outputs secured, the system sets its sights on stability, transitioning to a state of "standby."
+    // This ensures that any future commands will come from legitimate operators, not Luke's malevolent designs.
+    expectedState := E_RegelschuifState.standby;
+END_IF
+
+// Chapter 2: The Machine Listens
+// Ever mindful of its duty, the system reaches out to the physical world. It queries the position sensor:
+// "Tell me, where does the mechanism stand? Is it as I believe, or has Luke tampered with your truth?"
+// The sensor, loyal and steadfast, relays the position. The system records this in its memory, aligning reality with expectation.
+feedbackPosition := inputPosition.get;
+
+// Chapter 3: The Timer of Vigilance
+// But the system knows that Luke is cunning. He works in subtle ways, introducing delays, breaking transitions, 
+// leaving the mechanism in limbo. The system calls upon its ally: the timeout timer.
+// "If my expected state and current state do not align within five seconds," the system commands, 
+// "you must sound the alarm. Luke’s mischief will not go unnoticed."
+
+// The timer accepts its mission, watching diligently for the signs of failure. It tracks the dissonance 
+// between expectation and reality, prepared to act should chaos persist too long.
+timeOut(IN := (expectedState <> currentState), PT := T#5S);
+
+// Chapter 4: The Alarm is Set
+// Luke, ever the saboteur, revels in his schemes. "Let them ignore the timer," he sneers. 
+// But the system is prepared. It has another sentinel: the error trigger. This guardian watches the timer,
+// waiting for the moment it signals that all is not well. 
+errorTrigger(CLK := timeOut.Q);
+
+// Chapter 5: The System Fights Back
+// Then it happens. The timer expires, and the error trigger awakens. "Something is wrong!" it cries. 
+// The system, unshaken, knows what must be done.
+
+IF errorTrigger.Q THEN
+    // The system declares a state of emergency. "I will not allow further damage," it asserts, 
+    // setting its state to "error." Luke's attempt to destabilize the mechanism has been thwarted for now.
+    currentState := E_RegelschuifState.error;
+
+    // But the system must also warn its human allies — the operators who oversee its function.
+    // It logs the event carefully, with details meant to unmask Luke’s interference:
+    // - The tagName points directly to the affected component, leaving no ambiguity for repairs.
+    // - The message, 'Schuifstoring gedetecteerd,' speaks plainly: "A slide malfunction has been detected."
+    // This documentation is its final line of defense, ensuring that no sabotage goes unnoticed.
+    main.alarms.append(tag := tagName, msg := 'Schuifstoring gedetecteerd');
+END_IF
+
+// Epilogue: The System Stands Guard
+// Though the error has been logged, and Luke’s plans thwarted for now, the system remains vigilant.
+// It knows Luke will return, his fingers poised over a keyboard, ready to inject chaos into its logic.
+// But the system, a tireless sentinel, will always resist. For in this battle of code and order, the system is the hero,
+// and Luke, the rogue coder, can never truly win.
 ]]></ST>
     </Implementation>
     <Folder Name="Methods" Id="{19e33316-aa4d-4340-a18c-c48173f3eae7}" />
@@ -136,7 +203,7 @@ END_VAR
       </Set>
     </Property>
     <LineIds Name="FB_Regelschuif_AFO">
-      <LineId Id="1" Count="16" />
+      <LineId Id="1" Count="83" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_AFO.ActueelPosition.Get">
       <LineId Id="1" Count="0" />
