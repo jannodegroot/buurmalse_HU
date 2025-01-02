@@ -15,8 +15,8 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF currentMode = E_Bedrijfstoestand.off THEN
-	outputOpen.set(FALSE);
-	outputClose.set(FALSE);
+	outputOpen.set := 0;
+	outputClose.set := 0;
 	expectedState := E_RegelschuifState.standby;
 END_IF
 
@@ -82,12 +82,16 @@ IF checkPositions THEN
 	END_IF
 	
 	IF ActueelPosition > regelschuifGoTo THEN // huidige positie is te hoog
-		StateRegelSchuif := E_RegelschuifState.closing;
+		IF stateRegelschuif <> E_RegelschuifState.error THEN
+			StateRegelSchuif := E_RegelschuifState.closing;
+		END_IF
 		close();
 	END_IF
 
 	IF ActueelPosition < regelschuifGoTo THEN // huidige positie is te laag
-		StateRegelSchuif := E_RegelschuifState.opening;
+		IF stateRegelschuif <> E_RegelschuifState.error THEN
+			StateRegelSchuif := E_RegelschuifState.opening;
+		END_IF
 		open();
 	END_IF
 	minuteTimer(IN:= 0); // reset timer
@@ -131,11 +135,17 @@ END_VAR
       <LineId Id="16" Count="0" />
       <LineId Id="3" Count="0" />
       <LineId Id="13" Count="0" />
-      <LineId Id="7" Count="1" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="22" Count="0" />
       <LineId Id="15" Count="0" />
       <LineId Id="6" Count="0" />
       <LineId Id="12" Count="0" />
-      <LineId Id="10" Count="1" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="24" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="20" Count="0" />
