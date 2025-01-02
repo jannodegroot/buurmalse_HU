@@ -11,6 +11,11 @@ VAR
 	currentMode : E_Bedrijfstoestand := E_Bedrijfstoestand.off;
 	currentState : E_RegelschuifState := E_RegelschuifState.standby;
 	expectedState : E_RegelschuifState := E_RegelschuifState.standby;
+	
+	feedbackPosition : BOOL := FALSE;
+	
+	timeOut : TON;
+	errorTrigger : R_TRIG;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -18,6 +23,16 @@ END_VAR
 	outputOpen.set := 0;
 	outputClose.set := 0;
 	expectedState := E_RegelschuifState.standby;
+END_IF
+
+feedbackPosition := inputPosition.get;
+
+timeOut(IN :=(expectedState <> currentState), PT := T#5S);
+errorTrigger(CLK := timeOut.Q);
+
+IF errorTrigger.Q THEN
+	currentState := E_RegelschuifState.error;
+	main.alarms.append(tag := tagName, msg := 'Schuifstoring gedetecteerd');
 END_IF
 
 ]]></ST>
@@ -105,7 +120,7 @@ END_IF]]></ST>
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[StateRegelschuif := currentState;]]></ST>
         </Implementation>
       </Get>
       <Set Name="Set" Id="{c2a73e76-74c5-4c09-8b03-2178d70ef95f}">
@@ -118,7 +133,9 @@ END_VAR
       </Set>
     </Property>
     <LineIds Name="FB_Regelschuif_AFO">
-      <LineId Id="1" Count="6" />
+      <LineId Id="1" Count="5" />
+      <LineId Id="9" Count="9" />
+      <LineId Id="7" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_AFO.ActueelPosition.Get">
       <LineId Id="1" Count="0" />
