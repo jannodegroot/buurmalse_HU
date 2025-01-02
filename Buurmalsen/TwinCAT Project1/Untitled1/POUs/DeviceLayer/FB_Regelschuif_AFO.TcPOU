@@ -51,21 +51,27 @@ END_VAR]]></Declaration>
 VAR
 	close : FB_SimulatedDigOutClose_AFO;
 	open : FB_SimulatedDigOutOpen_AFO;
+	minuteTimer : TON;
+	checkPositions : BOOL;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF ActueelPosition = regelschuifGoTo THEN // huidige positie is correct
-	StateRegelSchuif.set := E_RegelschuifState.standby;
+        <ST><![CDATA[minuteTimer(IN:= 1,PT:= T#60S ,Q => checkPositions);
+IF checkPositions THEN
+	IF ActueelPosition = regelschuifGoTo THEN // huidige positie is correct
+		StateRegelSchuif.set := E_RegelschuifState.standby;
 	
-END_IF
+	END_IF
+	
+	IF ActueelPosition > regelschuifGoTo THEN // huidige positie is te hoog
+		StateRegelSchuif.set := E_RegelschuifState.closing;
+		close();
+	END_IF
 
-IF ActueelPosition > regelschuifGoTo THEN // huidige positie is te hoog
-	StateRegelSchuif.set := E_RegelschuifState.closing;
-	close();
-END_IF
-
-IF ActueelPosition < regelschuifGoTo THEN // huidige positie is te laag
-	StateRegelSchuif.set := E_RegelschuifState.opening;
-	open();
+	IF ActueelPosition < regelschuifGoTo THEN // huidige positie is te laag
+		StateRegelSchuif.set := E_RegelschuifState.opening;
+		open();
+	END_IF
+	minuteTimer(IN:= 0); // reset timer
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -103,6 +109,7 @@ END_VAR
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_AFO.RegelSchuifGoTo">
+      <LineId Id="17" Count="1" />
       <LineId Id="4" Count="1" />
       <LineId Id="16" Count="0" />
       <LineId Id="3" Count="0" />
@@ -114,6 +121,8 @@ END_VAR
       <LineId Id="10" Count="1" />
       <LineId Id="14" Count="0" />
       <LineId Id="9" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="19" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_AFO.StateRegelSchuif.Get">
       <LineId Id="1" Count="0" />
