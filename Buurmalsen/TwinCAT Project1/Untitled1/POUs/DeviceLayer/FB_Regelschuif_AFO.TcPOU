@@ -48,9 +48,25 @@ END_VAR]]></Declaration>
     </Method>
     <Method Name="RegelSchuifGoTo" Id="{79c61f24-d77f-47a4-b036-2823abebfb78}" FolderPath="Methods\">
       <Declaration><![CDATA[METHOD RegelSchuifGoTo : SINT
-]]></Declaration>
+VAR
+	close : FB_SimulatedDigOutClose_AFO;
+	open : FB_SimulatedDigOutOpen_AFO;
+END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[IF ActueelPosition = regelschuifGoTo THEN // huidige positie is correct
+	StateRegelSchuif.set := E_RegelschuifState.standby;
+	
+END_IF
+
+IF ActueelPosition > regelschuifGoTo THEN // huidige positie is te hoog
+	StateRegelSchuif.set := E_RegelschuifState.closing;
+	close();
+END_IF
+
+IF ActueelPosition < regelschuifGoTo THEN // huidige positie is te laag
+	StateRegelSchuif.set := E_RegelschuifState.opening;
+	open();
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Property Name="StateRegelSchuif" Id="{970eafd1-96ea-40c0-b909-2be329c20549}" FolderPath="Properties\">
@@ -87,7 +103,17 @@ END_VAR
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_AFO.RegelSchuifGoTo">
-      <LineId Id="1" Count="0" />
+      <LineId Id="4" Count="1" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="3" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="7" Count="1" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="10" Count="1" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_AFO.StateRegelSchuif.Get">
       <LineId Id="1" Count="0" />
