@@ -14,14 +14,11 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[CASE currentMode OF 
-E_Bedrijfstoestand.off:
+      <ST><![CDATA[IF currentMode = E_Bedrijfstoestand.off THEN
 	outputOpen.set(FALSE);
 	outputClose.set(FALSE);
 	expectedState := E_RegelschuifState.standby;
-E_Bedrijfstoestand.manual:
-	expectedState := E_RegelschuifState.standby;
-END_CASE
+END_IF
 
 ]]></ST>
     </Implementation>
@@ -117,11 +114,7 @@ END_VAR
       </Set>
     </Property>
     <LineIds Name="FB_Regelschuif_AFO">
-      <LineId Id="1" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="7" Count="5" />
-      <LineId Id="4" Count="0" />
-      <LineId Id="3" Count="0" />
+      <LineId Id="1" Count="6" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_AFO.ActueelPosition.Get">
       <LineId Id="1" Count="0" />
