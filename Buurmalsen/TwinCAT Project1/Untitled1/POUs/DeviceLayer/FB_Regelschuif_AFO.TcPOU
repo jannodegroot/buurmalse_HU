@@ -77,17 +77,17 @@ END_VAR]]></Declaration>
         <ST><![CDATA[minuteTimer(IN:= 1,PT:= T#60S ,Q => checkPositions);
 IF checkPositions THEN
 	IF ActueelPosition = regelschuifGoTo THEN // huidige positie is correct
-		StateRegelSchuif.set := E_RegelschuifState.standby;
+		StateRegelSchuif := E_RegelschuifState.standby;
 	
 	END_IF
 	
 	IF ActueelPosition > regelschuifGoTo THEN // huidige positie is te hoog
-		StateRegelSchuif.set := E_RegelschuifState.closing;
+		StateRegelSchuif := E_RegelschuifState.closing;
 		close();
 	END_IF
 
 	IF ActueelPosition < regelschuifGoTo THEN // huidige positie is te laag
-		StateRegelSchuif.set := E_RegelschuifState.opening;
+		StateRegelSchuif := E_RegelschuifState.opening;
 		open();
 	END_IF
 	minuteTimer(IN:= 0); // reset timer
