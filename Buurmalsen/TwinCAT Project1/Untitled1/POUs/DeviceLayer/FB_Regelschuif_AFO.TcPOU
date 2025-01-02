@@ -129,9 +129,7 @@ END_VAR
       </Set>
     </Property>
     <LineIds Name="FB_Regelschuif_AFO">
-      <LineId Id="1" Count="5" />
-      <LineId Id="9" Count="9" />
-      <LineId Id="7" Count="0" />
+      <LineId Id="1" Count="16" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_AFO.ActueelPosition.Get">
       <LineId Id="1" Count="0" />
