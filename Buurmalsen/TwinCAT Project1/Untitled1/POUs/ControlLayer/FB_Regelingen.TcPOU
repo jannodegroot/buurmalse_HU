@@ -3,19 +3,127 @@
   <POU Name="FB_Regelingen" Id="{10454be2-17f1-45a6-927c-6671ec7f7806}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Regelingen
 VAR_INPUT
-	
+    BestuurMode : INT;            (* 0 = Handmatig, 1 = Automatisch *)
+    RegelStand1 : REAL;           (* Setpoint debiet in m³/s *)
+    RegelStand2 : REAL;           (* Setpoint polderpeil in m NAP *)
 END_VAR
-VAR_OUTPUT
-	
-END_VAR
+
 VAR
-	
+    (* Uitgangen *)
+    Pomp1 : INT;                  (* Status pomp 1: 0 = uit, 1 = aan *)
+    Pomp2 : INT;                  (* Status pomp 2: 0 = uit, 1 = aan *)
+
+    (* Interne variabelen *)
+    ModeStatus : STRING[20];      (* Beschrijft huidige modus *)
+    ActiveStand : STRING[20];     (* Beschrijft actieve regelstand *)
+
+    (* Instanties van subfunctieblokken *)
+    Uitlaten : FB_Uitlaten;
+    Uitmalen : FB_Uitmalen;
+    Inmalen : FB_Inmalen;
+
+    (* Interne statusbewaking *)
+    DebietError : REAL;           (* Foutwaarde van debietregeling *)
+    PolderpeilError : REAL;       (* Foutwaarde van polderpeilregeling *)
+END_VAR
+
+(* De rest van de methodes blijft ongewijzigd *)
+
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[FUNCTION_BLOCK FB_Regelingen
+VAR
+    (* Ingangen *)
+    BestuurMode : INT;            (* 0 = Handmatig, 1 = Automatisch *)
+    RegelStand1 : REAL;           (* Setpoint debiet in m³/s *)
+    RegelStand2 : REAL;           (* Setpoint polderpeil in m NAP *)
+
+    (* Uitgangen *)
+    Pomp1 : INT;                  (* Status pomp 1: 0 = uit, 1 = aan *)
+    Pomp2 : INT;                  (* Status pomp 2: 0 = uit, 1 = aan *)
+
+    (* Interne variabelen *)
+    ModeStatus : STRING[20];      (* Beschrijft huidige modus *)
+    ActiveStand : STRING[20];     (* Beschrijft actieve regelstand *)
+
+    (* Instanties van subfunctieblokken *)
+    Uitlaten : FB_Uitlaten;
+    Uitmalen : FB_Uitmalen;
+    Inmalen : FB_Inmalen;
+
+    (* Interne statusbewaking *)
+    DebietError : REAL;           (* Foutwaarde van debietregeling *)
+    PolderpeilError : REAL;       (* Foutwaarde van polderpeilregeling *)
+END_VAR
+
+(* Methode om de regeling te activeren *)
+METHOD StartRegeling : VOID
+CASE BestuurMode OF
+    0:  (* Handmatige modus *)
+        ModeStatus := 'Handmatig';
+        (* Schakel pompen in of uit handmatig *)
+        Pomp1 := 0;  (* Pomp standby, handmatig inschakelen via HMI *)
+        Pomp2 := 0;
+
+    1:  (* Automatische modus *)
+        ModeStatus := 'Automatisch';
+
+        (* Regelstand 1: Debiet *)
+        Uitlaten.RegelStand := RegelStand1;
+        Uitlaten.Execute();
+
+        (* Regelstand 2: Polderpeil *)
+        Inmalen.RegelStand := RegelStand2;
+        Inmalen.Execute();
+
+        (* Errorberekening *)
+        DebietError := RegelStand1 - Uitlaten.ActueelDebiet;
+        PolderpeilError := RegelStand2 - Inmalen.ActueelPolderpeil;
+
+        (* Beslis de status van de pompen *)
+        IF DebietError > 0.1 THEN
+            Pomp1 := 1;  (* Schakel pomp 1 in als debiet onder setpoint is *)
+        ELSE
+            Pomp1 := 0;
+        END_IF
+
+        IF PolderpeilError > 0.05 THEN
+            Pomp2 := 1;  (* Schakel pomp 2 in als peil onder setpoint is *)
+        ELSE
+            Pomp2 := 0;
+        END_IF;
+
+    ELSE
+        ModeStatus := 'Onbekend';
+        Pomp1 := 0;
+        Pomp2 := 0;
+END_CASE
+END_METHOD
+
+(* Methode om de regeling te stoppen *)
+METHOD StopRegeling : VOID
+ModeStatus := 'Gestopt';
+Pomp1 := 0;       (* Zet beide pompen uit *)
+Pomp2 := 0;
+END_METHOD
+
+(* Hoofdlogica *)
+METHOD Execute : VOID
+IF BestuurMode = 1 THEN
+    StartRegeling();  (* Start automatische regeling als de modus actief is *)
+ELSE
+    StopRegeling();   (* Zet de regeling uit in handmatige modus *)
+END_IF
+
+(* Gegevens doorsturen naar de subfunctieblokken *)
+Uitlaten.PompStatus := Pomp1;
+Uitmalen.PompStatus := Pomp2;
+END_METHOD
+]]></ST>
     </Implementation>
     <LineIds Name="FB_Regelingen">
+      <LineId Id="443" Count="87" />
       <LineId Id="1" Count="0" />
     </LineIds>
   </POU>
