@@ -6,6 +6,7 @@
     <Method Name="set" Id="{bd492814-0480-47c9-a245-6696c18c92e3}">
       <Declaration><![CDATA[METHOD set : BOOL
 VAR_INPUT
+	state : BOOL;	
 END_VAR
 ]]></Declaration>
     </Method>
