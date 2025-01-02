@@ -3,11 +3,25 @@
   <POU Name="FB_Regelschuif_AFO" Id="{e3716e21-c926-4b53-b092-edc4b4bb1690}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Regelschuif_AFO IMPLEMENTS ITF_Regelschuif
 VAR
-	
+	tagName : STRING;
+	outputOpen : ITF_Schuif_DigOutOpen_AFO;
+	outputClose : ITF_Schuif_DigOutClose_AFO;
+	inputPosition : ITF_Schuif_AnaIn_AFO;
+
+	currentMode : E_Bedrijfstoestand := E_Bedrijfstoestand.off;
+	currentState : E_RegelschuifState := E_RegelschuifState.standby;
+	expectedState : E_RegelschuifState := E_RegelschuifState.standby;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//testvoormain
+      <ST><![CDATA[CASE currentMode OF 
+E_Bedrijfstoestand.off:
+	outputOpen.set(FALSE);
+	outputClose.set(FALSE);
+	expectedState := E_RegelschuifState.standby;
+E_Bedrijfstoestand.manual:
+	expectedState := E_RegelschuifState.standby;
+END_CASE
 
 ]]></ST>
     </Implementation>
@@ -41,9 +55,17 @@ METHOD FB_Init: BOOL
 VAR_INPUT
     bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
     bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
+	tag : STRING;
+	DigOutOpening : ITF_Schuif_DigOutOpen_AFO;
+	DigOutClosing : ITF_Schuif_DigOutClose_AFO;
+	AnaInPosition : ITF_Schuif_AnaIn_AFO;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[tagname := tag;
+outputOpen := DigOutOpening;
+outputClose := DigOutClosing;
+inputPosition := AnaInPosition;
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="RegelSchuifGoTo" Id="{79c61f24-d77f-47a4-b036-2823abebfb78}" FolderPath="Methods\">
@@ -74,6 +96,8 @@ END_VAR
     </Property>
     <LineIds Name="FB_Regelschuif_AFO">
       <LineId Id="1" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="5" />
       <LineId Id="4" Count="0" />
       <LineId Id="3" Count="0" />
     </LineIds>
@@ -84,7 +108,7 @@ END_VAR
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_AFO.FB_Init">
-      <LineId Id="1" Count="0" />
+      <LineId Id="1" Count="4" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_AFO.RegelSchuifGoTo">
       <LineId Id="1" Count="0" />
