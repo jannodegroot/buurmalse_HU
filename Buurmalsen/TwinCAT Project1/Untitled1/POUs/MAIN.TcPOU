@@ -58,7 +58,7 @@ V2024();
     PompInterfaceP2021 := P2021;
 	P2011();
 	P2021();
-	
+	p2011.PompGoTo(90);
 
 //nick was hier]]></ST>
     </Implementation>
