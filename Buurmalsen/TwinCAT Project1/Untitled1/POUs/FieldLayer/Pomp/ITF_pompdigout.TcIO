@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
+  <Itf Name="ITF_pompdigout" Id="{11ce1814-e1e2-4478-bbb0-4699c4add5ba}">
+    <Declaration><![CDATA[INTERFACE ITF_pompdigout
+]]></Declaration>
+    <Method Name="set" Id="{6a1cfa76-3656-4d97-ae72-2b3d1fac0981}">
+      <Declaration><![CDATA[METHOD set : bool
+VAR_INPUT
+	state : BOOL;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
+  <POU Name="FB_simulatiepompangout" Id="{4ca3763b-40d2-46a5-87ca-419448b32f65}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_simulatiepompangout IMPLEMENTS ITF_pompangout
+
+VAR
+		internalState : int;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="set" Id="{3d4ff804-a469-4a9d-b82c-77714dc430b6}">
+      <Declaration><![CDATA[METHOD set : INT
+VAR_INPUT
+	state	: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[internalState := state;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_simulatiepompangout">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_simulatiepompangout.set">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
