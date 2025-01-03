@@ -1,18 +1,94 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
-  <POU Name="FB_Pomp" Id="{06ecb101-bef7-4b99-b37c-3c3f30794da2}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_Pomp
-VAR_INPUT
-END_VAR
-VAR_OUTPUT
-END_VAR
+  <POU Name="FB_Pomp" Id="{01e0e1ca-9203-401d-bd28-bd8ab180b19f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Pomp IMPLEMENTS ITF_Pomp
 VAR
+	InternalToerental : INT; // Internal variable for current speed
+ 	InternalState : E_PompState;    // Internal variable for pump state
+	InternalToerental2 : INT; // Internal variable for current speed
+	
+	timeroptoeren : TON;
+	timerloopt : bool := True;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//ik kan niet spellen]]></ST>
+      <ST><![CDATA[]]></ST>
     </Implementation>
+    <Property Name="ActueelToerental" Id="{88d60577-962c-4c2d-820d-3c715054a2e6}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY ActueelToerental : INT
+]]></Declaration>
+      <Get Name="Get" Id="{6ce3d73e-f992-458e-b779-47ddd6581a09}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ ActueelToerental := InternalToerental;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{3edb9cc8-aede-44bb-a200-c22dffcdef8b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[    InternalToerental := ActueelToerental;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="PompGoTo" Id="{0c4c33cf-85bb-4137-9363-b61f6c82564a}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD PompGoTo : INT
+VAR_INPUT
+	toerental	: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[timeroptoeren(IN := timerloopt, PT := T#2S);
+IF timeroptoeren.Q THEN
+	timerloopt := FALSE;
+	InternalToerental2 := InternalToerental2+20;
+ELSE
+	timerloopt:=TRUE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="StatePomp" Id="{a3356c66-7303-4084-af63-de2a393bc632}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY StatePomp : E_PompState
+]]></Declaration>
+      <Get Name="Get" Id="{41be7f56-846c-4dde-9931-f12128d4dd95}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{515ac4c7-2fb1-4d81-bf82-c7c0bb4a75f9}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <LineIds Name="FB_Pomp">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Pomp.ActueelToerental.Get">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Pomp.ActueelToerental.Set">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Pomp.PompGoTo">
+      <LineId Id="1" Count="6" />
+    </LineIds>
+    <LineIds Name="FB_Pomp.StatePomp.Get">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Pomp.StatePomp.Set">
       <LineId Id="1" Count="0" />
     </LineIds>
   </POU>
