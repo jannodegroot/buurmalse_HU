@@ -31,7 +31,7 @@ VAR
 	PompInterfaceP2011 : ITF_Pomp; // Interface for P2011 pump
     PompInterfaceP2021 : ITF_Pomp; // Interface for P2021 pump
 	
-	UITMALEN : FB_Uitmalen;
+	Uitmalen : FB_Uitmalen;
 	REGELINGEN : FB_Regelingen;
 END_VAR
 ]]></Declaration>
@@ -63,7 +63,7 @@ V2024();
 	P2021();
 	p2011.PompGoTo(90);
 
-UITMALEN.poep := 
+Uitmalen();
 //nick was hier]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
