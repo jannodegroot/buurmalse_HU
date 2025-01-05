@@ -3,6 +3,7 @@
   <POU Name="FB_Uitmalen" Id="{9ae4d82e-20f8-4e09-9aaa-bd1ddcd0f3cd}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Uitmalen
 VAR_INPUT
+	poep : INT;
 END_VAR
 VAR_OUTPUT
 END_VAR
@@ -10,10 +11,18 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[main.PompInterfaceP2011.PompGoTo(20);
+IF 20 = main.PompInterfaceP2011.ActueelToerental  AND 
+	jkdefchr
+END_IF
+
+main.ITFv2012.close();]]></ST>
     </Implementation>
     <LineIds Name="FB_Uitmalen">
       <LineId Id="1" Count="0" />
+      <LineId Id="3" Count="2" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="6" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
