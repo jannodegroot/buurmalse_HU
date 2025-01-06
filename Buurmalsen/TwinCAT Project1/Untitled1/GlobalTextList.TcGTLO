@@ -187,9 +187,9 @@
             </o>
           </l>
           <l n="Languages" t="ArrayList" />
-          <v n="GuidInit">{e69c756f-9e25-448e-898e-ee2e61e08469}</v>
-          <v n="GuidReInit">{0ff1af79-6a29-4c61-8b1b-d74250b18852}</v>
-          <v n="GuidExitX">{fe891a00-2690-452e-9ca4-8eaaee53ec6b}</v>
+          <v n="GuidInit">{a5229498-a9e8-453f-870d-dfec9c7cc9a8}</v>
+          <v n="GuidReInit">{ff2555ee-8f4a-43f5-a689-a3e9cf75cb5b}</v>
+          <v n="GuidExitX">{2344241f-db53-4c90-ac79-d70483cb03dd}</v>
         </o>
       </Data>
       <TypeList>
