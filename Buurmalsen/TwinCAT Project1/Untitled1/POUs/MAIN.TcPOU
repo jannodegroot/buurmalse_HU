@@ -10,6 +10,10 @@ VAR
 	digIn_V2012_2 : FB_SimulatedDigIn;
 	digOut_V2012 : FB_SimulatedDigOut;
 	
+	digIn_V2014_1 : FB_SimulatedDigIn;
+	digIn_V2014_2 : FB_SimulatedDigIn;
+	digOut_V2014 : FB_SimulatedDigOut;
+	
 	digIn_V2021_1 : FB_SimulatedDigIn;
 	digIn_V2021_2 : FB_SimulatedDigIn;
 	digOut_V2021 : FB_SimulatedDigOut;
@@ -22,6 +26,14 @@ VAR
 	digIn_V2024_2 : FB_SimulatedDigIn;
 	digOut_V2024 : FB_SimulatedDigOut;
 	// Einde digin digout van appeltjes
+	
+	digIn_V2025_1 : FB_SimulatedDigIn;
+	digIn_V2025_2 : FB_SimulatedDigIn;
+	digOut_V2025 : FB_SimulatedDigOut;
+	
+	digIn_V2026_1 : FB_SimulatedDigIn;
+	digIn_V2026_2 : FB_SimulatedDigIn;
+	digOut_V2026 : FB_SimulatedDigOut;
 	
 	// Start digin digout van AFO
 	digOutOpeningV2013 : FB_SimulatedDigOutOpen_AFO;
@@ -44,9 +56,12 @@ VAR
 	
 	// einde digin digout van queens of harts
 	V2012 : FB_OpenDichtKlep(tag := 'V2012', DigInClosed := digIn_V2012_1, DigInOpened := digIn_V2012_2, DigOut := digOut_V2012);
+	V2014 : FB_OpenDichtKlep(tag := 'V2014', DigInClosed := digIn_V2014_1, DigInOpened := digIn_V2014_2, DigOut := digOut_V2014);
 	V2021 : FB_OpenDichtKlep(tag := 'V2021', DigInClosed := digIn_V2021_1, DigInOpened := digIn_V2021_2, DigOut := digOut_V2021);
 	V2023 : FB_OpenDichtKlep(tag := 'V2023', DigInClosed := digIn_V2023_1, DigInOpened := digIn_V2023_2, DigOut := digOut_V2023);
 	V2024 : FB_OpenDichtKlep(tag := 'V2024', DigInClosed := digIn_V2024_1, DigInOpened := digIn_V2024_2, DigOut := digOut_V2024);  
+	V2025 : FB_OpenDichtKlep(tag := 'V2025', DigInClosed := digIn_V2025_1, DigInOpened := digIn_V2025_2, DigOut := digOut_V2025);  
+	V2026 : FB_OpenDichtKlep(tag := 'V2026', DigInClosed := digIn_V2026_1, DigInOpened := digIn_V2026_2, DigOut := digOut_V2026);  
 	
 	V2013_AFO : FB_Regelschuif_AFO(tag := 'V2013', DigOutOpening := digOutOpeningV2013, DigOutClosing := digOutClosingV2013, AnaInPosition := AnaInV2013);
 	V2022_AFO : FB_Regelschuif_AFO(tag := 'V2022', DigOutOpening := digOutOpeningV2022, DigOutClosing := digOutClosingV2022, AnaInPosition := AnaInV2022);
@@ -105,14 +120,20 @@ digIn_V2024_2();
 digOut_V2024();
 
 V2012();
+V2014();
 V2021();
 V2023();
 V2024();
+V2025();
+V2026();
 //End  function kleppen appeltjes
+
+P2021();
+P2011();
 
 Regelingen ();
 ControllerInmalen ();
-]]></ST>
+ControllerUitmalen ();]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="165" Count="0" />
@@ -128,10 +149,14 @@ ControllerInmalen ();
       <LineId Id="152" Count="0" />
       <LineId Id="157" Count="0" />
       <LineId Id="75" Count="0" />
+      <LineId Id="167" Count="0" />
       <LineId Id="125" Count="0" />
       <LineId Id="155" Count="1" />
+      <LineId Id="168" Count="1" />
       <LineId Id="163" Count="0" />
+      <LineId Id="170" Count="0" />
       <LineId Id="162" Count="0" />
+      <LineId Id="171" Count="1" />
       <LineId Id="161" Count="0" />
       <LineId Id="2" Count="0" />
       <LineId Id="166" Count="0" />
