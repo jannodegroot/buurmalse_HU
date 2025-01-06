@@ -29,12 +29,15 @@ VAR
 	digOutOpeningV2013 : FB_SimulatedDigOutOpen_AFO;
 	digOutClosingV2013 :FB_SimulatedDigOutClose_AFO;
 	AnaInV2013 : FB_SimulatedAnaIn_AFO;
-	V2013 : FB_Regelschuif_AFO(tag := 'V2013', DigOutOpening := digOutOpeningV2013, DigOutClosing := digOutClosingV2013, AnaInPosition := AnaInV2013);
+	
 	digOutOpeningV2022 : FB_SimulatedDigOutOpen_AFO;
 	digOutClosingV2022 :FB_SimulatedDigOutClose_AFO;
 	AnaInV2022 : FB_SimulatedAnaIn_AFO;
+	
 	V2022 : FB_Regelschuif_AFO(tag := 'V2022', DigOutOpening := digOutOpeningV2022, DigOutClosing := digOutClosingV2022, AnaInPosition := AnaInV2022);
-
+	V2013 : FB_Regelschuif_AFO(tag := 'V2013', DigOutOpening := digOutOpeningV2013, DigOutClosing := digOutClosingV2013, AnaInPosition := AnaInV2013);
+	
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -71,25 +74,7 @@ AnaInV2022();
 V2022();]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="69" Count="2" />
-      <LineId Id="158" Count="0" />
-      <LineId Id="123" Count="1" />
-      <LineId Id="122" Count="0" />
-      <LineId Id="159" Count="0" />
-      <LineId Id="150" Count="1" />
-      <LineId Id="149" Count="0" />
-      <LineId Id="160" Count="0" />
-      <LineId Id="153" Count="1" />
-      <LineId Id="152" Count="0" />
-      <LineId Id="157" Count="0" />
-      <LineId Id="75" Count="0" />
-      <LineId Id="125" Count="0" />
-      <LineId Id="155" Count="1" />
-      <LineId Id="163" Count="0" />
-      <LineId Id="162" Count="0" />
-      <LineId Id="164" Count="3" />
-      <LineId Id="172" Count="0" />
-      <LineId Id="168" Count="3" />
+      <LineId Id="1" Count="30" />
     </LineIds>
   </POU>
 </TcPlcObject>
