@@ -76,6 +76,16 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"591"</v>
+              <v n="TextDefault">"Ontluchtingskleppen"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"184"</v>
+              <v n="TextDefault">"Open/Dicht kleppen"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"991"</v>
               <v n="TextDefault">"Position: %s"</v>
               <l n="LanguageTexts" t="ArrayList" />
