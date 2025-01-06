@@ -15,10 +15,32 @@ VAR
 	open : E_OpenDichtKlepState :=E_OpenDichtKlepState.open;
 	//toerentaltotaal 
 	optoeren : E_PompState :=E_PompState.optoeren;
+	
+	CurrentModus : E_Besturingsmodus;
+	KlepV2012 : ITF_OpenDichtKlep;
+	KlepV2014 : ITF_OpenDichtKlep;
+	KlepV2021 : ITF_OpenDichtKlep;
+	KlepV2023 : ITF_OpenDichtKlep;
+	KlepV2024 : ITF_OpenDichtKlep;
+	KlepV2025 : ITF_OpenDichtKlep;
+	KlepV2026 : ITF_OpenDichtKlep;
+	
+	
+	SchuifV2013_AFG : ITF_Regelschuif;
+	SchuifV2022_AFG : ITF_Regelschuif;
+	
+	SchuifV2013_DG : ITF_Regelschuif;
+	SchuifV2022_DG : ITF_Regelschuif;
+	
+	Pomp1_P2011 : ITF_Pomp;
+	pomp2_P2021 : ITF_Pomp;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[CASE stap OF
+      <ST><![CDATA[currentmodus := main.Regelingen.BestuurMode;
+IF currentmodus = E_Besturingsmodus.uitmalen THEN	
+CASE stap OF
 	1:
 		main.PompInterfaceP2011.PompGoTo(20);
 		main.PompInterfaceP2021.PompGoTo(20);
@@ -65,6 +87,7 @@ END_VAR
 		END_IF
 		
 END_CASE
+END_IF
 
 
 
@@ -91,16 +114,64 @@ METHOD FB_Init: BOOL
 VAR_INPUT
     bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
     bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
+END_VAR
+VAR
+	OpenDichtKlepV2012: ITF_OpenDichtKlep;
+	OpenDichtKlepV2014: ITF_OpenDichtKlep;
+	OpenDichtKlepV2021: ITF_OpenDichtKlep;
+	OpenDichtKlepV2023: ITF_OpenDichtKlep;
+	OpenDichtKlepV2024: ITF_OpenDichtKlep;
+	OpenDichtKlepV2025: ITF_OpenDichtKlep;
+	OpenDichtKlepV2026: ITF_OpenDichtKlep;
+
+	RegelschuifV2013_AFO: ITF_Regelschuif;
+	RegelschuifV2022_AFO: ITF_Regelschuif;
+	
+	PompP2021: ITF_Pomp;
+	PompP2011: ITF_Pomp;
+
+
+	RegelschuifV2013_DG: ITF_Regelschuif;
+	RegelschuifV2022_DG: ITF_Regelschuif;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[
+	
+KlepV2012 := OpenDichtKlepV2012;
+KlepV2014 := OpenDichtKlepV2014;
+KlepV2021 := OpenDichtKlepV2021;
+KlepV2023 := OpenDichtKlepV2023;
+KlepV2024 := OpenDichtKlepV2024;
+KlepV2025 := OpenDichtKlepV2025;
+KlepV2026 := OpenDichtKlepV2026;
+
+SchuifV2013_AFG := RegelschuifV2013_AFO;
+SchuifV2022_AFG := RegelschuifV2022_AFO;
+SchuifV2013_DG := RegelschuifV2013_DG;
+SchuifV2022_DG := RegelschuifV2022_DG;
+
+pomp2_P2021 := PompP2021;
+pomp1_p2011 := PompP2011;
+]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_Uitmalen">
-      <LineId Id="1" Count="62" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="1" Count="47" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="49" Count="14" />
     </LineIds>
     <LineIds Name="FB_Uitmalen.FB_Init">
       <LineId Id="1" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="21" Count="3" />
+      <LineId Id="30" Count="1" />
+      <LineId Id="25" Count="4" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="32" Count="1" />
     </LineIds>
   </POU>
 </TcPlcObject>
