@@ -38,6 +38,9 @@ VAR
 	V2023 : FB_OpenDichtKlep(tag := 'V2023', DigInClosed := digIn_V2023_1, DigInOpened := digIn_V2023_2, DigOut := digOut_V2023);
 	V2024 : FB_OpenDichtKlep(tag := 'V2024', DigInClosed := digIn_V2024_1, DigInOpened := digIn_V2024_2, DigOut := digOut_V2024);  
 
+	V2022 : FB_Regelschuif_AFO(tag := 'V2022', DigOutOpening := digOutOpeningV2022, DigOutClosing := digOutClosingV2022, AnaInPosition := AnaInV2022);
+	V2013 : FB_Regelschuif_AFO(tag := 'V2013', DigOutOpening := digOutOpeningV2013, DigOutClosing := digOutClosingV2013, AnaInPosition := AnaInV2013);
+
 	V2013_DG : FB_Regelschuif_DG;
 	V2022_DG : FB_Regelschuif_DG;
 	
