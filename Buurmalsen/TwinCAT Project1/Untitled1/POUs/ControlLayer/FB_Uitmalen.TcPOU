@@ -38,56 +38,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[currentmodus := main.Regelingen.BestuurMode;
-IF currentmodus = E_Besturingsmodus.uitmalen THEN	
-CASE stap OF
-	1:
-		main.PompInterfaceP2011.PompGoTo(20);
-		main.PompInterfaceP2021.PompGoTo(20);
-		IF 20 = main.PompInterfaceP2011.ActueelToerental  AND onPomp = main.PompInterfaceP2011.StatePomp AND 20 = main.PompInterfaceP2021.ActueelToerental  AND onPomp = main.PompInterfaceP2021.StatePomp THEN
-			stap := 2;
-		END_IF
-			
-	2:
-		main.RegelschuifInterfaceV2013.RegelschuifGoTo(0);
-		main.RegelschuifInterfaceV2022.RegelschuifGoTo(0);
-		main.OpenDichtKlepInterfaceV2014.OpenDichtKlepClose();
-		main.OpenDichtKlepInterfaceV2021.OpenDichtKlepClose();
-		main.OpenDichtKlepInterfaceV2024.OpenDichtKlepClose();
-		main.OpenDichtKlepInterfaceV2026.OpenDichtKlepClose();
-		IF 0 = main.RegelschuifInterfaceV2013.ActueelPosition  AND standbyRegelschuif = main.RegelschuifInterfaceV2013.StateRegelschuif AND  0 = main.RegelschuifInterfaceV2022.ActueelPosition  AND standbyRegelschuif = main.RegelschuifInterfacVe2022.StateRegelschuif AND closed = main.OpenDichtKlepInterfaceV2014 AND closed = main.OpenDichtKlepInterfaceV2021 AND  closed = main.OpenDichtKlepInterfaceV2024 AND  closed = main.OpenDichtKlepInterfaceV2026 THEN
-			stap := 3;
-		END_IF
-	3:
-		// totaal toerental
-		pompP2011 := main.Regelingen.ToerentalP2011; // get toerental
-		IF pompP2011 >= 386 THEN 
-			pompP2021 := pompP2011 - 385;
-			main.PompInterfaceP2011.PompGoTo(385);// set toerental 11 max
-			main.PompInterfaceP2021.PompGoTo(pompP2021);//Set toerental 21
-		ELSE 
-			pomp2_P2011.ActueelToerental := pompP2011; // set toerenal 11
-			main.PompInterfaceP2011.PompGoTo(pompP2011);
-		END_IF
-		
-		IF optoeren = main.PompInterfaceP2011.StatePomp THEN 
-			main.OpenDichtKlepInterfaceV2012.OpenDichtKlepOpen();
-			IF open = main.OpenDichtKlepInterfaceV2012 THEN
-				main.OpenDichtKlepInterfaceV2012.OpenDichtKlepClose();
-			END_IF
-		END_IF
-		
-		IF optoeren = main.PompInterfaceP2021.StatePomp THEN 
-			main.OpenDichtKlepInterfaceV2021.OpenDichtKlepOpen();
-			main.OpenDichtKlepInterfaceV2024.OpenDichtKlepOpen();
-			IF open = main.OpenDichtKlepInterfaceV2021 AND open = main.OpenDichtKlepInterfaceV2024 THEN
-				main.OpenDichtKlepInterfaceV2021.OpenDichtKlepClose();
-				main.OpenDichtKlepInterfaceV2024.OpenDichtKlepClose();
-			END_IF
-		END_IF
-		
-END_CASE
-END_IF
+      <ST><![CDATA[
 
 
 
@@ -113,9 +64,8 @@ END_IF
 METHOD FB_Init: BOOL
 VAR_INPUT
     bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
-    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
-END_VAR
-VAR
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change) 
+
 	OpenDichtKlepV2012: ITF_OpenDichtKlep;
 	OpenDichtKlepV2014: ITF_OpenDichtKlep;
 	OpenDichtKlepV2021: ITF_OpenDichtKlep;
@@ -132,12 +82,11 @@ VAR
 
 
 	RegelschuifV2013_DG: ITF_Regelschuif;
-	RegelschuifV2022_DG: ITF_Regelschuif;
-END_VAR]]></Declaration>
+	RegelschuifV2022_DG: ITF_Regelschuif;  
+END_VAR
+]]></Declaration>
       <Implementation>
-        <ST><![CDATA[
-	
-KlepV2012 := OpenDichtKlepV2012;
+        <ST><![CDATA[KlepV2012 := OpenDichtKlepV2012;
 KlepV2014 := OpenDichtKlepV2014;
 KlepV2021 := OpenDichtKlepV2021;
 KlepV2023 := OpenDichtKlepV2023;
@@ -156,16 +105,12 @@ pomp1_p2011 := PompP2011;
       </Implementation>
     </Method>
     <LineIds Name="FB_Uitmalen">
-      <LineId Id="69" Count="0" />
-      <LineId Id="65" Count="0" />
-      <LineId Id="1" Count="47" />
+      <LineId Id="48" Count="0" />
       <LineId Id="68" Count="0" />
       <LineId Id="49" Count="14" />
     </LineIds>
     <LineIds Name="FB_Uitmalen.FB_Init">
-      <LineId Id="1" Count="0" />
       <LineId Id="18" Count="0" />
-      <LineId Id="20" Count="0" />
       <LineId Id="34" Count="0" />
       <LineId Id="21" Count="3" />
       <LineId Id="30" Count="1" />
