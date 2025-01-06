@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
   <POU Name="FB_SimulatedDigIn" Id="{387a2786-04b8-428a-9692-51d1a64f4124}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_SimulatedDigIn IMPLEMENTS ITF_DigIn
 VAR
@@ -19,10 +19,10 @@ END_VAR
       </Implementation>
     </Method>
     <LineIds Name="FB_SimulatedDigIn">
-      <LineId Id="9" Count="0" />
+      <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_SimulatedDigIn.get">
-      <LineId Id="5" Count="0" />
+      <LineId Id="1" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
+  <POU Name="FB_simulatedpompdigin" Id="{a4b60bd1-8614-431c-a953-f3fcc946e2f0}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_simulatedpompdigin IMPLEMENTS ITF_pompdigin
+VAR
+	internalState : bool;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="get" Id="{30a0210a-53ae-4199-9024-345a136663b0}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD get : BOOL
+VAR_INPUT
+	state	: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[get := internalState;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_simulatedpompdigin">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_simulatedpompdigin.get">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

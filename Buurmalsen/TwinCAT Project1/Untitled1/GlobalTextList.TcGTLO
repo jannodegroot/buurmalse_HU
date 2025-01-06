@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
   <GlobalTextList Name="GlobalTextList" Id="{752f1e6a-9885-4fc6-a1c3-f188369e1ae0}">
     <XmlArchive>
       <Data>
@@ -76,6 +76,16 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"591"</v>
+              <v n="TextDefault">"Ontluchtingskleppen"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"184"</v>
+              <v n="TextDefault">"Open/Dicht kleppen"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"991"</v>
               <v n="TextDefault">"Position: %s"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -146,6 +156,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"322"</v>
+              <v n="TextDefault">"V2014"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"553"</v>
               <v n="TextDefault">"V2021"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -170,11 +185,21 @@
               <v n="TextDefault">"V2024"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
+            <o>
+              <v n="TextID">"884"</v>
+              <v n="TextDefault">"V2025"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"533"</v>
+              <v n="TextDefault">"V2026"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
           </l>
           <l n="Languages" t="ArrayList" />
-          <v n="GuidInit">{a00452ef-7c22-4ad0-a637-5510733b4ed2}</v>
-          <v n="GuidReInit">{f738308d-18d8-4ec2-9199-4016ab0cc606}</v>
-          <v n="GuidExitX">{22d94ac9-df5a-4063-ae7e-1a6f3d7597ab}</v>
+          <v n="GuidInit">{d04dea2d-98e9-4316-b1ff-d40dd2a6aa70}</v>
+          <v n="GuidReInit">{92f999af-58c9-433d-8249-fe8d53265643}</v>
+          <v n="GuidExitX">{395726de-22db-4fa5-a566-0ef2bbf80cdd}</v>
         </o>
       </Data>
       <TypeList>

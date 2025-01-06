@@ -2,18 +2,212 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
   <POU Name="FB_Inmalen" Id="{96114e51-ad37-44de-ac67-1fd4ce3f2d17}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Inmalen
-VAR_INPUT
-END_VAR
-VAR_OUTPUT
-END_VAR
 VAR
+	CurrentModus : E_Besturingsmodus := E_Besturingsmodus.uitlaten;
+	KlepV2012 : ITF_OpenDichtKlep;
+	KlepV2014 : ITF_OpenDichtKlep;
+	KlepV2021 : ITF_OpenDichtKlep;
+	KlepV2023 : ITF_OpenDichtKlep;
+	KlepV2024 : ITF_OpenDichtKlep;
+	KlepV2025 : ITF_OpenDichtKlep;
+	KlepV2026 : ITF_OpenDichtKlep;
+	
+	SchuifV2013_AFG : ITF_Regelschuif;
+	SchuifV2022_AFG : ITF_Regelschuif;
+	
+	SchuifV2013_DG : ITF_Regelschuif;
+	SchuifV2022_DG : ITF_Regelschuif;
+	
+	pomp2_P2011 : ITF_Pomp;
+	pomp2_P2021 : ITF_Pomp;
+	
+	pompP2011 : INT;
+	pompP2021 : INT;
+	
+	Ontluchtingsklep : BOOL := FALSE;
+	
+	firstround : BOOL := FALSE;
+	
+	timeOut : TON;
+	trigger : R_TRIG;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[//set currentmode to actual mode
+CurrentModus:= main.Regelingen.BestuurMode;
+
+IF (CurrentModus = E_Besturingsmodus.uitlaten) OR (CurrentModus = E_Besturingsmodus.uitmalen) THEN
+	firstround := FALSE;
+END_IF
+
+//flag for setting ontluchtingsklep open or closed
+IF pomp2_P2021.StatePomp = E_PompState.off THEN
+	Ontluchtingsklep := TRUE;
+ELSE 
+	Ontluchtingsklep := FALSE;
+END_IF	
+
+//Start modus inmalen			
+IF CurrentModus = E_Besturingsmodus.inmalen THEN
+	//set position kleppen
+	KlepV2012.close();
+	KlepV2014.close();
+	KlepV2021.Close();
+	KlepV2024.Close();
+	KlepV2025.close();
+	KlepV2026.close();
+	
+	//set position regelschuiven
+	SchuifV2013_AFG.RegelSchuifGoTo(0);
+	SchuifV2013_DG.RegelSchuifGoTo(0);
+	
+	IF (KlepV2012.StateKlep = E_OpenDichtKlepState.closed AND
+		KlepV2021.StateKlep = E_OpenDichtKlepState.closed AND
+		KlepV2024.StateKlep = E_OpenDichtKlepState.closed AND
+		KlepV2025.StateKlep = E_OpenDichtKlepState.closed AND
+		KlepV2026.StateKlep = E_OpenDichtKlepState.closed AND
+		SchuifV2013_AFG.StateRegelSchuif = E_RegelschuifState.standby AND
+		SchuifV2013_DG.StateRegelSchuif = E_RegelschuifState.standby) THEN
+		
+		//set position kleppen and regelschuiven
+		KlepV2023.Open();
+		SchuifV2022_AFG.RegelSchuifGoTo(100);
+		SchuifV2022_DG.RegelSchuifGoTo(100);
+		
+		IF (KlepV2023.StateKlep = E_OpenDichtKlepState.open AND
+			SchuifV2022_AFG.StateRegelSchuif = E_RegelschuifState.standby AND
+			SchuifV2022_DG.StateRegelSchuif = E_RegelschuifState.standby) THEN
+			
+			//Get toerental
+			pompP2011 := main.Regelingen.ToerentalP2011;
+			pompP2021 := main.Regelingen.ToerentalP2021;
+			
+			//Set pomp on or off with toerental from regelingen
+			pomp2_P2011.PompGoTo(pompP2011);
+			pomp2_P2021.PompGoTo(pompP2021);
+			
+			//Ontluchtingsklep open and after 10 seconds closed only when 	
+			IF Ontluchtingsklep = TRUE AND firstRound = FALSE THEN
+				firstround := TRUE;
+				KlepV2025.open();
+			END_IF
+	
+			timeOut(IN := KlepV2025.StateKlep = E_OpenDichtKlepState.open, PT := T#10S);
+			trigger(CLK := (timeOut.Q));
+			
+			IF trigger.Q THEN
+				KlepV2025.close();
+			END_IF
+		END_IF	
+	END_IF	
+END_IF]]></ST>
     </Implementation>
+    <Method Name="FB_init" Id="{292cdf7f-9fce-4ac5-8a23-a71cd6cbd45e}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	OpenDichtKlepV2012 : ITF_OpenDichtKlep; 
+	OpenDichtKlepV2014 : ITF_OpenDichtKlep; 
+	OpenDichtKlepV2021 : ITF_OpenDichtKlep; 
+	OpenDichtKlepV2023 : ITF_OpenDichtKlep; 
+	OpenDichtKlepV2024 : ITF_OpenDichtKlep;
+	OpenDichtKlepV2025 : ITF_OpenDichtKlep; 
+	OpenDichtKlepV2026 : ITF_OpenDichtKlep;  
+	
+	RegelschuifV2013_AFO : ITF_Regelschuif; 
+	RegelschuifV2022_AFO : ITF_Regelschuif;
+	
+	RegelschuifV2013_DG : ITF_Regelschuif;
+	RegelschuifV2022_DG : ITF_Regelschuif;
+	
+	PompP2011 : ITF_Pomp;
+	PompP2021 : ITF_Pomp;
+	
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[KlepV2012 := OpenDichtKlepV2012;
+KlepV2014 := OpenDichtKlepV2014;
+KlepV2021 := OpenDichtKlepV2021;
+KlepV2023 := OpenDichtKlepV2023;
+KlepV2024 := OpenDichtKlepV2024;
+KlepV2025 := OpenDichtKlepV2025;
+KlepV2026 := OpenDichtKlepV2026;
+
+SchuifV2013_AFG := RegelschuifV2013_AFO;
+SchuifV2022_AFG := RegelschuifV2022_AFO;
+SchuifV2013_DG := RegelschuifV2013_DG;
+SchuifV2022_DG := RegelschuifV2022_DG;
+
+pomp2_P2011 := PompP2011;
+pomp2_P2021 := PompP2021;
+
+]]></ST>
+      </Implementation>
+    </Method>
     <LineIds Name="FB_Inmalen">
+      <LineId Id="104" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="117" Count="0" />
+      <LineId Id="116" Count="0" />
+      <LineId Id="118" Count="1" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="98" Count="4" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="110" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="67" Count="1" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="114" Count="0" />
+      <LineId Id="11" Count="1" />
+      <LineId Id="29" Count="1" />
+      <LineId Id="62" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="120" Count="1" />
+      <LineId Id="36" Count="2" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="45" Count="1" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="47" Count="2" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="54" Count="1" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="88" Count="0" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="115" Count="0" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="76" Count="2" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Inmalen.FB_init">
       <LineId Id="1" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="2" Count="2" />
+      <LineId Id="17" Count="1" />
+      <LineId Id="5" Count="4" />
+      <LineId Id="11" Count="1" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="13" Count="1" />
     </LineIds>
   </POU>
 </TcPlcObject>
