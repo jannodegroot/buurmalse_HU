@@ -23,7 +23,6 @@ END_VAR
 		main.PompInterfaceP2011.PompGoTo(20);
 		main.PompInterfaceP2021.PompGoTo(20);
 		IF 20 = main.PompInterfaceP2011.ActueelToerental  AND onPomp = main.PompInterfaceP2011.StatePomp AND 20 = main.PompInterfaceP2021.ActueelToerental  AND onPomp = main.PompInterfaceP2021.StatePomp THEN
-			IF  THEN
 			stap := 2;
 		END_IF
 			
@@ -42,10 +41,8 @@ END_VAR
 		pompP2011 := main.Regelingen.ToerentalP2011; // get toerental
 		IF pompP2011 >= 386 THEN 
 			pompP2021 := pompP2011 - 385;
-			pomp2_P2011.ActueelToerental := 385; // set toerental 11 max
-			main.PompInterfaceP2011.PompGoTo(385);
-			pomp2_P2021.ActueelToerental := pompP2021; 	//Set toerental 21
-			main.PompInterfaceP2021.PompGoTo(pompP2021);
+			main.PompInterfaceP2011.PompGoTo(385);// set toerental 11 max
+			main.PompInterfaceP2021.PompGoTo(pompP2021);//Set toerental 21
 		ELSE 
 			pomp2_P2011.ActueelToerental := pompP2011; // set toerenal 11
 			main.PompInterfaceP2011.PompGoTo(pompP2011);
@@ -67,7 +64,16 @@ END_VAR
 			END_IF
 		END_IF
 		
-END_CASE;
+END_CASE
+
+
+
+
+
+
+
+
+
 
 
 
@@ -83,7 +89,48 @@ END_IF
 main.ITFv2012.close();]]></ST>
     </Implementation>
     <LineIds Name="FB_Uitmalen">
-      <LineId Id="1" Count="62" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="40" Count="1" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="44" Count="4" />
+      <LineId Id="55" Count="1" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="68" Count="2" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="73" Count="1" />
+      <LineId Id="93" Count="0" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="80" Count="2" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="85" Count="1" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="87" Count="1" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="89" Count="0" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="9" Count="15" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="3" Count="2" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="6" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
