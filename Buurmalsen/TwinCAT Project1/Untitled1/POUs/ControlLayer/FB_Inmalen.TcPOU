@@ -63,10 +63,7 @@ IF CurrentModus = E_Besturingsmodus.inmalen THEN
 			pompP2021 := main.Regelingen.ToerentalP2021;
 			
 			//Set toerental
-			pomp2_P2021.ActueelToerental := pompP2021;
-			
-			//set position
-			pomp2_P2021.PompGoTo(pomp2_P2021.ActueelToerental);
+			pomp2_P2021.PompGoTo(pompP2021);
 		END_IF	
 	END_IF	
 END_IF]]></ST>
@@ -129,7 +126,8 @@ pomp2_P2021 := PompP2021;
       <LineId Id="51" Count="0" />
       <LineId Id="53" Count="0" />
       <LineId Id="52" Count="0" />
-      <LineId Id="54" Count="5" />
+      <LineId Id="54" Count="1" />
+      <LineId Id="59" Count="0" />
       <LineId Id="50" Count="0" />
       <LineId Id="32" Count="0" />
       <LineId Id="4" Count="0" />
