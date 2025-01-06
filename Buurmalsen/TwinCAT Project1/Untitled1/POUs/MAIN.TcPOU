@@ -25,7 +25,6 @@ VAR
 	digIn_V2024_1 : FB_SimulatedDigIn;
 	digIn_V2024_2 : FB_SimulatedDigIn;
 	digOut_V2024 : FB_SimulatedDigOut;
-	// Einde digin digout van appeltjes
 	
 	digIn_V2025_1 : FB_SimulatedDigIn;
 	digIn_V2025_2 : FB_SimulatedDigIn;
@@ -34,6 +33,7 @@ VAR
 	digIn_V2026_1 : FB_SimulatedDigIn;
 	digIn_V2026_2 : FB_SimulatedDigIn;
 	digOut_V2026 : FB_SimulatedDigOut;
+	// Einde digin digout van appeltjes
 	
 	// Start digin digout van AFO
 	digOutOpeningV2013 : FB_SimulatedDigOutOpen_AFO;
@@ -82,6 +82,7 @@ VAR
 								   RegelschuifV2022_AFO := V2022_AFO,
 								   RegelschuifV2013_DG := V2013_DG,
 								   RegelschuifV2022_DG := V2022_DG,
+								   PompP2011 := P2011,
 								   PompP2021 := P2021 );
 								   
 	ControllerUitmalen : FB_Uitmalen(OpenDichtKlepV2012 := V2012,
@@ -136,30 +137,7 @@ ControllerInmalen ();
 ControllerUitmalen ();]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="165" Count="0" />
-      <LineId Id="69" Count="2" />
-      <LineId Id="158" Count="0" />
-      <LineId Id="123" Count="1" />
-      <LineId Id="122" Count="0" />
-      <LineId Id="159" Count="0" />
-      <LineId Id="150" Count="1" />
-      <LineId Id="149" Count="0" />
-      <LineId Id="160" Count="0" />
-      <LineId Id="153" Count="1" />
-      <LineId Id="152" Count="0" />
-      <LineId Id="157" Count="0" />
-      <LineId Id="75" Count="0" />
-      <LineId Id="167" Count="0" />
-      <LineId Id="125" Count="0" />
-      <LineId Id="155" Count="1" />
-      <LineId Id="168" Count="1" />
-      <LineId Id="163" Count="0" />
-      <LineId Id="170" Count="0" />
-      <LineId Id="162" Count="0" />
-      <LineId Id="171" Count="1" />
-      <LineId Id="161" Count="0" />
-      <LineId Id="2" Count="0" />
-      <LineId Id="166" Count="0" />
+      <LineId Id="1" Count="31" />
     </LineIds>
   </POU>
 </TcPlcObject>
