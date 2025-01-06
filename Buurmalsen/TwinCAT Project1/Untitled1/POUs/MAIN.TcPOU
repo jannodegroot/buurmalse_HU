@@ -58,28 +58,12 @@ V2024();
     PompInterfaceP2021 := P2021;
 	P2011();
 	P2021();
-	p2011.PompGoTo(90);
+	p2011.PompGoTo(90); //test
 
 //nick was hier]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="69" Count="2" />
-      <LineId Id="158" Count="0" />
-      <LineId Id="123" Count="1" />
-      <LineId Id="122" Count="0" />
-      <LineId Id="159" Count="0" />
-      <LineId Id="150" Count="1" />
-      <LineId Id="149" Count="0" />
-      <LineId Id="160" Count="0" />
-      <LineId Id="153" Count="1" />
-      <LineId Id="152" Count="0" />
-      <LineId Id="157" Count="0" />
-      <LineId Id="75" Count="0" />
-      <LineId Id="125" Count="0" />
-      <LineId Id="155" Count="1" />
-      <LineId Id="163" Count="5" />
-      <LineId Id="162" Count="0" />
-      <LineId Id="161" Count="0" />
+      <LineId Id="1" Count="27" />
     </LineIds>
   </POU>
 </TcPlcObject>
