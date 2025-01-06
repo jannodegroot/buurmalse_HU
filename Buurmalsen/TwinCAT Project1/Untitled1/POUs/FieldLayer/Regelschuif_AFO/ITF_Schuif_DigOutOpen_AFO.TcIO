@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
+  <Itf Name="ITF_Schuif_DigOutOpen_AFO" Id="{54c54e13-a755-4a5f-809c-de1feb8e1e8a}">
+    <Declaration><![CDATA[INTERFACE ITF_Schuif_DigOutOpen_AFO
+]]></Declaration>
+    <Method Name="set" Id="{3e24cccd-bdea-48e9-8ad2-444d2cb582b4}">
+      <Declaration><![CDATA[METHOD set : BOOL
+VAR_INPUT
+	state : BOOL;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

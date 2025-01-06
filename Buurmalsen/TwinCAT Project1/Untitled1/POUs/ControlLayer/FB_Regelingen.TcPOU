@@ -3,10 +3,13 @@
   <POU Name="FB_Regelingen" Id="{10454be2-17f1-45a6-927c-6671ec7f7806}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Regelingen
 VAR_INPUT
+	
 END_VAR
 VAR_OUTPUT
+	
 END_VAR
 VAR
+	
 END_VAR
 ]]></Declaration>
     <Implementation>

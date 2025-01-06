@@ -15,6 +15,7 @@
     <Method Name="RegelSchuifGoTo" Id="{99e424e3-8256-42ae-9d72-9807e7acbee4}">
       <Declaration><![CDATA[METHOD RegelSchuifGoTo : SINT
 VAR_INPUT
+	regelschuifdoel : SINT;
 END_VAR
 ]]></Declaration>
     </Method>
