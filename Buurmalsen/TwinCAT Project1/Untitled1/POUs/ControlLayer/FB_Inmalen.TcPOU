@@ -64,7 +64,7 @@ END_VAR
 			pomp2_P2021.ActueelToerental := pompP2021;
 			
 			//set position
-			pomp2_P2021.PompGoTo();
+			pomp2_P2021.PompGoTo(pomp2_P2021.ActueelToerental);
 		END_IF	
 	END_IF	
 END_IF]]></ST>
