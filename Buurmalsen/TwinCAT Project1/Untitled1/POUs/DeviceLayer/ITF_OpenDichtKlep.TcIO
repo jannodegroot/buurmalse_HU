@@ -9,6 +9,12 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
+    <Method Name="Open" Id="{4fc3a83e-a820-4ba7-b24c-f0b2e4be8d0f}">
+      <Declaration><![CDATA[METHOD Open : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
     <Property Name="StateKlep" Id="{e35b7089-a5c0-4392-a7c9-cc70b7f96d40}">
       <Declaration><![CDATA[PROPERTY StateKlep : E_OpenDichtKlepState]]></Declaration>
       <Get Name="Get" Id="{5dbe4bca-7b52-45a6-b547-28d1eb1a3b38}">

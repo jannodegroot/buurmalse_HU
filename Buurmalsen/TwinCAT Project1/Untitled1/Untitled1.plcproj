@@ -32,6 +32,9 @@
     <Compile Include="DUTs\E_Besturingsmodus.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FB_AlarmHandler.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GlobalTextList.TcGTLO">
       <SubType>Code</SubType>
     </Compile>
@@ -71,19 +74,19 @@
     <Compile Include="POUs\DeviceLayer\ITF_Pomp.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FieldLayer\FB_AlarmHandler.TcPOU">
+    <Compile Include="POUs\FB_AlarmHandler.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FieldLayer\FB_SimulatedDigIn.TcPOU">
+    <Compile Include="POUs\FieldLayer\OpenDichtKlep\FB_SimulatedDigIn.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FieldLayer\FB_SimulatedDigOut.TcPOU">
+    <Compile Include="POUs\FieldLayer\OpenDichtKlep\FB_SimulatedDigOut.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FieldLayer\ITF_DigIn.TcIO">
+    <Compile Include="POUs\FieldLayer\OpenDichtKlep\ITF_DigIn.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FieldLayer\ITF_DigOut.TcIO">
+    <Compile Include="POUs\FieldLayer\OpenDichtKlep\ITF_DigOut.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FieldLayer\Pomp\FB_simulatedpompdigin.TcPOU">
@@ -139,6 +142,7 @@
     <Folder Include="POUs\ControlLayer" />
     <Folder Include="POUs\DeviceLayer" />
     <Folder Include="POUs\FieldLayer" />
+    <Folder Include="POUs\FieldLayer\OpenDichtKlep" />
     <Folder Include="POUs\FieldLayer\Pomp" />
     <Folder Include="POUs\FieldLayer\Regelschuif_AFO" />
     <Folder Include="VISUs" />

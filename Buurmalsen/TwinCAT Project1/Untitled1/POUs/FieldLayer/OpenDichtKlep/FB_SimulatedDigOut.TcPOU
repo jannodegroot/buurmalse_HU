@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
   <POU Name="FB_SimulatedDigOut" Id="{e7465166-7df2-484b-8c65-5063e075f75b}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_SimulatedDigOut IMPLEMENTS ITF_DigOut
 VAR
@@ -20,10 +20,10 @@ END_VAR
       </Implementation>
     </Method>
     <LineIds Name="FB_SimulatedDigOut">
-      <LineId Id="9" Count="0" />
+      <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_SimulatedDigOut.set">
-      <LineId Id="4" Count="0" />
+      <LineId Id="1" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
