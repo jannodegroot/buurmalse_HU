@@ -39,28 +39,28 @@ END_IF
 
 //outputs pomp
 ActueelToerental:=InternalToerental;
-outputtoerental:=ActueelToerental;
+outputtoerental.set(InternalToerental);
 IF InternalToerental = 0 AND globaaldoeltoerental=0 THEN
-	outputpompon.set:=FALSE;
+	outputpompon.set(FALSE);
 ELSIF globaaldoeltoerental>0 THEN
-	outputpompon.set:=TRUE;
+	outputpompon.set(TRUE);
 END_IF
 
 //inputs errorcheck
-timerpomperror(in:=(NOT inputpompon.get AND(globaaldoeltoerental>0 AND ActueelToerental>0)) OR(inputpompon.get AND ((InternalToerental = 0 AND globaaldoeltoerental=0) OR ActueelToerental=0)), PT:=timerpomperrortijd);
+timerpomperror(in:=(inputpompon.get(FALSE) AND(globaaldoeltoerental>0 AND ActueelToerental>0)) OR(inputpompon.get(TRUE) AND ((InternalToerental = 0 AND globaaldoeltoerental=0) OR ActueelToerental=0)), PT:=timerpomperrortijd);
 IF timerpomperror.Q THEN
 	InternalState := E_PompState.error;
 END_IF
 
 //status pomp
 IF (NOT timerpomperror.Q) THEN
-	IF  inputpompon.get = FALSE AND ActueelToerental=0 THEN
+	IF  inputpompon.get(FALSE) AND ActueelToerental=0 THEN
 		InternalState := E_pompstate.off;
-	ELSIF inputpompon.get = TRUE AND ActueelToerental<globaaldoeltoerental THEN
+	ELSIF inputpompon.get(TRUE) AND ActueelToerental<globaaldoeltoerental THEN
 		InternalState := E_pompstate.optoeren;
-	ELSIF inputpompon.get = TRUE AND ActueelToerental>globaaldoeltoerental THEN
+	ELSIF inputpompon.get(TRUE) AND ActueelToerental>globaaldoeltoerental THEN
 		InternalState := E_pompstate.aftoeren;
-	ELSIF inputpompon.get = TRUE AND ActueelToerental=globaaldoeltoerental THEN
+	ELSIF inputpompon.get(TRUE) AND ActueelToerental=globaaldoeltoerental THEN
 		InternalState := E_pompstate.on;
 	END_IF
 END_IF]]></ST>

@@ -48,6 +48,9 @@ END_VAR
     </Method>
     <Method Name="RegelschuifGoTo" Id="{a4a1d9ca-2482-46aa-ba66-9fb460cea5bb}" FolderPath="Methods\">
       <Declaration><![CDATA[METHOD RegelSchuifGoTo : SINT
+VAR_INPUT
+	regelschuifdoel:sint;
+END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[]]></ST>

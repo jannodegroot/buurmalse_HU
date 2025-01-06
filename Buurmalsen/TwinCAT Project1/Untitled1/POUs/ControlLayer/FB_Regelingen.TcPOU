@@ -99,7 +99,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[ToerentalP2011 := internalToerentalP2022;]]></ST>
+          <ST><![CDATA[ToerentalP2011 := internalToerentalP2021;]]></ST>
         </Implementation>
       </Get>
       <Set Name="Set" Id="{810193cf-b8f4-44af-854a-e5e0ee173417}">
