@@ -46,6 +46,17 @@ VAR
 								   RegelschuifV2013_DG := V2013_DG,
 								   RegelschuifV2022_DG := V2022_DG,
 								   PompP2021 := P2021 );
+								   
+	digOutOpeningV2013 : FB_SimulatedDigOutOpen_AFO;
+	digOutClosingV2013 :FB_SimulatedDigOutClose_AFO;
+	AnaInV2013 : FB_SimulatedAnaIn_AFO;
+	V2013 : FB_Regelschuif_AFO(tag := 'V2013', DigOutOpening := digOutOpeningV2013, DigOutClosing := digOutClosingV2013, AnaInPosition := AnaInV2013);
+	digOutOpeningV2022 : FB_SimulatedDigOutOpen_AFO;
+	digOutClosingV2022 :FB_SimulatedDigOutClose_AFO;
+	AnaInV2022 : FB_SimulatedAnaIn_AFO;
+	V2022 : FB_Regelschuif_AFO(tag := 'V2022', DigOutOpening := digOutOpeningV2022, DigOutClosing := digOutClosingV2022, AnaInPosition := AnaInV2022);
+
+								   
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -93,8 +104,6 @@ ControllerInmalen ();
       <LineId Id="163" Count="0" />
       <LineId Id="162" Count="0" />
       <LineId Id="161" Count="0" />
-      <LineId Id="2" Count="0" />
-      <LineId Id="166" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
