@@ -12,6 +12,12 @@
         <Declaration><![CDATA[]]></Declaration>
       </Set>
     </Property>
+    <Method Name="Open" Id="{296b4c6c-e3a0-49b2-9950-040b11a920d2}">
+      <Declaration><![CDATA[METHOD Open : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
     <Method Name="PompGoTo" Id="{79f0a90a-1cff-424f-80fb-af47f655734a}">
       <Declaration><![CDATA[METHOD PompGoTo : INT
 VAR_INPUT
