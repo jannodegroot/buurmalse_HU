@@ -2,13 +2,8 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
   <POU Name="FB_Inmalen" Id="{96114e51-ad37-44de-ac67-1fd4ce3f2d17}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Inmalen
-VAR_INPUT
-
-END_VAR
-VAR_OUTPUT
-END_VAR
 VAR
-		CurrentModus : E_Besturingsmodus := E_Besturingsmodus.uitlaten;
+	CurrentModus : E_Besturingsmodus := E_Besturingsmodus.uitlaten;
 	KlepV2012 : ITF_OpenDichtKlep;
 	KlepV2021 : ITF_OpenDichtKlep;
 	KlepV2023 : ITF_OpenDichtKlep;
@@ -20,8 +15,10 @@ VAR
 	SchuifV2013_DG : ITF_Regelschuif;
 	SchuifV2022_DG : ITF_Regelschuif;
 	
+	pomp2_P2011 : ITF_Pomp;
 	pomp2_P2021 : ITF_Pomp;
 	
+	pompP2011 : INT;
 	pompP2021 : INT;
 END_VAR
 ]]></Declaration>
@@ -60,9 +57,11 @@ IF CurrentModus = E_Besturingsmodus.inmalen THEN
 			SchuifV2022_DG.StateRegelSchuif = E_RegelschuifState.standby) THEN
 			
 			//Get toerental
+			pompP2011 := main.Regelingen.ToerentalP2011;
 			pompP2021 := main.Regelingen.ToerentalP2021;
 			
 			//Set toerental
+			pomp2_P2011.PompGoTo(pompP2011);
 			pomp2_P2021.PompGoTo(pompP2021);
 		END_IF	
 	END_IF	
@@ -84,6 +83,7 @@ VAR_INPUT
 	RegelschuifV2013_DG : ITF_Regelschuif;
 	RegelschuifV2022_DG : ITF_Regelschuif;
 	
+	PompP2011 : ITF_Pomp;
 	PompP2021 : ITF_Pomp;
 	
 END_VAR
@@ -99,6 +99,7 @@ SchuifV2022_AFG := RegelschuifV2013_AFO;
 SchuifV2013_DG := RegelschuifV2013_AFO;
 SchuifV2022_DG := RegelschuifV2013_AFO;
 
+pomp2_P2011 := PompP2011;
 pomp2_P2021 := PompP2021;
 
 ]]></ST>
@@ -125,16 +126,20 @@ pomp2_P2021 := PompP2021;
       <LineId Id="47" Count="2" />
       <LineId Id="51" Count="0" />
       <LineId Id="53" Count="0" />
+      <LineId Id="64" Count="0" />
       <LineId Id="52" Count="0" />
       <LineId Id="54" Count="1" />
       <LineId Id="59" Count="0" />
+      <LineId Id="65" Count="0" />
       <LineId Id="50" Count="0" />
       <LineId Id="32" Count="0" />
       <LineId Id="4" Count="0" />
     </LineIds>
     <LineIds Name="FB_Inmalen.FB_init">
       <LineId Id="1" Count="8" />
-      <LineId Id="11" Count="3" />
+      <LineId Id="11" Count="1" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="13" Count="1" />
     </LineIds>
   </POU>
 </TcPlcObject>
