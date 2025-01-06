@@ -57,8 +57,33 @@ VAR
     PolderpeilError : REAL;       (* Foutwaarde van polderpeilregeling *)
 END_VAR
 
-(* Methode om de regeling te activeren *)
-METHOD StartRegeling : VOID
+
+(* Gegevens doorsturen naar de subfunctieblokken *)
+Uitlaten.PompStatus := Pomp1;
+Uitmalen.PompStatus := Pomp2;
+END_METHOD
+]]></ST>
+    </Implementation>
+    <Method Name="Excute" Id="{63571029-8e9a-4487-8846-7eb1ac19ffd7}">
+      <Declaration><![CDATA[METHOD Excute : VOID
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF BestuurMode = 1 THEN
+    StartRegeling();  (* Start automatische regeling als de modus actief is *)
+ELSE
+    StopRegeling();   (* Zet de regeling uit in handmatige modus *)
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StartRegeling" Id="{b46af18e-9800-4f78-8701-c2159a7865ad}">
+      <Declaration><![CDATA[METHOD StartRegeling : VOID
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[(* Methode om de regeling te activeren *)
 CASE BestuurMode OF
     0:  (* Handmatige modus *)
         ModeStatus := 'Handmatig';
@@ -98,33 +123,38 @@ CASE BestuurMode OF
         ModeStatus := 'Onbekend';
         Pomp1 := 0;
         Pomp2 := 0;
-END_CASE
-END_METHOD
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StopRegeling" Id="{f9e49943-4756-4a73-b531-44f685a43df0}">
+      <Declaration><![CDATA[METHOD StopRegeling : BOOL
+VAR_INPUT
+END_VAR
 
-(* Methode om de regeling te stoppen *)
-METHOD StopRegeling : VOID
+
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[(* Methode om de regeling te stoppen *)
 ModeStatus := 'Gestopt';
 Pomp1 := 0;       (* Zet beide pompen uit *)
 Pomp2 := 0;
-END_METHOD
-
-(* Hoofdlogica *)
-METHOD Execute : VOID
-IF BestuurMode = 1 THEN
-    StartRegeling();  (* Start automatische regeling als de modus actief is *)
-ELSE
-    StopRegeling();   (* Zet de regeling uit in handmatige modus *)
-END_IF
-
-(* Gegevens doorsturen naar de subfunctieblokken *)
-Uitlaten.PompStatus := Pomp1;
-Uitmalen.PompStatus := Pomp2;
-END_METHOD
 ]]></ST>
-    </Implementation>
+      </Implementation>
+    </Method>
     <LineIds Name="FB_Regelingen">
-      <LineId Id="443" Count="87" />
+      <LineId Id="443" Count="23" />
+      <LineId Id="519" Count="0" />
+      <LineId Id="526" Count="4" />
       <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Regelingen.Excute">
+      <LineId Id="1" Count="4" />
+    </LineIds>
+    <LineIds Name="FB_Regelingen.StartRegeling">
+      <LineId Id="1" Count="40" />
+    </LineIds>
+    <LineIds Name="FB_Regelingen.StopRegeling">
+      <LineId Id="1" Count="4" />
     </LineIds>
   </POU>
 </TcPlcObject>
