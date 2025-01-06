@@ -63,7 +63,11 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//start functions appeltjes
+      <ST><![CDATA[//Start function regelingen AFO
+Regelingen ();
+//End function regelingen AFO
+
+//start functions kleppen appeltjes
 digIn_V2012_1();
 digIn_V2012_2();
 digOut_V2012();
@@ -84,11 +88,17 @@ V2012();
 V2021();
 V2023();
 V2024();
+//End  function kleppen appeltjes
 
-Regelingen ();
-ControllerInmalen ();]]></ST>
+//Start function inmalen appeltjes
+ControllerInmalen ();
+//End function inmalen appeltjes]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
+      <LineId Id="166" Count="0" />
+      <LineId Id="164" Count="0" />
+      <LineId Id="167" Count="0" />
+      <LineId Id="165" Count="0" />
       <LineId Id="69" Count="2" />
       <LineId Id="158" Count="0" />
       <LineId Id="123" Count="1" />
@@ -104,9 +114,11 @@ ControllerInmalen ();]]></ST>
       <LineId Id="125" Count="0" />
       <LineId Id="155" Count="1" />
       <LineId Id="163" Count="0" />
+      <LineId Id="168" Count="0" />
       <LineId Id="162" Count="0" />
       <LineId Id="161" Count="0" />
       <LineId Id="2" Count="0" />
+      <LineId Id="169" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
