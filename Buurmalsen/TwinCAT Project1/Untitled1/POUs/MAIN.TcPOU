@@ -4,7 +4,8 @@
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
 	alarms  : FB_AlarmHandler;
-
+	
+	// Start digin digout van appeltjes
 	digIn_V2012_1 : FB_SimulatedDigIn;
 	digIn_V2012_2 : FB_SimulatedDigIn;
 	digOut_V2012 : FB_SimulatedDigOut;
@@ -20,6 +21,17 @@ VAR
 	digIn_V2024_1 : FB_SimulatedDigIn;
 	digIn_V2024_2 : FB_SimulatedDigIn;
 	digOut_V2024 : FB_SimulatedDigOut;
+	// Einde digin digout van appeltjes
+	
+	// Start digin digout van AFO
+	digOutOpeningV2013 : FB_SimulatedDigOutOpen_AFO;
+	digOutClosingV2013 :FB_SimulatedDigOutClose_AFO;
+	AnaInV2013 : FB_SimulatedAnaIn_AFO;
+	
+	digOutOpeningV2022 : FB_SimulatedDigOutOpen_AFO;
+	digOutClosingV2022 :FB_SimulatedDigOutClose_AFO;
+	AnaInV2022 : FB_SimulatedAnaIn_AFO;
+	// Einde digin digout van AFO
 
 	V2012 : FB_OpenDichtKlep(tag := 'V2012', DigInClosed := digIn_V2012_1, DigInOpened := digIn_V2012_2, DigOut := digOut_V2012);
 	V2021 : FB_OpenDichtKlep(tag := 'V2021', DigInClosed := digIn_V2021_1, DigInOpened := digIn_V2021_2, DigOut := digOut_V2021);
@@ -46,10 +58,13 @@ VAR
 								   RegelschuifV2013_DG := V2013_DG,
 								   RegelschuifV2022_DG := V2022_DG,
 								   PompP2021 := P2021 );
+								   
+									   
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[digIn_V2012_1();
+      <ST><![CDATA[//start functions appeltjes
+digIn_V2012_1();
 digIn_V2012_2();
 digOut_V2012();
 
@@ -91,6 +106,7 @@ ControllerInmalen ();]]></ST>
       <LineId Id="163" Count="0" />
       <LineId Id="162" Count="0" />
       <LineId Id="161" Count="0" />
+      <LineId Id="2" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
