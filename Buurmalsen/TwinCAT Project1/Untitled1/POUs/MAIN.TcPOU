@@ -26,8 +26,8 @@ VAR
 	V2023 : FB_OpenDichtKlep(tag := 'V2023', DigInClosed := digIn_V2023_1, DigInOpened := digIn_V2023_2, DigOut := digOut_V2023);
 	V2024 : FB_OpenDichtKlep(tag := 'V2024', DigInClosed := digIn_V2024_1, DigInOpened := digIn_V2024_2, DigOut := digOut_V2024);  
 	
-	V2013_AFO : FB_Regelschuif_AFO;
-	V2022_AFO : FB_Regelschuif_AFO;
+	V2013_AFO : FB_Regelschuif_AFO ();
+	V2022_AFO : FB_Regelschuif_AFO ();
 	
 	V2013_DG : FB_Regelschuif_DG;
 	V2022_DG : FB_Regelschuif_DG;
@@ -72,7 +72,8 @@ V2023();
 V2024();
 
 Regelingen ();
-ControllerInmalen ();]]></ST>
+ControllerInmalen ();
+]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="69" Count="2" />
@@ -92,6 +93,8 @@ ControllerInmalen ();]]></ST>
       <LineId Id="163" Count="0" />
       <LineId Id="162" Count="0" />
       <LineId Id="161" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="166" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
