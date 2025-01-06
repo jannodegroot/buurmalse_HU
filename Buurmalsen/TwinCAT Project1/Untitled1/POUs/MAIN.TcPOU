@@ -38,8 +38,8 @@ VAR
 	V2023 : FB_OpenDichtKlep(tag := 'V2023', DigInClosed := digIn_V2023_1, DigInOpened := digIn_V2023_2, DigOut := digOut_V2023);
 	V2024 : FB_OpenDichtKlep(tag := 'V2024', DigInClosed := digIn_V2024_1, DigInOpened := digIn_V2024_2, DigOut := digOut_V2024);  
 	
-	V2013 : FB_Regelschuif_AFO(tag := 'V2013', DigOutOpening := digOutOpeningV2013, DigOutClosing := digOutClosingV2013, AnaInPosition := AnaInV2013)
-	V2022 : FB_Regelschuif_AFO(tag := 'V2022', DigOutOpening := digOutOpeningV2022, DigOutClosing := digOutClosingV2022, AnaInPosition := AnaInV2022);
+	V2013_AFO : FB_Regelschuif_AFO;
+	V2022_AFO : FB_Regelschuif_AFO;
 	
 	V2013_DG : FB_Regelschuif_DG;
 	V2022_DG : FB_Regelschuif_DG;
@@ -63,7 +63,11 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//start functions appeltjes
+      <ST><![CDATA[//Start function regelingen AFO
+Regelingen ();
+//End function regelingen AFO
+
+//start functions kleppen appeltjes
 digIn_V2012_1();
 digIn_V2012_2();
 digOut_V2012();
@@ -84,23 +88,37 @@ V2012();
 V2021();
 V2023();
 V2024();
+//End  function kleppen appeltjes
 
-Regelingen ();
+//Start function inmalen appeltjes
 ControllerInmalen ();
-
-//AFO
-digOutOpeningV2013();
-digOutClosingV2013();
-AnaInV2013();
-V2013();
-V2013.RegelSchuifGoTo(20);
-digOutOpeningV2022();
-digOutClosingV2022();
-AnaInV2022();
-V2022();]]></ST>
+//End function inmalen appeltjes]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="1" Count="34" />
+      <LineId Id="166" Count="0" />
+      <LineId Id="164" Count="0" />
+      <LineId Id="167" Count="0" />
+      <LineId Id="165" Count="0" />
+      <LineId Id="69" Count="2" />
+      <LineId Id="158" Count="0" />
+      <LineId Id="123" Count="1" />
+      <LineId Id="122" Count="0" />
+      <LineId Id="159" Count="0" />
+      <LineId Id="150" Count="1" />
+      <LineId Id="149" Count="0" />
+      <LineId Id="160" Count="0" />
+      <LineId Id="153" Count="1" />
+      <LineId Id="152" Count="0" />
+      <LineId Id="157" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="125" Count="0" />
+      <LineId Id="155" Count="1" />
+      <LineId Id="163" Count="0" />
+      <LineId Id="168" Count="0" />
+      <LineId Id="162" Count="0" />
+      <LineId Id="161" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="169" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
