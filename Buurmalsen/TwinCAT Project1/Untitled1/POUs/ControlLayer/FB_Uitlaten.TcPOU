@@ -3,6 +3,7 @@
   <POU Name="FB_Uitlaten" Id="{a1b74111-7dea-4521-89a1-4c1341f39b91}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Uitlaten
 VAR_INPUT
+	PompStatus: INT;
 END_VAR
 VAR_OUTPUT
 END_VAR
