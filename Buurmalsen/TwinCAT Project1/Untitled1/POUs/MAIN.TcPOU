@@ -4,7 +4,8 @@
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
 	alarms  : FB_AlarmHandler;
-
+	
+	// Start digin digout van appeltjes
 	digIn_V2012_1 : FB_SimulatedDigIn;
 	digIn_V2012_2 : FB_SimulatedDigIn;
 	digOut_V2012 : FB_SimulatedDigOut;
@@ -20,14 +21,25 @@ VAR
 	digIn_V2024_1 : FB_SimulatedDigIn;
 	digIn_V2024_2 : FB_SimulatedDigIn;
 	digOut_V2024 : FB_SimulatedDigOut;
+	// Einde digin digout van appeltjes
+	
+	// Start digin digout van AFO
+	digOutOpeningV2013 : FB_SimulatedDigOutOpen_AFO;
+	digOutClosingV2013 :FB_SimulatedDigOutClose_AFO;
+	AnaInV2013 : FB_SimulatedAnaIn_AFO;
+	
+	digOutOpeningV2022 : FB_SimulatedDigOutOpen_AFO;
+	digOutClosingV2022 :FB_SimulatedDigOutClose_AFO;
+	AnaInV2022 : FB_SimulatedAnaIn_AFO;
+	// Einde digin digout van AFO
 
 	V2012 : FB_OpenDichtKlep(tag := 'V2012', DigInClosed := digIn_V2012_1, DigInOpened := digIn_V2012_2, DigOut := digOut_V2012);
 	V2021 : FB_OpenDichtKlep(tag := 'V2021', DigInClosed := digIn_V2021_1, DigInOpened := digIn_V2021_2, DigOut := digOut_V2021);
 	V2023 : FB_OpenDichtKlep(tag := 'V2023', DigInClosed := digIn_V2023_1, DigInOpened := digIn_V2023_2, DigOut := digOut_V2023);
 	V2024 : FB_OpenDichtKlep(tag := 'V2024', DigInClosed := digIn_V2024_1, DigInOpened := digIn_V2024_2, DigOut := digOut_V2024);  
 	
-	V2013_AFO : FB_Regelschuif_AFO ();
-	V2022_AFO : FB_Regelschuif_AFO ();
+	V2013 : FB_Regelschuif_AFO(tag := 'V2013', DigOutOpening := digOutOpeningV2013, DigOutClosing := digOutClosingV2013, AnaInPosition := AnaInV2013)
+	V2022 : FB_Regelschuif_AFO(tag := 'V2022', DigOutOpening := digOutOpeningV2022, DigOutClosing := digOutClosingV2022, AnaInPosition := AnaInV2022);
 	
 	V2013_DG : FB_Regelschuif_DG;
 	V2022_DG : FB_Regelschuif_DG;
@@ -47,16 +59,7 @@ VAR
 								   RegelschuifV2022_DG := V2022_DG,
 								   PompP2021 := P2021 );
 								   
-	digOutOpeningV2013 : FB_SimulatedDigOutOpen_AFO;
-	digOutClosingV2013 :FB_SimulatedDigOutClose_AFO;
-	AnaInV2013 : FB_SimulatedAnaIn_AFO;
-	V2013 : FB_Regelschuif_AFO(tag := 'V2013', DigOutOpening := digOutOpeningV2013, DigOutClosing := digOutClosingV2013, AnaInPosition := AnaInV2013);
-	digOutOpeningV2022 : FB_SimulatedDigOutOpen_AFO;
-	digOutClosingV2022 :FB_SimulatedDigOutClose_AFO;
-	AnaInV2022 : FB_SimulatedAnaIn_AFO;
-	V2022 : FB_Regelschuif_AFO(tag := 'V2022', DigOutOpening := digOutOpeningV2022, DigOutClosing := digOutClosingV2022, AnaInPosition := AnaInV2022);
-
-								   
+									   
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -84,26 +87,20 @@ V2024();
 
 Regelingen ();
 ControllerInmalen ();
-]]></ST>
+
+//AFO
+digOutOpeningV2013();
+digOutClosingV2013();
+AnaInV2013();
+V2013();
+V2013.RegelSchuifGoTo(20);
+digOutOpeningV2022();
+digOutClosingV2022();
+AnaInV2022();
+V2022();]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="69" Count="2" />
-      <LineId Id="158" Count="0" />
-      <LineId Id="123" Count="1" />
-      <LineId Id="122" Count="0" />
-      <LineId Id="159" Count="0" />
-      <LineId Id="150" Count="1" />
-      <LineId Id="149" Count="0" />
-      <LineId Id="160" Count="0" />
-      <LineId Id="153" Count="1" />
-      <LineId Id="152" Count="0" />
-      <LineId Id="157" Count="0" />
-      <LineId Id="75" Count="0" />
-      <LineId Id="125" Count="0" />
-      <LineId Id="155" Count="1" />
-      <LineId Id="163" Count="0" />
-      <LineId Id="162" Count="0" />
-      <LineId Id="161" Count="0" />
+      <LineId Id="1" Count="34" />
     </LineIds>
   </POU>
 </TcPlcObject>
