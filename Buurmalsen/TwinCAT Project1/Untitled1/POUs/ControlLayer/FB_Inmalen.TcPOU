@@ -3,11 +3,12 @@
   <POU Name="FB_Inmalen" Id="{96114e51-ad37-44de-ac67-1fd4ce3f2d17}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Inmalen
 VAR_INPUT
+
 END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
-	CurrentModus : E_Besturingsmodus := E_Besturingsmodus.uitlaten;
+		CurrentModus : E_Besturingsmodus := E_Besturingsmodus.uitlaten;
 	KlepV2012 : ITF_OpenDichtKlep;
 	KlepV2021 : ITF_OpenDichtKlep;
 	KlepV2023 : ITF_OpenDichtKlep;
@@ -25,7 +26,8 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF CurrentModus = E_Besturingsmodus.inmalen THEN
+      <ST><![CDATA[CurrentModus:= main.Regelingen.BestuurMode;
+IF CurrentModus = E_Besturingsmodus.inmalen THEN
 	//set stand
 	SchuifV2013_AFG.ActueelPosition := 0;
 	SchuifV2013_DG.ActueelPosition := 0;	
@@ -61,10 +63,7 @@ END_VAR
 			pompP2021 := main.Regelingen.ToerentalP2021;
 			
 			//Set toerental
-			pomp2_P2021.ActueelToerental := pompP2021;
-			
-			//set position
-			pomp2_P2021.PompGoTo(pomp2_P2021.ActueelToerental);
+			pomp2_P2021.PompGoTo(pompP2021);
 		END_IF	
 	END_IF	
 END_IF]]></ST>
@@ -106,6 +105,7 @@ pomp2_P2021 := PompP2021;
       </Implementation>
     </Method>
     <LineIds Name="FB_Inmalen">
+      <LineId Id="63" Count="0" />
       <LineId Id="1" Count="0" />
       <LineId Id="23" Count="1" />
       <LineId Id="5" Count="0" />
@@ -126,7 +126,8 @@ pomp2_P2021 := PompP2021;
       <LineId Id="51" Count="0" />
       <LineId Id="53" Count="0" />
       <LineId Id="52" Count="0" />
-      <LineId Id="54" Count="5" />
+      <LineId Id="54" Count="1" />
+      <LineId Id="59" Count="0" />
       <LineId Id="50" Count="0" />
       <LineId Id="32" Count="0" />
       <LineId Id="4" Count="0" />
