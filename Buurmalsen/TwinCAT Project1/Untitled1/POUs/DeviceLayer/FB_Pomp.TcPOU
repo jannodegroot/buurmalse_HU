@@ -10,7 +10,8 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//ik kan niet spellen]]></ST>
+      <ST><![CDATA[//ik kan niet spellen
+]]></ST>
     </Implementation>
     <Folder Name="Methods" Id="{bf5cf5ca-668b-48c9-b584-364735c4887e}" />
     <Folder Name="Properties" Id="{2eec5991-7c1f-49f7-b0b9-e395ab7feb87}" />
@@ -74,6 +75,7 @@ END_VAR
     </Property>
     <LineIds Name="FB_Pomp">
       <LineId Id="1" Count="0" />
+      <LineId Id="3" Count="0" />
     </LineIds>
     <LineIds Name="FB_Pomp.ActueelToerental.Get">
       <LineId Id="1" Count="0" />
