@@ -64,6 +64,8 @@ IF CurrentModus = E_Besturingsmodus.inmalen THEN
 	IF (KlepV2012.StateKlep = E_OpenDichtKlepState.closed AND
 		KlepV2021.StateKlep = E_OpenDichtKlepState.closed AND
 		KlepV2024.StateKlep = E_OpenDichtKlepState.closed AND
+		KlepV2025.StateKlep = E_OpenDichtKlepState.closed AND
+		KlepV2026.StateKlep = E_OpenDichtKlepState.closed AND
 		SchuifV2013_AFG.StateRegelSchuif = E_RegelschuifState.standby AND
 		SchuifV2013_DG.StateRegelSchuif = E_RegelschuifState.standby) THEN
 		
@@ -167,7 +169,9 @@ pomp2_P2021 := PompP2021;
       <LineId Id="11" Count="1" />
       <LineId Id="29" Count="1" />
       <LineId Id="62" Count="0" />
-      <LineId Id="35" Count="3" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="120" Count="1" />
+      <LineId Id="36" Count="2" />
       <LineId Id="44" Count="0" />
       <LineId Id="39" Count="0" />
       <LineId Id="45" Count="1" />
