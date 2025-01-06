@@ -9,12 +9,12 @@ VAR_OUTPUT
 END_VAR
 VAR
 	stap : INT;
-	onPomp : E_POMPSTATE.on;
-	standbyRegelschuif : E_RegelschuifState.standby;
-	closed : E_OpenDichtKlepState.closed;
-	open : E_OpenDichtKlepState.open;
+	onPomp : E_POMPSTATE :=E_POMPSTATE.on;
+	standbyRegelschuif : E_RegelschuifState := E_RegelschuifState.standby;
+	closed : E_OpenDichtKlepState :=E_OpenDichtKlepState.closed;
+	open : E_OpenDichtKlepState :=E_OpenDichtKlepState.open;
 	//toerentaltotaal 
-	optoeren : E_PompState.optoeren;
+	optoeren : E_PompState :=E_PompState.optoeren;
 END_VAR
 ]]></Declaration>
     <Implementation>
