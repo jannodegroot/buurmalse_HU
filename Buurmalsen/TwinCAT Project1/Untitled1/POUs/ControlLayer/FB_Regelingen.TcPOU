@@ -8,12 +8,27 @@ VAR_OUTPUT
 END_VAR
 VAR
 END_VAR
+
+
+(* Gegevens doorsturen naar de subfunctieblokken *)
+Uitlaten.PompStatus := Pomp1;
+Uitmalen.PompStatus := Pomp2;
+END_METHOD
+]]></ST>
+    </Implementation>
+    <Method Name="Excute" Id="{63571029-8e9a-4487-8846-7eb1ac19ffd7}">
+      <Declaration><![CDATA[METHOD Excute : VOID
+VAR_INPUT
+END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//Nick heeft hier geprogrammeerd
 ]]></ST>
     </Implementation>
     <LineIds Name="FB_Regelingen">
+      <LineId Id="443" Count="23" />
+      <LineId Id="519" Count="0" />
+      <LineId Id="526" Count="4" />
       <LineId Id="1" Count="0" />
       <LineId Id="3" Count="0" />
     </LineIds>
