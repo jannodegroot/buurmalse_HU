@@ -3,11 +3,12 @@
   <POU Name="FB_Inmalen" Id="{96114e51-ad37-44de-ac67-1fd4ce3f2d17}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Inmalen
 VAR_INPUT
+
 END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
-	CurrentModus : E_Besturingsmodus := E_Besturingsmodus.uitlaten;
+		CurrentModus : E_Besturingsmodus := E_Besturingsmodus.uitlaten;
 	KlepV2012 : ITF_OpenDichtKlep;
 	KlepV2021 : ITF_OpenDichtKlep;
 	KlepV2023 : ITF_OpenDichtKlep;
@@ -25,7 +26,8 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF CurrentModus = E_Besturingsmodus.inmalen THEN
+      <ST><![CDATA[CurrentModus:= main.Regelingen.BestuurMode;
+IF CurrentModus = E_Besturingsmodus.inmalen THEN
 	//set stand
 	SchuifV2013_AFG.ActueelPosition := 0;
 	SchuifV2013_DG.ActueelPosition := 0;	
@@ -106,6 +108,7 @@ pomp2_P2021 := PompP2021;
       </Implementation>
     </Method>
     <LineIds Name="FB_Inmalen">
+      <LineId Id="63" Count="0" />
       <LineId Id="1" Count="0" />
       <LineId Id="23" Count="1" />
       <LineId Id="5" Count="0" />
