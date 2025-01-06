@@ -6,6 +6,7 @@ VAR
 	InternalToerental : INT; // Internal variable for current speed
  	InternalState : E_PompState;    // Internal variable for pump state
 	InternalToerental2 : INT; // Internal variable for current speed
+	globaaldoeltoerental : INT; //global variable for doel speed
 	
 	timeroptoeren : TON;
 	timerloopt : BOOL := TRUE;
@@ -17,6 +18,16 @@ VAR
 	timervisvriendelijktijd : TIME := T#3M;
 	timervisvriendelijk : TON;
 	bezig_visvriendelijkopstarten : BOOL := FALSE;
+	
+	tagName : STRING;
+	outputpompon : ITF_pompdigout;
+	inputpompon : ITF_pompdigin;
+	outputtoerental : ITF_pompangout;
+	
+	timerpomperror: ton;
+	timerpomperrortijd: TIME:=T#20S;
+	noodstop:BOOL;
+
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -24,6 +35,34 @@ END_VAR
 IF visvriendelijkactief AND (StatePomp = E_PompState.off OR bezig_visvriendelijkopstarten) THEN
 	bezig_visvriendelijkopstarten:=TRUE;
 	visvriendelijk();
+END_IF
+
+//outputs pomp
+ActueelToerental:=InternalToerental;
+outputtoerental:=ActueelToerental;
+IF InternalToerental = 0 AND globaaldoeltoerental=0 THEN
+	outputpompon.set:=FALSE;
+ELSIF globaaldoeltoerental>0 THEN
+	outputpompon.set:=TRUE;
+END_IF
+
+//inputs errorcheck
+timerpomperror(in:=(NOT inputpompon.get AND(globaaldoeltoerental>0 AND ActueelToerental>0)) OR(inputpompon.get AND ((InternalToerental = 0 AND globaaldoeltoerental=0) OR ActueelToerental=0)), PT:=timerpomperrortijd);
+IF timerpomperror.Q THEN
+	InternalState := E_PompState.error;
+END_IF
+
+//status pomp
+IF (NOT timerpomperror.Q) THEN
+	IF  inputpompon.get = FALSE AND ActueelToerental=0 THEN
+		InternalState := E_pompstate.off;
+	ELSIF inputpompon.get = TRUE AND ActueelToerental<globaaldoeltoerental THEN
+		InternalState := E_pompstate.optoeren;
+	ELSIF inputpompon.get = TRUE AND ActueelToerental>globaaldoeltoerental THEN
+		InternalState := E_pompstate.aftoeren;
+	ELSIF inputpompon.get = TRUE AND ActueelToerental=globaaldoeltoerental THEN
+		InternalState := E_pompstate.on;
+	END_IF
 END_IF]]></ST>
     </Implementation>
     <Property Name="ActueelToerental" Id="{88d60577-962c-4c2d-820d-3c715054a2e6}">
@@ -47,6 +86,27 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
+    <Method Name="FB_Init" Id="{dc539e09-6f97-4e59-8bee-fe04507eedbf}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
+	tag : STRING;
+	DigOutOn : ITF_pompdigout;
+	Diginon : ITF_pompdigin;
+	Anaouttoerental : ITF_pompangout;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[tagname := tag;
+outputpompon := DigOutOn;
+inputpompon := Diginon;
+outputtoerental := Anaouttoerental;]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="PompGoTo" Id="{0c4c33cf-85bb-4137-9363-b61f6c82564a}">
       <Declaration><![CDATA[METHOD PompGoTo : INT
 VAR_INPUT
@@ -59,10 +119,17 @@ VAR
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[timeroptoeren(IN := timerloopt, PT := optoerentimer);
-IF timeroptoeren.Q AND NOT bezig_visvriendelijkopstarten THEN
+globaaldoeltoerental:=toerental;
+IF noodstop THEN
+	InternalToerental:=0;
+ELSIF timeroptoeren.Q AND NOT bezig_visvriendelijkopstarten THEN
 	timerloopt := FALSE;
 	IF (toerental <= InternalToerental+toenamentoerental) AND (toerental >= InternalToerental-afnametoerental) THEN
+		IF toerental >20 OR TOERENTAL=0THEN	
 		InternalToerental:= toerental;
+		ELSIF TOERENTAL>0 THEN
+			INTERNALTOERENTAL:=20;
+		END_IF;
 	ELSIF toerental > InternalToerental THEN
 	InternalToerental := InternalToerental+toenamentoerental;
 	ELSIF toerental < internaltoerental THEN
@@ -82,7 +149,7 @@ PROPERTY StatePomp : E_PompState
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[    StatePomp := InternalState;]]></ST>
         </Implementation>
       </Get>
       <Set Name="Set" Id="{515ac4c7-2fb1-4d81-bf82-c7c0bb4a75f9}">
@@ -90,7 +157,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[    InternalState := StatePomp;]]></ST>
         </Implementation>
       </Set>
     </Property>
@@ -133,6 +200,26 @@ END_VAR
       <LineId Id="1" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="3" Count="1" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="9" Count="1" />
+      <LineId Id="13" Count="1" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="17" Count="1" />
+      <LineId Id="20" Count="1" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="30" Count="1" />
+      <LineId Id="35" Count="3" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="34" Count="0" />
     </LineIds>
     <LineIds Name="FB_Pomp.ActueelToerental.Get">
       <LineId Id="1" Count="0" />
@@ -140,10 +227,17 @@ END_VAR
     <LineIds Name="FB_Pomp.ActueelToerental.Set">
       <LineId Id="1" Count="0" />
     </LineIds>
+    <LineIds Name="FB_Pomp.FB_Init">
+      <LineId Id="1" Count="3" />
+    </LineIds>
     <LineIds Name="FB_Pomp.PompGoTo">
-      <LineId Id="1" Count="2" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="18" Count="2" />
+      <LineId Id="2" Count="1" />
       <LineId Id="8" Count="0" />
-      <LineId Id="10" Count="1" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="14" Count="3" />
+      <LineId Id="11" Count="0" />
       <LineId Id="4" Count="0" />
       <LineId Id="12" Count="1" />
       <LineId Id="9" Count="0" />
