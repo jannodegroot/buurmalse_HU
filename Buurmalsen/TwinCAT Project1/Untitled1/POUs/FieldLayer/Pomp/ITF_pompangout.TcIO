@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
+  <Itf Name="ITF_pompangout" Id="{7533d3ce-6466-4061-80e4-d53d50a1fdea}">
+    <Declaration><![CDATA[INTERFACE ITF_pompangout
+]]></Declaration>
+    <Method Name="set" Id="{f6786b9e-2847-416b-bb68-baf54047f394}">
+      <Declaration><![CDATA[METHOD set : INT
+VAR_INPUT
+		state : INT;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

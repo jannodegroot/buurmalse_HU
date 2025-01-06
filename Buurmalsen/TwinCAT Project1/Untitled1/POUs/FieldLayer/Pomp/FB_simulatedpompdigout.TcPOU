@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
+  <POU Name="FB_simulatedpompdigout" Id="{e7c545b7-e0f2-414e-8148-4f7973fdb8d3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_simulatedpompdigout IMPLEMENTS ITF_pompdigout
+VAR
+	internalState:BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="set" Id="{24160de5-cbd3-4a03-9332-d573fcb15dc3}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD set : BOOL
+VAR_INPUT
+	state	: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[internalState := state;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_simulatedpompdigout">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_simulatedpompdigout.set">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
