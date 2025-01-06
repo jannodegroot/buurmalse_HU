@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
   <POU Name="FB_AlarmHandler" Id="{be54b949-3e78-4cf0-a2a1-cf3bd0f957b8}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_AlarmHandler
 VAR
@@ -25,11 +25,10 @@ ADSLOGSTR(msgCtrlMask := ADSLOG_MSGTYPE_WARN OR ADSLOG_MSGTYPE_MSGBOX, msgFmtStr
       </Implementation>
     </Method>
     <LineIds Name="FB_AlarmHandler">
-      <LineId Id="9" Count="0" />
+      <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_AlarmHandler.Append">
-      <LineId Id="5" Count="0" />
-      <LineId Id="11" Count="1" />
+      <LineId Id="1" Count="2" />
     </LineIds>
   </POU>
 </TcPlcObject>

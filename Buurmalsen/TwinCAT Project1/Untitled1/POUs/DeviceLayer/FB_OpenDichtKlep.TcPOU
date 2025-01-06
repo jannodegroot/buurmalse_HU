@@ -21,14 +21,18 @@ VAR
 	
 	timeOut : TON;
 	errorTrigger : R_TRIG;
+	
+
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF currentMode = E_Bedrijfstoestand.off THEN
+      <ST><![CDATA[//check if currentmode = off and set klep closed
+IF currentMode = E_Bedrijfstoestand.off THEN
 	output.set(FALSE);
 	expectedState := E_OpenDichtKlepState.closed;
 END_IF
 
+//check if currentmode = manual and give klep a state
 IF currentMode = E_Bedrijfstoestand.manual THEN
 	IF manOpen THEN
 		openManual();
@@ -40,35 +44,31 @@ IF currentMode = E_Bedrijfstoestand.manual THEN
 	END_IF
 END_IF
 
+//control witch feedback button in pressed
 feedbackOpen := inputOpen.get() AND NOT inputClosed.get();
 feedbackClosed := inputClosed.get() AND NOT inputOpen.get();
 feedbackError := inputClosed.get() AND inputOpen.get();
 
+//set timer for error
 timeOut(IN := NOT(expectedState = currentState), PT := T#5S);
 errorTrigger(CLK := (timeOut.Q OR feedbackError));
 
+//check if error is active
 IF errorTrigger.Q THEN
 	currentState := E_OpenDichtKlepState.error;
 	main.alarms.append(tag := tagName, msg := 'Klepstoring gedetecteerd');
 END_IF
 
-CASE expectedState OF
-E_OpenDichtKlepState.closed :
-	IF feedbackClosed THEN
-		currentState := E_OpenDichtKlepState.closed;
-	ELSIF NOT(currentState = E_OpenDichtKlepState.error) THEN
-		currentState := E_OpenDichtKlepState.closing;
-	END_IF
-E_OpenDichtKlepState.open :
-	IF feedbackOpen THEN
-		currentState := E_OpenDichtKlepState.open;
-	ELSIF NOT(currentState = E_OpenDichtKlepState.error) THEN
-		currentState := E_OpenDichtKlepState.opening;
-	END_IF
-END_CASE
-
-
-]]></ST>
+//set state of klep based on feedback buttons
+IF feedbackClosed THEN
+	currentState := E_OpenDichtKlepState.closed;
+ELSIF NOT(currentState = E_OpenDichtKlepState.error) AND expectedState = E_OpenDichtKlepState.closed THEN
+	currentState := E_OpenDichtKlepState.closing;
+ELSIF feedbackOpen THEN
+	currentState := E_OpenDichtKlepState.open;
+ELSIF NOT(currentState = E_OpenDichtKlepState.error)AND expectedState = E_OpenDichtKlepState.open THEN
+	currentState := E_OpenDichtKlepState.opening;
+END_IF]]></ST>
     </Implementation>
     <Folder Name="Methods" Id="{e673a8db-7aa9-4caf-957a-24ea31a29447}" />
     <Folder Name="Properties" Id="{3447b9dd-f8e7-4a65-ae2f-06d0f9ed87d9}" />
@@ -152,20 +152,41 @@ ELSE
 END_IF]]></ST>
       </Implementation>
     </Method>
-    <Property Name="state" Id="{c5b6a438-a407-4476-b778-6ca0016d8482}" FolderPath="Properties\">
-      <Declaration><![CDATA[PROPERTY state : E_OpenDichtKlepState]]></Declaration>
+    <Property Name="StateKlep" Id="{c5b6a438-a407-4476-b778-6ca0016d8482}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY StateKlep : E_OpenDichtKlepState]]></Declaration>
       <Get Name="Get" Id="{529f5fa6-f344-4663-bdad-a7ab966a373e}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[state := currentState;
+          <ST><![CDATA[StateKlep := currentState;
 ]]></ST>
         </Implementation>
       </Get>
+      <Set Name="Set" Id="{08634344-5f5f-487f-a9fe-2127d67569b8}">
+        <Declaration><![CDATA[
+VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Set>
     </Property>
     <LineIds Name="FB_OpenDichtKlep">
-      <LineId Id="3" Count="44" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="3" Count="3" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="7" Count="10" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="18" Count="3" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="22" Count="2" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="25" Count="4" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="32" Count="4" />
+      <LineId Id="39" Count="4" />
     </LineIds>
     <LineIds Name="FB_OpenDichtKlep.close">
       <LineId Id="5" Count="0" />
@@ -191,8 +212,11 @@ END_VAR
       <LineId Id="18" Count="5" />
       <LineId Id="5" Count="0" />
     </LineIds>
-    <LineIds Name="FB_OpenDichtKlep.state.Get">
+    <LineIds Name="FB_OpenDichtKlep.StateKlep.Get">
       <LineId Id="1" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_OpenDichtKlep.StateKlep.Set">
+      <LineId Id="1" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

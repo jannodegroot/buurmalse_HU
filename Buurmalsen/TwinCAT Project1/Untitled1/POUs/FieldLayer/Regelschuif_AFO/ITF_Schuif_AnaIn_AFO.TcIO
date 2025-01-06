@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
+  <Itf Name="ITF_Schuif_AnaIn_AFO" Id="{ff3ed898-1395-46ff-8850-405f840f374d}">
+    <Declaration><![CDATA[INTERFACE ITF_Schuif_AnaIn_AFO
+]]></Declaration>
+    <Method Name="get" Id="{c473f6ef-f3e0-400c-baa7-85fae2eaa728}">
+      <Declaration><![CDATA[METHOD get : SINT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>
