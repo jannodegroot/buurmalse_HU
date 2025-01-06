@@ -2,135 +2,47 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
   <POU Name="FB_Regelingen" Id="{10454be2-17f1-45a6-927c-6671ec7f7806}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Regelingen
-VAR_INPUT
-    BestuurMode : INT;            (* 0 = Handmatig, 1 = Automatisch *)
-    RegelStand1 : REAL;           (* Setpoint debiet in m³/s *)
-    RegelStand2 : REAL;           (* Setpoint polderpeil in m NAP *)
-END_VAR
-
 VAR
-    (* Uitgangen *)
-    Pomp1 : INT;                  (* Status pomp 1: 0 = uit, 1 = aan *)
-    Pomp2 : INT;                  (* Status pomp 2: 0 = uit, 1 = aan *)
-
-    (* Interne variabelen *)
-    ModeStatus : STRING[20];      (* Beschrijft huidige modus *)
-    ActiveStand : STRING[20];     (* Beschrijft actieve regelstand *)
-
-    (* Instanties van subfunctieblokken *)
-    Uitlaten : FB_Uitlaten;
-    Uitmalen : FB_Uitmalen;
-    Inmalen : FB_Inmalen;
-
-    (* Interne statusbewaking *)
-    DebietError : REAL;           (* Foutwaarde van debietregeling *)
-    PolderpeilError : REAL;       (* Foutwaarde van polderpeilregeling *)
+	internalBesturingsMode : E_Besturingsmodus;
+	internalRegelschuifStandV2013 : SINT;
+	internalRegelschuifStandV2022 : SINT;
+	internalToerentalP2011 : INT;
+	internalToerentalP2021 : INT;
 END_VAR
 
-(* De rest van de methodes blijft ongewijzigd *)
-
-END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[FUNCTION_BLOCK FB_Regelingen
-VAR
-    (* Ingangen *)
-    BestuurMode : INT;            (* 0 = Handmatig, 1 = Automatisch *)
-    RegelStand1 : REAL;           (* Setpoint debiet in m³/s *)
-    RegelStand2 : REAL;           (* Setpoint polderpeil in m NAP *)
-
-    (* Uitgangen *)
-    Pomp1 : INT;                  (* Status pomp 1: 0 = uit, 1 = aan *)
-    Pomp2 : INT;                  (* Status pomp 2: 0 = uit, 1 = aan *)
-
-    (* Interne variabelen *)
-    ModeStatus : STRING[20];      (* Beschrijft huidige modus *)
-    ActiveStand : STRING[20];     (* Beschrijft actieve regelstand *)
-
-    (* Instanties van subfunctieblokken *)
-    Uitlaten : FB_Uitlaten;
-    Uitmalen : FB_Uitmalen;
-    Inmalen : FB_Inmalen;
-
-    (* Interne statusbewaking *)
-    DebietError : REAL;           (* Foutwaarde van debietregeling *)
-    PolderpeilError : REAL;       (* Foutwaarde van polderpeilregeling *)
-END_VAR
-
-(* Methode om de regeling te activeren *)
-METHOD StartRegeling : VOID
-CASE BestuurMode OF
-    0:  (* Handmatige modus *)
-        ModeStatus := 'Handmatig';
-        (* Schakel pompen in of uit handmatig *)
-        Pomp1 := 0;  (* Pomp standby, handmatig inschakelen via HMI *)
-        Pomp2 := 0;
-
-    1:  (* Automatische modus *)
-        ModeStatus := 'Automatisch';
-
-        (* Regelstand 1: Debiet *)
-        Uitlaten.RegelStand := RegelStand1;
-        Uitlaten.Execute();
-
-        (* Regelstand 2: Polderpeil *)
-        Inmalen.RegelStand := RegelStand2;
-        Inmalen.Execute();
-
-        (* Errorberekening *)
-        DebietError := RegelStand1 - Uitlaten.ActueelDebiet;
-        PolderpeilError := RegelStand2 - Inmalen.ActueelPolderpeil;
-
-        (* Beslis de status van de pompen *)
-        IF DebietError > 0.1 THEN
-            Pomp1 := 1;  (* Schakel pomp 1 in als debiet onder setpoint is *)
-        ELSE
-            Pomp1 := 0;
-        END_IF
-
-        IF PolderpeilError > 0.05 THEN
-            Pomp2 := 1;  (* Schakel pomp 2 in als peil onder setpoint is *)
-        ELSE
-            Pomp2 := 0;
-        END_IF;
-
-    ELSE
-        ModeStatus := 'Onbekend';
-        Pomp1 := 0;
-        Pomp2 := 0;
-END_CASE
-END_METHOD
-
-(* Methode om de regeling te stoppen *)
-METHOD StopRegeling : VOID
-ModeStatus := 'Gestopt';
-Pomp1 := 0;       (* Zet beide pompen uit *)
-Pomp2 := 0;
-END_METHOD
-
-(* Hoofdlogica *)
-METHOD Execute : VOID
-IF BestuurMode = 1 THEN
-    StartRegeling();  (* Start automatische regeling als de modus actief is *)
-ELSE
-    StopRegeling();   (* Zet de regeling uit in handmatige modus *)
-END_IF
-
-(* Gegevens doorsturen naar de subfunctieblokken *)
-Uitlaten.PompStatus := Pomp1;
-Uitmalen.PompStatus := Pomp2;
-END_METHOD
+      <ST><![CDATA[
 ]]></ST>
     </Implementation>
     <Folder Name="Properties" Id="{7c6e2fb9-4775-4dab-baa7-e5b89aec5c3b}" />
+    <Property Name="BestuurMode" Id="{ef2a99b5-5f20-4b0a-b6bc-351e2bd448d2}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY BestuurMode : E_Besturingsmodus]]></Declaration>
+      <Get Name="Get" Id="{e2d7c206-8f7f-426b-82b2-78ed55082002}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[BestuurMode := internalBesturingsMode;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{8657565b-1ccc-48a7-a1b2-ee5eec85ab16}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[internalBesturingsMode := BestuurMode ;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <Property Name="RegelschuifStandV2013" Id="{22aaed06-7a4e-4fb5-9a38-f497238e5600}" FolderPath="Properties\">
-      <Declaration><![CDATA[PROPERTY RegelschuifStandV2013 : INT]]></Declaration>
+      <Declaration><![CDATA[PROPERTY RegelschuifStandV2013 : SINT]]></Declaration>
       <Get Name="Get" Id="{df927b81-0b19-4ba5-8491-c549fdf3679f}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[RegelschuifStandV2013 := internalRegelschuifStandV2013;]]></ST>
         </Implementation>
       </Get>
       <Set Name="Set" Id="{46201dd7-77e4-4f26-9ef1-8e4e09797119}">
@@ -138,18 +50,18 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[internalRegelschuifStandV2013 := RegelschuifStandV2013;]]></ST>
         </Implementation>
       </Set>
     </Property>
     <Property Name="RegelschuifStandV2022" Id="{25ca217c-5af0-4a23-9400-b185b560c6f4}" FolderPath="Properties\">
-      <Declaration><![CDATA[PROPERTY RegelschuifStandV2022 : INT]]></Declaration>
+      <Declaration><![CDATA[PROPERTY RegelschuifStandV2022 : SINT]]></Declaration>
       <Get Name="Get" Id="{baefb7a1-259b-4e50-b712-7341c25b1805}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[RegelschuifStandV2022 := internalRegelschuifStandV2022;]]></ST>
         </Implementation>
       </Get>
       <Set Name="Set" Id="{9059e5f4-2721-43bc-8e0e-724abee52b74}">
@@ -157,7 +69,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[internalRegelschuifStandV2022 := RegelschuifStandV2022;]]></ST>
         </Implementation>
       </Set>
     </Property>
@@ -168,7 +80,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[ToerentalP2011 := internalToerentalP2011;]]></ST>
         </Implementation>
       </Get>
       <Set Name="Set" Id="{c50b0b11-1f65-436f-bc39-0a87e0b63fbe}">
@@ -176,7 +88,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[internalToerentalP2011 := ToerentalP2011;]]></ST>
         </Implementation>
       </Set>
     </Property>
@@ -187,7 +99,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[ToerentalP2011 := internalToerentalP2022;]]></ST>
         </Implementation>
       </Get>
       <Set Name="Set" Id="{810193cf-b8f4-44af-854a-e5e0ee173417}">
@@ -195,12 +107,17 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[internalToerentalP2011 := ToerentalP2021;]]></ST>
         </Implementation>
       </Set>
     </Property>
     <LineIds Name="FB_Regelingen">
-      <LineId Id="443" Count="87" />
+      <LineId Id="1" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_Regelingen.BestuurMode.Get">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Regelingen.BestuurMode.Set">
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelingen.RegelschuifStandV2013.Get">
