@@ -10,10 +10,12 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[//Nick heeft hier geprogrammeerd
+]]></ST>
     </Implementation>
     <LineIds Name="FB_Regelingen">
       <LineId Id="1" Count="0" />
+      <LineId Id="3" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
