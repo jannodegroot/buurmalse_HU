@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
+  <Itf Name="ITF_Regelschuif_OutClose_DG" Id="{d4dd24ca-4a3f-4e66-aaf3-3c7a7c648480}">
+    <Declaration><![CDATA[INTERFACE ITF_Regelschuif_OutClose_DG
+]]></Declaration>
+    <Method Name="set" Id="{95353664-ab06-49ba-a9ce-f275afa138e2}">
+      <Declaration><![CDATA[METHOD set : BOOL
+VAR_INPUT
+	state : BOOL;	
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

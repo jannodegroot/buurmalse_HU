@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
+  <POU Name="FB_SimulatedIn_DG" Id="{1937c0a8-07f6-4296-bab0-27257a63d4d8}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_SimulatedIn_DG IMPLEMENTS ITF_Regelschuif_In_DG
+
+VAR
+	internalState : sint;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="get" Id="{74e86409-c405-4759-a251-5fa15e22afc3}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD get : SINT
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[get := internalState;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_SimulatedIn_DG">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_SimulatedIn_DG.get">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
