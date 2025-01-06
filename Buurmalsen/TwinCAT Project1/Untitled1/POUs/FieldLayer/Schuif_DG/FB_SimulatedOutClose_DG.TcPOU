@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
+  <POU Name="FB_SimulatedOutClose_DG" Id="{ff58a706-d197-40fc-9b59-01bd0c33f601}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_SimulatedOutClose_DG IMPLEMENTS ITF_Regelschuif_OutClose_DG
+VAR
+	internalState : BOOL := FALSE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="set" Id="{e63e9833-22d7-456d-980d-87c15cf3db17}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD set : BOOL
+VAR_INPUT
+	state : BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[internalState := state;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_SimulatedOutClose_DG">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_SimulatedOutClose_DG.set">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
