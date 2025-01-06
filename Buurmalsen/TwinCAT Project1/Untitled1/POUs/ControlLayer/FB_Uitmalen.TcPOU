@@ -35,6 +35,8 @@ VAR
 	Pomp1_P2011 : ITF_Pomp;
 	pomp2_P2021 : ITF_Pomp;
 	
+	pompP2011:INT;
+	pompP2021:INT;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -42,20 +44,20 @@ END_VAR
 IF currentmodus = E_Besturingsmodus.uitmalen THEN	
 CASE stap OF
 	1:
-		main.PompInterfaceP2011.PompGoTo(20);
-		main.PompInterfaceP2021.PompGoTo(20);
-		IF 20 = main.PompInterfaceP2011.ActueelToerental  AND onPomp = main.PompInterfaceP2011.StatePomp AND 20 = main.PompInterfaceP2021.ActueelToerental  AND onPomp = main.PompInterfaceP2021.StatePomp THEN
+		Pomp1_P2011.PompGoTo(20);
+		pomp2_P2021.PompGoTo(20);
+		IF 20 = Pomp1_P2011.ActueelToerental  AND onPomp = Pomp1_P2011.StatePomp AND 20 = pomp2_P2021.ActueelToerental  AND onPomp = pomp2_P2021.StatePomp THEN
 			stap := 2;
 		END_IF
 			
 	2:
-		main.RegelschuifInterfaceV2013.RegelschuifGoTo(0);
-		main.RegelschuifInterfaceV2022.RegelschuifGoTo(0);
-		main.OpenDichtKlepInterfaceV2014.OpenDichtKlepClose();
-		main.OpenDichtKlepInterfaceV2021.OpenDichtKlepClose();
-		main.OpenDichtKlepInterfaceV2024.OpenDichtKlepClose();
-		main.OpenDichtKlepInterfaceV2026.OpenDichtKlepClose();
-		IF 0 = main.RegelschuifInterfaceV2013.ActueelPosition  AND standbyRegelschuif = main.RegelschuifInterfaceV2013.StateRegelschuif AND  0 = main.RegelschuifInterfaceV2022.ActueelPosition  AND standbyRegelschuif = main.RegelschuifInterfacVe2022.StateRegelschuif AND closed = main.OpenDichtKlepInterfaceV2014 AND closed = main.OpenDichtKlepInterfaceV2021 AND  closed = main.OpenDichtKlepInterfaceV2024 AND  closed = main.OpenDichtKlepInterfaceV2026 THEN
+		SchuifV2013_AFG.RegelschuifGoTo(0);
+		SchuifV2022_AFG.RegelschuifGoTo(0);
+		KlepV2014.Close();
+		KlepV2021.Close();
+		KlepV2024.Close();
+		KlepV2026.Close();
+		IF 0 = SchuifV2013_AFG.ActueelPosition  AND standbyRegelschuif = SchuifV2013_AFG.StateRegelschuif AND  0 = SchuifV2022_AFG.ActueelPosition  AND standbyRegelschuif = SchuifV2022_AFG.StateRegelschuif AND closed = KlepV2014.StateKlep AND closed = KlepV2021.StateKlep AND  closed = KlepV2024.StateKlep  AND  closed = KlepV2026.StateKlep  THEN
 			stap := 3;
 		END_IF
 	3:
@@ -63,26 +65,26 @@ CASE stap OF
 		pompP2011 := main.Regelingen.ToerentalP2011; // get toerental
 		IF pompP2011 >= 386 THEN 
 			pompP2021 := pompP2011 - 385;
-			main.PompInterfaceP2011.PompGoTo(385);// set toerental 11 max
-			main.PompInterfaceP2021.PompGoTo(pompP2021);//Set toerental 21
+			Pomp1_P2011.PompGoTo(385);// set toerental 11 max
+			pomp2_P2021.PompGoTo(pompP2021);//Set toerental 21
 		ELSE 
-			pomp2_P2011.ActueelToerental := pompP2011; // set toerenal 11
-			main.PompInterfaceP2011.PompGoTo(pompP2011);
+			Pomp1_P2011.ActueelToerental := pompP2011; // set toerenal 11
+			Pomp1_P2011.PompGoTo(pompP2011);
 		END_IF
 		
-		IF optoeren = main.PompInterfaceP2011.StatePomp THEN 
-			main.OpenDichtKlepInterfaceV2012.OpenDichtKlepOpen();
-			IF open = main.OpenDichtKlepInterfaceV2012 THEN
-				main.OpenDichtKlepInterfaceV2012.OpenDichtKlepClose();
+		IF optoeren = Pomp1_P2011.StatePomp THEN 
+			KlepV2012.Open();
+			IF open = KlepV2012.StateKlep THEN
+				KlepV2012.Close();
 			END_IF
 		END_IF
 		
-		IF optoeren = main.PompInterfaceP2021.StatePomp THEN 
-			main.OpenDichtKlepInterfaceV2021.OpenDichtKlepOpen();
-			main.OpenDichtKlepInterfaceV2024.OpenDichtKlepOpen();
-			IF open = main.OpenDichtKlepInterfaceV2021 AND open = main.OpenDichtKlepInterfaceV2024 THEN
-				main.OpenDichtKlepInterfaceV2021.OpenDichtKlepClose();
-				main.OpenDichtKlepInterfaceV2024.OpenDichtKlepClose();
+		IF optoeren = pomp2_P2021.StatePomp THEN 
+			KlepV2021.Open();
+			KlepV2024.Open();
+			IF open = KlepV2021.StateKlep AND open = KlepV2024.StateKlep THEN
+				KlepV2021.Close();
+				KlepV2024.Close();
 			END_IF
 		END_IF
 		
@@ -114,9 +116,7 @@ METHOD FB_Init: BOOL
 VAR_INPUT
     bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
     bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
-END_VAR
-VAR
-	OpenDichtKlepV2012: ITF_OpenDichtKlep;
+		OpenDichtKlepV2012: ITF_OpenDichtKlep;
 	OpenDichtKlepV2014: ITF_OpenDichtKlep;
 	OpenDichtKlepV2021: ITF_OpenDichtKlep;
 	OpenDichtKlepV2023: ITF_OpenDichtKlep;
