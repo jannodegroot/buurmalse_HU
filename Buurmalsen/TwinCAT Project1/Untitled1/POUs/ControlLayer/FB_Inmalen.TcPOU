@@ -95,9 +95,9 @@ KlepV2023 := OpenDichtKlepV2023;
 KlepV2024 := OpenDichtKlepV2024;
 
 SchuifV2013_AFG := RegelschuifV2013_AFO;
-SchuifV2022_AFG := RegelschuifV2013_AFO;
-SchuifV2013_DG := RegelschuifV2013_AFO;
-SchuifV2022_DG := RegelschuifV2013_AFO;
+SchuifV2022_AFG := RegelschuifV2022_AFO;
+SchuifV2013_DG := RegelschuifV2013_DG;
+SchuifV2022_DG := RegelschuifV2022_DG;
 
 pomp2_P2011 := PompP2011;
 pomp2_P2021 := PompP2021;
