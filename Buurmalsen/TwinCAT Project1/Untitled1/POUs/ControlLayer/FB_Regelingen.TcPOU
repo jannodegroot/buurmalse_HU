@@ -57,7 +57,6 @@ VAR
     PolderpeilError : REAL;       (* Foutwaarde van polderpeilregeling *)
 END_VAR
 
-
 (* Gegevens doorsturen naar de subfunctieblokken *)
 Uitlaten.PompStatus := Pomp1;
 Uitmalen.PompStatus := Pomp2;
@@ -143,7 +142,6 @@ Pomp2 := 0;
     </Method>
     <LineIds Name="FB_Regelingen">
       <LineId Id="443" Count="23" />
-      <LineId Id="519" Count="0" />
       <LineId Id="526" Count="4" />
       <LineId Id="1" Count="0" />
     </LineIds>
