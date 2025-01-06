@@ -175,11 +175,21 @@
               <v n="TextDefault">"V2024"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
+            <o>
+              <v n="TextID">"884"</v>
+              <v n="TextDefault">"V2025"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"533"</v>
+              <v n="TextDefault">"V2026"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
           </l>
           <l n="Languages" t="ArrayList" />
-          <v n="GuidInit">{dba8392c-584d-41e9-8bc5-5fc3975a411e}</v>
-          <v n="GuidReInit">{16bb3910-a5ba-4b64-b57a-038406ae9ac3}</v>
-          <v n="GuidExitX">{fc66ce6a-b8cd-456f-85a6-9397e50908a7}</v>
+          <v n="GuidInit">{40e5243a-3da9-430e-9417-64a56015fe08}</v>
+          <v n="GuidReInit">{4c7ceaf0-a6cc-4071-8b3d-78cceff5acb0}</v>
+          <v n="GuidExitX">{0ea93d56-5a08-43c3-ba95-977d9c527d44}</v>
         </o>
       </Data>
       <TypeList>
