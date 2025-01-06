@@ -66,6 +66,7 @@ VAR
 								   RegelschuifV2022_AFO := V2022_AFO,
 								   RegelschuifV2013_DG := V2013_DG,
 								   RegelschuifV2022_DG := V2022_DG,
+								   PompP2011 := p2011;
 								   PompP2021 := P2021 );							   
 END_VAR
 ]]></Declaration>

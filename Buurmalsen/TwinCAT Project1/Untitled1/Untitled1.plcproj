@@ -74,9 +74,6 @@
     <Compile Include="POUs\DeviceLayer\ITF_Pomp.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FB_AlarmHandler.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\FieldLayer\OpenDichtKlep\FB_SimulatedDigIn.TcPOU">
       <SubType>Code</SubType>
     </Compile>
