@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
   <GlobalTextList Name="GlobalTextList" Id="{752f1e6a-9885-4fc6-a1c3-f188369e1ae0}">
     <XmlArchive>
       <Data>
@@ -172,9 +172,9 @@
             </o>
           </l>
           <l n="Languages" t="ArrayList" />
-          <v n="GuidInit">{a00452ef-7c22-4ad0-a637-5510733b4ed2}</v>
-          <v n="GuidReInit">{f738308d-18d8-4ec2-9199-4016ab0cc606}</v>
-          <v n="GuidExitX">{22d94ac9-df5a-4063-ae7e-1a6f3d7597ab}</v>
+          <v n="GuidInit">{abb26de7-5436-47fd-b05c-2103b5b4ec08}</v>
+          <v n="GuidReInit">{719537cb-e6d3-4cf9-ad2e-4ea9f0748634}</v>
+          <v n="GuidExitX">{586f6a15-d45b-4420-8c42-427fd7b9d688}</v>
         </o>
       </Data>
       <TypeList>
