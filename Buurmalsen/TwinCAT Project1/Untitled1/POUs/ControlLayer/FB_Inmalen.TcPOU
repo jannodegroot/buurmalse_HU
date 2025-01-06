@@ -35,8 +35,8 @@ END_VAR
 	KlepV2021.Close();
 	KlepV2024.Close();
 	
-	SchuifV2013_AFG.RegelSchuifGoTo();
-	SchuifV2013_DG.RegelSchuifGoTo();
+	SchuifV2013_AFG.RegelSchuifGoTo(SchuifV2013_AFG.ActueelPosition);
+	SchuifV2013_DG.RegelSchuifGoTo(SchuifV2013_DG.ActueelPosition);
 	
 	IF (KlepV2012.StateKlep = E_OpenDichtKlepState.closed AND
 		KlepV2021.StateKlep = E_OpenDichtKlepState.closed AND
@@ -50,8 +50,8 @@ END_VAR
 	
 		//set position
 		KlepV2023.Open();
-		SchuifV2022_AFG.RegelSchuifGoTo();
-		SchuifV2022_DG.RegelSchuifGoTo();
+		SchuifV2022_AFG.RegelSchuifGoTo(SchuifV2022_AFG.ActueelPosition);
+		SchuifV2022_DG.RegelSchuifGoTo(SchuifV2022_DG.ActueelPosition);
 		
 		IF (KlepV2023.StateKlep = E_OpenDichtKlepState.open AND
 			SchuifV2022_AFG.StateRegelSchuif = E_RegelschuifState.standby AND
