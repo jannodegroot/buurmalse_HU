@@ -30,7 +30,7 @@ VAR
 	V2022_AFO : FB_Regelschuif_AFO(tag := 'V2022', DigOutOpening := digOutOpeningV2022, DigOutClosing := digOutClosingV2022, AnaInPosition := AnaInV2022);
 	
 	V2013_DG : FB_Regelschuif_DG(tag := 'V2013', DigOutOpening := digOutOpeningV2013, DigOutClosing := digOutClosingV2013, AnaInPosition := AnaInV2013);
-	V2022_DG : FB_Regelschuif_DG(tag := 'V2022', DigOutOpening := digOutOpeningV2022, DigOutClosing := digOutClosingV2022, AnaInPosition := AnaInV2022);;
+	V2022_DG : FB_Regelschuif_DG(tag := 'V2022', DigOutOpening := digOutOpeningV2022, DigOutClosing := digOutClosingV2022, AnaInPosition := AnaInV2022);
 	
 	P2011 : FB_Pomp(tag:= 'P2011',DigOutOn:=digoutP2011,Diginon:=diginP2011, Anaouttoerental:=AnaoutP2011);
 	P2021 : FB_Pomp(tag:= 'P2021',DigOutOn:=digoutP2021,Diginon:=diginP2021, Anaouttoerental:=AnaoutP2021);
@@ -89,6 +89,7 @@ V2024();
       <LineId Id="75" Count="0" />
       <LineId Id="125" Count="0" />
       <LineId Id="155" Count="1" />
+      <LineId Id="2" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
