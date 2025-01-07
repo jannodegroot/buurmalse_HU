@@ -32,6 +32,9 @@ ActueelPosition:= InputSchuif.get();
 SchuifPosition:= InputSchuif.get();
 
 error_Trigger(CLK:= ErrorTimer.Q);
+
+
+
 ]]></ST>
     </Implementation>
     <Folder Name="Methods" Id="{a5c8f5f8-d7b2-406e-83cb-5c27f5fd8301}" />
@@ -81,7 +84,7 @@ SluitSchuif := OutputClose;
       <Declaration><![CDATA[METHOD RegelSchuifGoTo : SINT
 VAR
 	PulseTimer: TON;
-	StartPulse: BOOL;
+	StartPulse: BOOL := TRUE;
 	OpenTimer: TON;
 	StartOpen: BOOL;
 END_VAR
@@ -95,7 +98,7 @@ PulseTimer(IN:=StartPulse ,PT:= T#10S);
 
 Opentimer(IN:=StartOpen , PT:= T#1S);
 
-IF PulseTimer.Q THEN
+IF PulseTimer.Q AND stateRegelschuif <> E_RegelschuifState.error THEN
 	//Als de regelschuif zijn actuele positie op zijn doel is wordt hij uitgezet
 	IF (regelschuifdoel = ActueelPosition)THEN
 		StateRegelschuif := E_RegelschuifState.standby;
@@ -105,16 +108,35 @@ IF PulseTimer.Q THEN
 		StateRegelschuif := E_RegelschuifState.closing;
 		OpenSchuif.set(FALSE);
 		SluitSchuif.set(TRUE);
-		
 	END_IF
 	//Als het doel groter is dan de actuele positie gaat hij openen
 	IF (regelschuifdoel > ActueelPosition) THEN
 		StateRegelschuif := E_RegelschuifState.opening;
 		OpenSchuif.set(TRUE);
 		Sluitschuif.set(FALSE);
+	ActueelPosition := ActueelPosition +1;
+	END_IF	
+	StartPulse := FALSE;
+	StartPulse := TRUE;
+END_IF 	
+
+IF StateRegelschuif = E_RegelschuifState.opening THEN
+	StartOpen := TRUE;
+	IF OpenTimer.Q THEN
+	ActueelPosition := ActueelPosition - 1;
 	END_IF
-	
+	StartOpen := FALSE;
 END_IF
+
+IF StateRegelschuif = E_RegelschuifState.closing THEN
+	StartOpen := TRUE;
+	IF OpenTimer.Q THEN
+	ActueelPosition := ActueelPosition + 1;
+	END_IF
+	StartOpen := FALSE;
+END_IF
+
+
 
 //Zorgt ervoor dat de schuif stopt met bewegen als hij wordt uitgeschakeld
 IF CurrentMode = E_Bedrijfstoestand.off THEN
@@ -145,7 +167,10 @@ END_VAR
       </Set>
     </Property>
     <LineIds Name="FB_Regelschuif_DG">
-      <LineId Id="1" Count="10" />
+      <LineId Id="1" Count="9" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="32" Count="1" />
+      <LineId Id="11" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_DG.ActueelPosition.Get">
       <LineId Id="1" Count="0" />
@@ -171,12 +196,28 @@ END_VAR
       <LineId Id="17" Count="0" />
       <LineId Id="24" Count="0" />
       <LineId Id="31" Count="1" />
-      <LineId Id="30" Count="0" />
       <LineId Id="19" Count="3" />
       <LineId Id="33" Count="1" />
+      <LineId Id="36" Count="0" />
       <LineId Id="23" Count="0" />
+      <LineId Id="57" Count="1" />
       <LineId Id="15" Count="0" />
-      <LineId Id="11" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="63" Count="1" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="62" Count="0" />
+      <LineId Id="44" Count="1" />
+      <LineId Id="37" Count="0" />
       <LineId Id="29" Count="0" />
       <LineId Id="26" Count="0" />
       <LineId Id="25" Count="0" />
