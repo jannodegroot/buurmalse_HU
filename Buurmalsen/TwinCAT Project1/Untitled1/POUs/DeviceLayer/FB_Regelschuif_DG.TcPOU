@@ -23,7 +23,7 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//Als de schuif uit staat stopt de regelschuif met openen of sluiten
-IF CurrentMode:= E_Bedrijfstoestand.off THEN
+IF CurrentMode = E_Bedrijfstoestand.off THEN
 	Openschuif.set(FALSE);
 	SluitSchuif.set(FALSE);
 END_IF

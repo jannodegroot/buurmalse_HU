@@ -45,6 +45,16 @@ VAR
 	AnaInV2022 : FB_SimulatedAnaIn_AFO;
 	// Einde digin digout van AFO
 
+	//DG
+	OutOpeningV2013 : FB_SimulatedOutOpen_DG;
+	OutClosingV2013 :FB_SimulatedOutClose_DG;
+	InV2013 : FB_SimulatedIn_DG;
+	
+	OutOpeningV2022 : FB_SimulatedOutOpen_DG;
+	OutClosingV2022 :FB_SimulatedOutClose_DG;
+	InV2022 : FB_SimulatedIn_DG;
+	//DG
+
 	// Start digin digout van queens of harts
 	digoutP2011 :FB_simulatedpompdigout;
 	digoutP2021 :FB_simulatedpompdigout;
@@ -66,8 +76,8 @@ VAR
 	V2013_AFO : FB_Regelschuif_AFO(tag := 'V2013', DigOutOpening := digOutOpeningV2013, DigOutClosing := digOutClosingV2013, AnaInPosition := AnaInV2013);
 	V2022_AFO : FB_Regelschuif_AFO(tag := 'V2022', DigOutOpening := digOutOpeningV2022, DigOutClosing := digOutClosingV2022, AnaInPosition := AnaInV2022);
 	
-	V2013_DG : FB_Regelschuif_DG(tag := 'V2013', DigOutOpening := digOutOpeningV2013, DigOutClosing := digOutClosingV2013, AnaInPosition := AnaInV2013);
-	V2022_DG : FB_Regelschuif_DG(tag := 'V2022', DigOutOpening := digOutOpeningV2022, DigOutClosing := digOutClosingV2022, AnaInPosition := AnaInV2022);
+	V2013_DG : FB_Regelschuif_DG(tag := 'V2013', OutputOpen := OutOpeningV2013, OutputClose := OutClosingV2013, SchuifInput := InV2013);
+	V2022_DG : FB_Regelschuif_DG(tag := 'V2022', OutputOpen := OutOpeningV2022, OutputClose := OutClosingV2022, SchuifInput := InV2022);
 	
 	P2011 : FB_Pomp(tag:= 'P2011',DigOutOn:=digoutP2011,Diginon:=diginP2011, Anaouttoerental:=AnaoutP2011);
 	P2021 : FB_Pomp(tag:= 'P2021',DigOutOn:=digoutP2021,Diginon:=diginP2021, Anaouttoerental:=AnaoutP2021);
@@ -107,6 +117,9 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[
+V2013_DG();
+V2022_DG();
+
 digIn_V2012_1();
 digIn_V2012_2();
 digOut_V2012();
@@ -140,7 +153,11 @@ ControllerInmalen ();
 ControllerUitmalen ();]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="69" Count="2" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="161" Count="0" />
+      <LineId Id="163" Count="0" />
+      <LineId Id="162" Count="0" />
+      <LineId Id="70" Count="1" />
       <LineId Id="158" Count="0" />
       <LineId Id="123" Count="1" />
       <LineId Id="122" Count="0" />
