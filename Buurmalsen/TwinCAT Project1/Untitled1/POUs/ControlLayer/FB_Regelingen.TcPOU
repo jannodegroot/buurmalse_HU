@@ -66,7 +66,9 @@ Uitmalen.PompStatus := Pomp2;
 END_METHOD
 ]]></ST>
     </Implementation>
-    <Method Name="Debiet" Id="{2b6958b9-f966-445a-a2a5-06201dbd73f8}">
+    <Folder Name="Methods" Id="{7a5154a8-d0ab-4aca-a913-d3242cae32ca}" />
+    <Folder Name="Properties" Id="{64d43a35-4d5a-4d04-a035-1c51de5047d0}" />
+    <Method Name="Debiet" Id="{2b6958b9-f966-445a-a2a5-06201dbd73f8}" FolderPath="Methods\">
       <Declaration><![CDATA[METHOD Debiet : BOOL
 VAR_INPUT
 END_VAR
@@ -75,7 +77,7 @@ END_VAR
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Excute" Id="{63571029-8e9a-4487-8846-7eb1ac19ffd7}">
+    <Method Name="Excute" Id="{63571029-8e9a-4487-8846-7eb1ac19ffd7}" FolderPath="Methods\">
       <Declaration><![CDATA[METHOD Excute : VOID
 VAR_INPUT
 END_VAR
@@ -92,7 +94,7 @@ Uitlaten.PompStatus := Pomp1;
 Uitmalen.PompStatus := Pomp2;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Polderpeil" Id="{59254c56-c257-4845-8458-df8ed2c1a598}">
+    <Method Name="Polderpeil" Id="{59254c56-c257-4845-8458-df8ed2c1a598}" FolderPath="Methods\">
       <Declaration><![CDATA[METHOD Polderpeil : BOOL
 VAR_INPUT
 END_VAR
@@ -101,7 +103,7 @@ END_VAR
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
-    <Method Name="StartRegeling" Id="{b46af18e-9800-4f78-8701-c2159a7865ad}">
+    <Method Name="StartRegeling" Id="{b46af18e-9800-4f78-8701-c2159a7865ad}" FolderPath="Methods\">
       <Declaration><![CDATA[METHOD StartRegeling : VOID
 VAR_INPUT
 END_VAR
@@ -180,7 +182,26 @@ END_VAR
 END_CASE]]></ST>
       </Implementation>
     </Method>
-    <Method Name="StopRegeling" Id="{f9e49943-4756-4a73-b531-44f685a43df0}">
+    <Property Name="Statusdebiet" Id="{27f04e5c-872c-417b-b202-7a7edac38bfd}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Statusdebiet : BOOL]]></Declaration>
+      <Get Name="Get" Id="{0df83d80-bdac-4b44-bc88-00d562838eb3}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{c175d2e1-d2b4-4540-a5e4-9545957390d2}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="StopRegeling" Id="{f9e49943-4756-4a73-b531-44f685a43df0}" FolderPath="Methods\">
       <Declaration><![CDATA[METHOD StopRegeling : BOOL
 VAR_INPUT
 END_VAR
@@ -196,12 +217,7 @@ Pomp2 := 0;
       </Implementation>
     </Method>
     <LineIds Name="FB_Regelingen">
-      <LineId Id="443" Count="1" />
-      <LineId Id="465" Count="0" />
-      <LineId Id="559" Count="0" />
-      <LineId Id="466" Count="0" />
-      <LineId Id="526" Count="4" />
-      <LineId Id="1" Count="0" />
+      <LineId Id="1" Count="10" />
     </LineIds>
     <LineIds Name="FB_Regelingen.Debiet">
       <LineId Id="1" Count="0" />
@@ -214,6 +230,12 @@ Pomp2 := 0;
     </LineIds>
     <LineIds Name="FB_Regelingen.StartRegeling">
       <LineId Id="1" Count="70" />
+    </LineIds>
+    <LineIds Name="FB_Regelingen.Statusdebiet.Get">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Regelingen.Statusdebiet.Set">
+      <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelingen.StopRegeling">
       <LineId Id="1" Count="4" />
