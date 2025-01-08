@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
   <GlobalTextList Name="GlobalTextList" Id="{752f1e6a-9885-4fc6-a1c3-f188369e1ae0}">
     <XmlArchive>
       <Data>
@@ -8,6 +8,16 @@
             <o>
               <v n="TextID">"7"</v>
               <v n="TextDefault">"%s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"514"</v>
+              <v n="TextDefault">"AFO regelschuif test"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"114"</v>
+              <v n="TextDefault">"AFO regelschuif test (V2013)"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -23,6 +33,11 @@
             <o>
               <v n="TextID">"403"</v>
               <v n="TextDefault">"Bedrijfstoestand: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"860"</v>
+              <v n="TextDefault">"closing"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -51,6 +66,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"577"</v>
+              <v n="TextDefault">"Digital Out 1 (off = closing, on = oning)"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"792"</v>
               <v n="TextDefault">"Digital Out 1 (off = closing, on = opening)"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -71,8 +91,23 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"946"</v>
+              <v n="TextDefault">"Manual percentage %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"702"</v>
+              <v n="TextDefault">"niet final"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"59"</v>
               <v n="TextDefault">"Off"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"961"</v>
+              <v n="TextDefault">"opening"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -108,6 +143,11 @@
             <o>
               <v n="TextID">"943"</v>
               <v n="TextDefault">"State: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"21"</v>
+              <v n="TextDefault">"Status: %s"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
