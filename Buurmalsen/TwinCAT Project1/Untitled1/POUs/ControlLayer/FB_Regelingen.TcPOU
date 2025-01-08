@@ -201,6 +201,25 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
+    <Property Name="StatusPolderpeil" Id="{32e1e152-1b90-473e-b502-821a058bfe88}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY StatusPolderpeil : BOOL]]></Declaration>
+      <Get Name="Get" Id="{7201f6cb-5b60-4ee4-b9b6-21f564618a85}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{b9b5e7b8-ea12-4383-8890-4ea40e547a06}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <Method Name="StopRegeling" Id="{f9e49943-4756-4a73-b531-44f685a43df0}" FolderPath="Methods\">
       <Declaration><![CDATA[METHOD StopRegeling : BOOL
 VAR_INPUT
@@ -235,6 +254,12 @@ Pomp2 := 0;
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelingen.Statusdebiet.Set">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Regelingen.StatusPolderpeil.Get">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Regelingen.StatusPolderpeil.Set">
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelingen.StopRegeling">
