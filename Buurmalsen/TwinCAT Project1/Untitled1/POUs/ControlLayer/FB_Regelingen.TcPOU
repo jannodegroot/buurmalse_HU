@@ -66,7 +66,9 @@ Uitmalen.PompStatus := Pomp2;
 END_METHOD
 ]]></ST>
     </Implementation>
-    <Method Name="Debiet" Id="{2b6958b9-f966-445a-a2a5-06201dbd73f8}">
+    <Folder Name="Methodes" Id="{2378fe98-3bc5-4716-ac5d-bbe8352c35c1}" />
+    <Folder Name="Properties" Id="{31b0fd8a-c527-4149-bea8-a7bab24f2469}" />
+    <Method Name="Debiet" Id="{2b6958b9-f966-445a-a2a5-06201dbd73f8}" FolderPath="Methodes\">
       <Declaration><![CDATA[METHOD Debiet : BOOL
 VAR_INPUT
 END_VAR
@@ -75,7 +77,26 @@ END_VAR
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Excute" Id="{63571029-8e9a-4487-8846-7eb1ac19ffd7}">
+    <Property Name="Debiet_prop" Id="{32bb8186-7e40-48e0-93be-1357fae0daba}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Debiet_prop : BOOL]]></Declaration>
+      <Get Name="Get" Id="{92166b9f-934a-4248-80c9-1d9112e5cbdf}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{e6b6f370-27fe-4808-aad9-146ea23945cc}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="Excute" Id="{63571029-8e9a-4487-8846-7eb1ac19ffd7}" FolderPath="Methodes\">
       <Declaration><![CDATA[METHOD Excute : VOID
 VAR_INPUT
 END_VAR
@@ -92,7 +113,7 @@ Uitlaten.PompStatus := Pomp1;
 Uitmalen.PompStatus := Pomp2;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Polderpeil" Id="{59254c56-c257-4845-8458-df8ed2c1a598}">
+    <Method Name="Polderpeil" Id="{59254c56-c257-4845-8458-df8ed2c1a598}" FolderPath="Methodes\">
       <Declaration><![CDATA[METHOD Polderpeil : BOOL
 VAR_INPUT
 END_VAR
@@ -101,7 +122,26 @@ END_VAR
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
-    <Method Name="StartRegeling" Id="{b46af18e-9800-4f78-8701-c2159a7865ad}">
+    <Property Name="Polderpeil_prop" Id="{817c2c97-90d5-4553-a4b0-5bb39c9a01aa}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Polderpeil_prop : BOOL]]></Declaration>
+      <Get Name="Get" Id="{6116dd91-08d4-40e6-a33a-1902ee76a65a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{1070456c-c0f3-4979-b739-0a34e73e41d9}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="StartRegeling" Id="{b46af18e-9800-4f78-8701-c2159a7865ad}" FolderPath="Methodes\">
       <Declaration><![CDATA[METHOD StartRegeling : VOID
 VAR_INPUT
 END_VAR
@@ -180,7 +220,7 @@ END_VAR
 END_CASE]]></ST>
       </Implementation>
     </Method>
-    <Method Name="StopRegeling" Id="{f9e49943-4756-4a73-b531-44f685a43df0}">
+    <Method Name="StopRegeling" Id="{f9e49943-4756-4a73-b531-44f685a43df0}" FolderPath="Methodes\">
       <Declaration><![CDATA[METHOD StopRegeling : BOOL
 VAR_INPUT
 END_VAR
@@ -206,10 +246,22 @@ Pomp2 := 0;
     <LineIds Name="FB_Regelingen.Debiet">
       <LineId Id="1" Count="0" />
     </LineIds>
+    <LineIds Name="FB_Regelingen.Debiet_prop.Get">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Regelingen.Debiet_prop.Set">
+      <LineId Id="1" Count="0" />
+    </LineIds>
     <LineIds Name="FB_Regelingen.Excute">
       <LineId Id="1" Count="8" />
     </LineIds>
     <LineIds Name="FB_Regelingen.Polderpeil">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Regelingen.Polderpeil_prop.Get">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Regelingen.Polderpeil_prop.Set">
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelingen.StartRegeling">
