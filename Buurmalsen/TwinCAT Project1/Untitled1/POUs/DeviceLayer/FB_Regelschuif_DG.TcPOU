@@ -44,6 +44,9 @@ IF error_Trigger.Q THEN
 	VorigePosition := ActueelPosition;
 END_IF
 
+IF (ActueelPosition > (Vorigeposition + Marge) AND Stateregelschuif = E_RegelschuifState.error) THEN
+Stateregelschuif := E_RegelschuifState.opening;
+END_IF
 ]]></ST>
     </Implementation>
     <Folder Name="Methods" Id="{a5c8f5f8-d7b2-406e-83cb-5c27f5fd8301}" />
@@ -104,10 +107,11 @@ END_VAR
       <Implementation>
         <ST><![CDATA[//Zet de timer voor de puls op 1 minuut/10 seconden voor testen
 PulseTimer(IN:=StartPulse ,PT:= T#10S);
-
 Opentimer(IN:=StartOpen , PT:= T#1S);
 
-IF PulseTimer.Q AND stateRegelschuif <> E_RegelschuifState.error THEN
+regelschuifdoel := Inputschuif.get();
+
+IF PulseTimer.Q AND (stateRegelschuif <> E_RegelschuifState.error) AND (Currentmode <> E_Bedrijfstoestand.off) THEN
 	//Als de regelschuif zijn actuele positie op zijn doel is wordt hij uitgezet
 	IF (regelschuifdoel = ActueelPosition)THEN
 		StateRegelschuif := E_RegelschuifState.standby;
@@ -123,21 +127,13 @@ IF PulseTimer.Q AND stateRegelschuif <> E_RegelschuifState.error THEN
 		StateRegelschuif := E_RegelschuifState.opening;
 		OpenSchuif.set(TRUE);
 		Sluitschuif.set(FALSE);
-	ActueelPosition := ActueelPosition +1;
 	END_IF	
 	StartPulse := FALSE;
 	StartPulse := TRUE;
 END_IF 	
 
+//De regelschuif wordt geopend
 IF StateRegelschuif = E_RegelschuifState.opening THEN
-	StartOpen := TRUE;
-	IF OpenTimer.Q THEN
-	ActueelPosition := ActueelPosition - 1;
-	END_IF
-	StartOpen := FALSE;
-END_IF
-
-IF StateRegelschuif = E_RegelschuifState.closing THEN
 	StartOpen := TRUE;
 	IF OpenTimer.Q THEN
 	ActueelPosition := ActueelPosition + 1;
@@ -145,7 +141,14 @@ IF StateRegelschuif = E_RegelschuifState.closing THEN
 	StartOpen := FALSE;
 END_IF
 
-
+//De regelschuif wordt gesloten
+IF StateRegelschuif = E_RegelschuifState.closing THEN
+	StartOpen := TRUE;
+	IF OpenTimer.Q THEN
+	ActueelPosition := ActueelPosition - 1;
+	END_IF
+	StartOpen := FALSE;
+END_IF
 
 //Zorgt ervoor dat de schuif stopt met bewegen als hij wordt uitgeschakeld
 IF CurrentMode = E_Bedrijfstoestand.off THEN
@@ -188,6 +191,8 @@ END_VAR
       <LineId Id="39" Count="0" />
       <LineId Id="36" Count="0" />
       <LineId Id="35" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="55" Count="1" />
       <LineId Id="33" Count="0" />
       <LineId Id="11" Count="0" />
     </LineIds>
@@ -205,8 +210,9 @@ END_VAR
     <LineIds Name="FB_Regelschuif_DG.RegelschuifGoTo">
       <LineId Id="5" Count="0" />
       <LineId Id="1" Count="0" />
-      <LineId Id="7" Count="0" />
       <LineId Id="6" Count="0" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="71" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="8" Count="0" />
       <LineId Id="16" Count="0" />
@@ -217,10 +223,10 @@ END_VAR
       <LineId Id="31" Count="1" />
       <LineId Id="19" Count="3" />
       <LineId Id="33" Count="1" />
-      <LineId Id="36" Count="0" />
       <LineId Id="23" Count="0" />
       <LineId Id="57" Count="1" />
       <LineId Id="15" Count="0" />
+      <LineId Id="73" Count="0" />
       <LineId Id="53" Count="0" />
       <LineId Id="51" Count="0" />
       <LineId Id="70" Count="0" />
@@ -228,14 +234,14 @@ END_VAR
       <LineId Id="63" Count="1" />
       <LineId Id="69" Count="0" />
       <LineId Id="50" Count="0" />
+      <LineId Id="74" Count="0" />
       <LineId Id="54" Count="0" />
       <LineId Id="41" Count="0" />
       <LineId Id="68" Count="0" />
       <LineId Id="65" Count="0" />
       <LineId Id="43" Count="0" />
       <LineId Id="66" Count="1" />
-      <LineId Id="44" Count="1" />
-      <LineId Id="37" Count="0" />
+      <LineId Id="44" Count="0" />
       <LineId Id="29" Count="0" />
       <LineId Id="26" Count="0" />
       <LineId Id="25" Count="0" />
