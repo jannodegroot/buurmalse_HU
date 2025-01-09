@@ -9,12 +9,34 @@ VAR_OUTPUT
 END_VAR
 VAR
 	stap : INT;
-	onPomp : E_POMPSTATE.on;
-	standbyRegelschuif : E_RegelschuifState.standby;
-	closed : E_OpenDichtKlepState.closed;
-	open : E_OpenDichtKlepState.open;
+	onPomp : E_POMPSTATE :=E_POMPSTATE.on;
+	standbyRegelschuif : E_RegelschuifState := E_RegelschuifState.standby;
+	closed : E_OpenDichtKlepState :=E_OpenDichtKlepState.closed;
+	open : E_OpenDichtKlepState :=E_OpenDichtKlepState.open;
 	//toerentaltotaal 
-	optoeren : E_PompState.optoeren;
+	optoeren : E_PompState :=E_PompState.optoeren;
+	
+	CurrentModus : E_Besturingsmodus;
+	KlepV2012 : ITF_OpenDichtKlep;
+	KlepV2014 : ITF_OpenDichtKlep;
+	KlepV2021 : ITF_OpenDichtKlep;
+	KlepV2023 : ITF_OpenDichtKlep;
+	KlepV2024 : ITF_OpenDichtKlep;
+	KlepV2025 : ITF_OpenDichtKlep;
+	KlepV2026 : ITF_OpenDichtKlep;
+	
+	
+	SchuifV2013_AFG : ITF_Regelschuif;
+	SchuifV2022_AFG : ITF_Regelschuif;
+	
+	SchuifV2013_DG : ITF_Regelschuif;
+	SchuifV2022_DG : ITF_Regelschuif;
+	
+	Pomp1_P2011 : ITF_Pomp;
+	pomp2_P2021 : ITF_Pomp;
+	
+	pompP2011:INT;
+	pompP2021:INT;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -40,20 +62,16 @@ CASE stap OF
 		END_IF
 	3:
 		// totaal toerental
-		pompP2011 := main.Regelingen.ToerentalP2011; // get toerental
-		IF pompP2011 >= 386 THEN 
-			pompP2021 := pompP2011 - 385;
-			main.PompInterfaceP2011.PompGoTo(385);// set toerental 11 max
-			main.PompInterfaceP2021.PompGoTo(pompP2021);//Set toerental 21
-		ELSE 
-			pomp2_P2011.ActueelToerental := pompP2011; // set toerenal 11
-			main.PompInterfaceP2011.PompGoTo(pompP2011);
-		END_IF
+		pompP2011 := main.Regelingen.ToerentalP2011; // get toerental 11
+		pompP2021 := main.Regelingen.ToerentalP2021; // get toerental 21
+		pomp2_P2021.PompGoTo(pompP2021);//Set toerental 21
+		Pomp1_P2011.PompGoTo(pompP2011); // set toerental 11
 		
-		IF optoeren = main.PompInterfaceP2011.StatePomp THEN 
-			main.OpenDichtKlepInterfaceV2012.OpenDichtKlepOpen();
-			IF open = main.OpenDichtKlepInterfaceV2012 THEN
-				main.OpenDichtKlepInterfaceV2012.OpenDichtKlepClose();
+		
+		IF optoeren = Pomp1_P2011.StatePomp THEN 
+			KlepV2012.Open();
+			IF open = KlepV2012.StateKlep THEN
+				KlepV2012.Close();
 			END_IF
 		END_IF
 		
@@ -134,44 +152,25 @@ pomp1_p2011 := PompP2011;
       </Implementation>
     </Method>
     <LineIds Name="FB_Uitmalen">
-      <LineId Id="8" Count="0" />
-      <LineId Id="25" Count="0" />
-      <LineId Id="27" Count="0" />
-      <LineId Id="29" Count="0" />
-      <LineId Id="28" Count="0" />
-      <LineId Id="40" Count="0" />
-      <LineId Id="31" Count="0" />
-      <LineId Id="37" Count="0" />
-      <LineId Id="32" Count="0" />
-      <LineId Id="34" Count="0" />
-      <LineId Id="44" Count="4" />
-      <LineId Id="55" Count="1" />
-      <LineId Id="33" Count="0" />
-      <LineId Id="57" Count="0" />
+      <LineId Id="69" Count="0" />
       <LineId Id="65" Count="0" />
-      <LineId Id="60" Count="0" />
-      <LineId Id="64" Count="0" />
-      <LineId Id="71" Count="0" />
-      <LineId Id="68" Count="0" />
+      <LineId Id="1" Count="20" />
       <LineId Id="70" Count="0" />
-      <LineId Id="73" Count="1" />
-      <LineId Id="93" Count="0" />
-      <LineId Id="67" Count="0" />
-      <LineId Id="58" Count="0" />
-      <LineId Id="76" Count="0" />
-      <LineId Id="78" Count="0" />
-      <LineId Id="80" Count="2" />
-      <LineId Id="79" Count="0" />
-      <LineId Id="83" Count="0" />
-      <LineId Id="85" Count="1" />
-      <LineId Id="91" Count="0" />
-      <LineId Id="87" Count="1" />
-      <LineId Id="90" Count="0" />
-      <LineId Id="89" Count="0" />
-      <LineId Id="84" Count="0" />
-      <LineId Id="77" Count="0" />
-      <LineId Id="26" Count="0" />
-      <LineId Id="6" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="28" Count="20" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="49" Count="14" />
+    </LineIds>
+    <LineIds Name="FB_Uitmalen.FB_Init">
+      <LineId Id="1" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="21" Count="3" />
+      <LineId Id="30" Count="1" />
+      <LineId Id="25" Count="4" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="32" Count="1" />
     </LineIds>
   </POU>
 </TcPlcObject>

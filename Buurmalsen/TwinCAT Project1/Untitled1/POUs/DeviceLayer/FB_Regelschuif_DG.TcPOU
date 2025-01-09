@@ -1,24 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
   <POU Name="FB_Regelschuif_DG" Id="{197a057b-7e77-4001-97d3-497a9b935830}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_Regelschuif_DG
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Regelschuif_DG IMPLEMENTS ITF_Regelschuif
+VAR
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Methods" Id="{a5c8f5f8-d7b2-406e-83cb-5c27f5fd8301}" />
+    <Folder Name="Properties" Id="{b6eb3f6c-3011-4a7e-8816-c7f569303f45}" />
+    <Property Name="ActueelPosition" Id="{e5264e59-d7b3-4d52-85a9-01c31af68424}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY ActueelPosition : SINT]]></Declaration>
+      <Get Name="Get" Id="{9fd5639f-907b-4f81-9ddb-25b621dd3e75}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{905c9011-2b5d-48ef-959c-c4e2af0ee1b8}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="FB_init" Id="{f3ca1436-908a-411d-9d51-011caa116cfc}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
 VAR_INPUT
 	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
 	
-	tag: STRING;
-	SchuifInput: ITF_Regelschuif_In_DG;
-	OutputOpen: ITF_Regelschuif_OutOpen_DG;
-	OutputClose: ITF_Regelschuif_OutClose_DG;
+
 	
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TagName:= tag;
-InputSchuif := SchuifInput;
-OpenSchuif := OutputOpen;
-SluitSchuif := OutputClose;
-
+        <ST><![CDATA[
 ]]></ST>
       </Implementation>
     </Method>
@@ -35,37 +58,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//Zet de timer voor de puls op 1 minuut/10 seconden voor testen
-PulseTimer(IN:=StartPulse ,PT:= T#10S);
-
-Opentimer(IN:=StartOpen , PT:= T#1S);
-
-IF PulseTimer.Q THEN
-	//Als de regelschuif zijn actuele positie op zijn doel is wordt hij uitgezet
-	IF (regelschuifdoel = ActueelPosition)THEN
-		StateRegelschuif := E_RegelschuifState.standby;
-	END_IF
-	//Als het doel kleiner is dan de actuele positie gaat hij sluiten
-	IF (regelschuifdoel < ActueelPosition) THEN
-		StateRegelschuif := E_RegelschuifState.closing;
-		OpenSchuif.set(FALSE);
-		SluitSchuif.set(TRUE);
-		
-	END_IF
-	//Als het doel groter is dan de actuele positie gaat hij openen
-	IF (regelschuifdoel > ActueelPosition) THEN
-		StateRegelschuif := E_RegelschuifState.opening;
-		OpenSchuif.set(TRUE);
-		Sluitschuif.set(FALSE);
-	END_IF
-	
-END_IF
-
-//Zorgt ervoor dat de schuif stopt met bewegen als hij wordt uitgeschakeld
-IF CurrentMode = E_Bedrijfstoestand.off THEN
-	regelschuifdoel := ActueelPosition;
-END_IF
-
+        <ST><![CDATA[
 
 ]]></ST>
       </Implementation>
@@ -84,55 +77,13 @@ END_VAR
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
-    <Implementation>
-      <ST><![CDATA[//test]]></ST>
-    </Implementation>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <LineIds Name="FB_Regelschuif_DG">
-      <LineId Id="1" Count="10" />
-    </LineIds>
-    <LineIds Name="FB_Regelschuif_DG.ActueelPosition.Get">
-      <LineId Id="1" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Regelschuif_DG.ActueelPosition.Set">
-      <LineId Id="1" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Regelschuif_DG.FB_init">
-      <LineId Id="1" Count="0" />
-      <LineId Id="4" Count="2" />
-      <LineId Id="2" Count="1" />
-    </LineIds>
-    <LineIds Name="FB_Regelschuif_DG.RegelschuifGoTo">
-      <LineId Id="5" Count="0" />
-      <LineId Id="1" Count="0" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="6" Count="0" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="8" Count="0" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="12" Count="2" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="24" Count="0" />
-      <LineId Id="31" Count="1" />
-      <LineId Id="30" Count="0" />
-      <LineId Id="19" Count="3" />
-      <LineId Id="33" Count="1" />
-      <LineId Id="23" Count="0" />
-      <LineId Id="15" Count="0" />
       <LineId Id="11" Count="0" />
-      <LineId Id="29" Count="0" />
-      <LineId Id="26" Count="0" />
-      <LineId Id="25" Count="0" />
-      <LineId Id="27" Count="1" />
-      <LineId Id="4" Count="0" />
-      <LineId Id="3" Count="0" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Regelschuif_DG.StateRegelschuif.Get">
-      <LineId Id="1" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Regelschuif_DG.StateRegelschuif.Set">
-      <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_DG.ActueelPosition.Get">
       <LineId Id="1" Count="0" />
@@ -141,10 +92,10 @@ END_VAR
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_DG.FB_init">
-      <LineId Id="1" Count="2" />
+      <LineId Id="5" Count="1" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_DG.RegelschuifGoTo">
-      <LineId Id="1" Count="0" />
+      <LineId Id="31" Count="2" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_DG.StateRegelschuif.Get">
       <LineId Id="1" Count="0" />
