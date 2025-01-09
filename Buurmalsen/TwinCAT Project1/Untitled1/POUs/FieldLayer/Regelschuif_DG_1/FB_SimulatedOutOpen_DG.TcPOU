@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
+  <POU Name="FB_SimulatedOutOpen_DG" Id="{9d9c518a-3a46-4ca8-a5b8-2c0ac1be4c7b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_SimulatedOutOpen_DG IMPLEMENTS ITF_Regelschuif_OutOpen_DG
+VAR
+	internalState : BOOL := FALSE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="set" Id="{bcd0bac6-3ed9-4947-a075-8f2420f81498}">
+      <Declaration><![CDATA[METHOD set : BOOL
+VAR_INPUT
+	state : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[internalState := state;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_SimulatedOutOpen_DG">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_SimulatedOutOpen_DG.set">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
