@@ -8,7 +8,7 @@ END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
-	stap : INT := 1;
+	stap : INT;
 	offPomp : E_POMPSTATE :=E_POMPSTATE.off;
 	standbyRegelschuif : E_RegelschuifState := E_RegelschuifState.standby;
 	closed : E_OpenDichtKlepState :=E_OpenDichtKlepState.closed;
