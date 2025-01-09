@@ -54,16 +54,7 @@ VAR
     streefPijl : REAL;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[FUNCTION_BLOCK FB_Regelingen
-VAR
-
-	
-END_VAR
-
-(* Gegevens doorsturen naar de subfunctieblokken *)
-Uitlaten.PompStatus := Pomp1;
-Uitmalen.PompStatus := Pomp2;
-END_METHOD
+      <ST><![CDATA[
 ]]></ST>
     </Implementation>
     <Folder Name="Methods" Id="{7a5154a8-d0ab-4aca-a913-d3242cae32ca}" />
@@ -74,15 +65,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF BestuurMode = 1 THEN
-    StartRegeling();  (* Start automatische regeling als de modus actief is *)
-ELSE
-    StopRegeling();   (* Zet de regeling uit in handmatige modus *)
-END_IF
-
-(* Gegevens doorsturen naar de subfunctieblokken *)
-Uitlaten.PompStatus := Pomp1;
-Uitmalen.PompStatus := Pomp2;]]></ST>
+        <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
     <Method Name="StartRegeling" Id="{b46af18e-9800-4f78-8701-c2159a7865ad}" FolderPath="Methods\">
@@ -91,77 +74,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[CASE BestuurMode OF
-    0:  (* Handmatige modus *)
-        ModeStatus := 'Handmatig';
-        (* Schakel pompen in of uit handmatig *)
-        Pomp1 := 0;  (* Pomp standby, handmatig inschakelen via HMI *)
-        Pomp2 := 0;
-
-    1:  (* Automatische modus *)
-        ModeStatus := 'Automatisch';
-
-        (* Regelstand 1: Debiet *)
-        Uitlaten.RegelStand := RegelStand1;
-        Uitlaten.Execute();
-
-        (* Regelstand 2: Polderpeil *)
-        Inmalen.RegelStand := RegelStand2;
-        Inmalen.Execute();
-
-        (* Errorberekening *)
-        DebietError := RegelStand1 - Uitlaten.ActueelDebiet;
-        PolderpeilError := RegelStand2 - Inmalen.ActueelPolderpeil;
-
-        (* Beslis de status van de pompen *)
-        IF DebietError > 0.1 THEN
-            Pomp1 := 1;  (* Schakel pomp 1 in als debiet onder setpoint is *)
-        ELSE
-            Pomp1 := 0;
-        END_IF
-
-        IF PolderpeilError > 0.05 THEN
-            Pomp2 := 1;  (* Schakel pomp 2 in als peil onder setpoint is *)
-        ELSE
-            Pomp2 := 0;
-        END_IF;
-
-        (* Pomp 1 berekening *)
-        IF P2021_stand = 1 AND BestuurMode = 1 THEN
-            berekenRPM(GewenstdebietV2013 := RegelStand1, polderHoogteVerschil := polderHoogteVerschil, pompIndex := 2, RPM := berekendeRPM_REAL);
-            berekendeRPM_UINT := LREAL_TO_UINT(In := berekendeRPM_REAL);
-
-            IF berekendeRPM_UINT < minRPM_M2021 THEN
-                M2021_ON := FALSE;
-                stuurM2021(0, minRPM_M2021, maxRPM_M2021, P2021_status, P2021_setpoint, stuurRPM_M2021, currentRPM_M2021);
-            ELSE
-                M2021_ON := TRUE;
-                stuurM2021(berekendeRPM_UINT, minRPM_M2021, maxRPM_M2021, P2021_status, P2021_setpoint, stuurRPM_M2021, currentRPM_M2021);
-            END_IF;
-        END_IF;
-
-        (* Pomp 2 berekening *)
-        IF P2011_stand = 1 AND BestuurMode = 1 THEN
-            berekenRPM(GewenstdebietV2013 := RegelStand1, polderHoogteVerschil := polderHoogteVerschil, pompIndex := 2, RPM := berekendeRPM2_REAL);
-            berekendeRPM2_UINT := LREAL_TO_UINT(In := berekendeRPM2_REAL);
-            stuurM2011(berekendeRPM2_UINT, minRPM_M2011, maxRPM_M2011, P2011_status, P2011_setpoint, stuurRPM_M2011, currentRPM_M2011);
-
-            IF berekendeRPM2_UINT < minRPM_M2011 THEN
-                M2011_ON := FALSE;
-            ELSE
-                M2011_ON := TRUE;
-            END_IF;
-
-        ELSIF P2011_stand = 1 AND BestuurMode = 2 THEN
-            IF zomerPijl = TRUE THEN
-                streefPijl := 180;
-            END_IF;
-        END_IF;
-    ELSE
-        ModeStatus := 'Onbekend';
-        Pomp1 := 0;
-        Pomp2 := 0;
-END_CASE]]></ST>
+        <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
     <Property Name="Statusdebiet" Id="{27f04e5c-872c-417b-b202-7a7edac38bfd}" FolderPath="Properties\">
@@ -206,25 +119,20 @@ END_VAR
       <Declaration><![CDATA[METHOD StopRegeling : BOOL
 VAR_INPUT
 END_VAR
-
-
-END_VAR]]></Declaration>
+]]></Declaration>
       <Implementation>
-        <ST><![CDATA[(* Methode om de regeling te stoppen *)
-ModeStatus := 'Gestopt';
-Pomp1 := 0;       (* Zet beide pompen uit *)
-Pomp2 := 0;
-]]></ST>
+        <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_Regelingen">
-      <LineId Id="1" Count="10" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="11" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelingen.Excute">
-      <LineId Id="1" Count="8" />
+      <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelingen.StartRegeling">
-      <LineId Id="1" Count="70" />
+      <LineId Id="71" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelingen.Statusdebiet.Get">
       <LineId Id="1" Count="0" />
@@ -239,7 +147,7 @@ Pomp2 := 0;
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelingen.StopRegeling">
-      <LineId Id="1" Count="4" />
+      <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
