@@ -2,15 +2,49 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
   <POU Name="FB_Uitlaten" Id="{a1b74111-7dea-4521-89a1-4c1341f39b91}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Uitlaten
-VAR_INPUT
-END_VAR
-VAR_OUTPUT
-END_VAR
 VAR
-END_VAR
-]]></Declaration>
+	Besturing: E_Besturingsmodus;
+
+	PompStatus11 : ITF_Pomp;
+	PompStatus21 : ITF_Pomp;
+	
+	KlepV2012 : ITF_OpenDichtKlep;
+	KlepV2021 : ITF_OpenDichtKlep;
+	KlepV2023 : ITF_OpenDichtKlep;
+	KlepV2024 : ITF_OpenDichtKlep;
+	
+	SchuifV2013_AFO : ITF_Regelschuif;
+	SchuifV2022_AFO : ITF_Regelschuif;
+	
+	SchuifV2013_DG : ITF_Regelschuif;
+	SchuifV2022_DG : ITF_Regelschuif;
+
+	Stand2013: SINT; //Moeten we van de regelingen krijgen
+	Stand2022: SINT; //Moeten we van de regelingen krijgen
+END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[Besturing := main.Regelingen.BestuurMode;
+IF Besturing = E_Besturingsmodus.uitlaten THEN
+	
+	KlepV2012.Open();
+	KlepV2021.Open();
+	KlepV2023.Close();
+	KlepV2024.Close();
+	
+	PompStatus11.PompGoTo(0);
+	PompStatus21.PompGoTo(0);
+	
+	//Op het moment dat de terugmelding is gegeven dan:
+	IF KlepV2012.StateKlep = E_OpenDichtKlepState.open AND KlepV2021.StateKlep = E_OpenDichtKlepState.open AND KlepV2023.StateKlep = E_OpenDichtKlepState.closed AND KlepV2024.StateKlep = E_OpenDichtKlepState.closed THEN		
+        SchuifV2013_AFO.RegelSchuifGoTo(Stand2013);
+	    SchuifV2013_DG.RegelSchuifGoTo(Stand2013);
+		
+		IF ((SchuifV2013_AFO.ActueelPosition = Stand2013) OR (SchuifV2022_DG.ActueelPosition = Stand2013 ))THEN
+	        SchuifV2022_AFO.RegelSchuifGoTo(Stand2022);
+	        SchuifV2022_DG.RegelSchuifGoTo(Stand2022);
+	    END_IF
+	END_IF
+END_IF]]></ST>
     </Implementation>
     <Method Name="FB_Init" Id="{d9f73871-464c-4614-bf1b-96c514a43dd2}">
       <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
@@ -20,17 +54,56 @@ END_VAR
 METHOD FB_Init: BOOL
 VAR_INPUT
     bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
-    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)  
+	OpenDichtKlepV2012: ITF_OpenDichtKlep;
+	OpenDichtKlepV2021: ITF_OpenDichtKlep;
+	OpenDichtKlepV2023: ITF_OpenDichtKlep;
+	OpenDichtKlepV2024: ITF_OpenDichtKlep;
+	
+	V2013_DG: ITF_Regelschuif;
+	V2022_DG: ITF_Regelschuif;
+	
+	V2013_AFO: ITF_Regelschuif;
+	V2022_AFO: ITF_Regelschuif;
+	
+	Pomp2011: ITF_Pomp;
+	Pomp2021: ITF_Pomp;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[KlepV2012:= OpenDichtKlepV2012;
+KlepV2021:= OpenDichtKlepV2021;
+KlepV2023:= OpenDichtKlepV2023;
+KlepV2024:= OpenDichtKlepV2024;
+
+SchuifV2013_DG:= V2013_DG;
+SchuifV2022_DG:= V2022_DG;
+
+SchuifV2013_AFO:= V2013_AFO;
+SchuifV2022_AFO:= V2022_AFO;
+
+Pompstatus11:= Pomp2011;
+Pompstatus21:= Pomp2021; ]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_Uitlaten">
+      <LineId Id="4" Count="0" />
+      <LineId Id="6" Count="13" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="22" Count="3" />
+      <LineId Id="34" Count="0" />
       <LineId Id="3" Count="0" />
     </LineIds>
     <LineIds Name="FB_Uitlaten.FB_Init">
       <LineId Id="1" Count="0" />
+      <LineId Id="3" Count="3" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="13" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

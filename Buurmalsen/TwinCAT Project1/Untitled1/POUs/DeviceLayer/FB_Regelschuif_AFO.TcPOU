@@ -110,6 +110,7 @@ VAR
 	checkPositions : BOOL;
 	currentstatet: E_RegelschuifState;
 	secondTriggerTrigger: BOOL;
+	waitExtraMinute: BOOL;
 END_VAR
 VAR_INPUT
 	regelschuifdoel : SINT;
@@ -118,7 +119,7 @@ END_VAR]]></Declaration>
         <ST><![CDATA[minuteTimer(IN:= timerrunt,PT:= T#10S);
 
 // dit is zodat het gefaseerd gaat een pulse per sec sturen
-secondTimer(IN:= secondTimerRun,PT:= T#1S);
+secondTimer(IN:= secondTimerRun,PT:= T#5S); // pulse lengte langer ivm testen
 secondTimerTrigger(CLK := secondTriggerTrigger);
 IF secondTimerTrigger.Q THEN
 	secondTimerRun := TRUE;
@@ -137,12 +138,12 @@ END_IF
 
 IF minuteTimer.Q THEN
 	
-	IF ActueelPosition = regelschuifdoel THEN // huidige positie is correct
+	IF ActueelPosition >= (regelschuifdoel - 3) AND ActueelPosition <= (regelschuifdoel + 3) THEN // huidige positie is correct binnen 3%
 		StateRegelSchuif := E_RegelschuifState.standby;
 	
 	END_IF
 	
-	IF ActueelPosition > regelschuifdoel THEN // huidige positie is te hoog
+	IF ActueelPosition > (regelschuifdoel + 3) AND waitExtraMinute = FALSE THEN // huidige positie is te hoog
 		IF stateRegelschuif <> E_RegelschuifState.error THEN
 			StateRegelSchuif := E_RegelschuifState.closing;
 		END_IF
@@ -150,9 +151,10 @@ IF minuteTimer.Q THEN
 		outputOpen.set(FALSE);
 		outputClose.set(TRUE);
 		secondTriggerTrigger := TRUE; 
+		waitExtraMinute := TRUE; // wacht een minuut extra als er een pulse is gestuurd
 	END_IF
 
-	IF ActueelPosition < regelschuifdoel THEN // huidige positie is te laag
+	IF ActueelPosition < (regelschuifdoel - 3) AND waitExtraMinute = FALSE THEN // huidige positie is te laag
 		IF stateRegelschuif <> E_RegelschuifState.error THEN
 			StateRegelSchuif := E_RegelschuifState.opening;
 		END_IF
@@ -160,8 +162,10 @@ IF minuteTimer.Q THEN
 		outputClose.set(FALSE);
 		outputOpen.set(TRUE);
 		secondTriggerTrigger := TRUE; 
+		waitExtraMinute := TRUE;
 	END_IF
 	timerrunt := 0; // reset timer
+	waitExtraMinute := FALSE;
 ELSE
 	timerrunt := 1; //reser reset timer
 END_IF
@@ -254,6 +258,7 @@ END_VAR
       <LineId Id="15" Count="0" />
       <LineId Id="38" Count="0" />
       <LineId Id="53" Count="0" />
+      <LineId Id="61" Count="0" />
       <LineId Id="6" Count="0" />
       <LineId Id="12" Count="0" />
       <LineId Id="10" Count="0" />
@@ -264,8 +269,10 @@ END_VAR
       <LineId Id="40" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="54" Count="0" />
+      <LineId Id="63" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="20" Count="0" />
+      <LineId Id="62" Count="0" />
       <LineId Id="30" Count="2" />
       <LineId Id="19" Count="0" />
       <LineId Id="26" Count="0" />
