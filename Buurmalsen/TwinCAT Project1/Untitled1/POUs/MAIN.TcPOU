@@ -25,7 +25,6 @@ VAR
 	digIn_V2024_1 : FB_SimulatedDigIn;
 	digIn_V2024_2 : FB_SimulatedDigIn;
 	digOut_V2024 : FB_SimulatedDigOut;
-	// Einde digin digout van appeltjes
 	
 	digIn_V2025_1 : FB_SimulatedDigIn;
 	digIn_V2025_2 : FB_SimulatedDigIn;
@@ -34,6 +33,7 @@ VAR
 	digIn_V2026_1 : FB_SimulatedDigIn;
 	digIn_V2026_2 : FB_SimulatedDigIn;
 	digOut_V2026 : FB_SimulatedDigOut;
+	// Einde digin digout van appeltjes
 	
 	// Start digin digout van AFO
 	digOutOpeningV2013 : FB_SimulatedDigOutOpen_AFO;
@@ -60,45 +60,7 @@ VAR
 	V2021 : FB_OpenDichtKlep(tag := 'V2021', DigInClosed := digIn_V2021_1, DigInOpened := digIn_V2021_2, DigOut := digOut_V2021);
 	V2023 : FB_OpenDichtKlep(tag := 'V2023', DigInClosed := digIn_V2023_1, DigInOpened := digIn_V2023_2, DigOut := digOut_V2023);
 	V2024 : FB_OpenDichtKlep(tag := 'V2024', DigInClosed := digIn_V2024_1, DigInOpened := digIn_V2024_2, DigOut := digOut_V2024);  
-	V2025 : FB_OpenDichtKlep(tag := 'V2025', DigInClosed := digIn_V2025_1, DigInOpened := digIn_V2025_2, DigOut := digOut_V2025);  
-	V2026 : FB_OpenDichtKlep(tag := 'V2026', DigInClosed := digIn_V2026_1, DigInOpened := digIn_V2026_2, DigOut := digOut_V2026);  
-	
-	V2013_AFO : FB_Regelschuif_AFO(tag := 'V2013', DigOutOpening := digOutOpeningV2013, DigOutClosing := digOutClosingV2013, AnaInPosition := AnaInV2013);
-	V2022_AFO : FB_Regelschuif_AFO(tag := 'V2022', DigOutOpening := digOutOpeningV2022, DigOutClosing := digOutClosingV2022, AnaInPosition := AnaInV2022);
-	
-	V2013_DG : FB_Regelschuif_DG;
-	V2022_DG : FB_Regelschuif_DG;
-	
-	P2011 : FB_Pomp(tag:= 'P2011',DigOutOn:=digoutP2011,Diginon:=diginP2011, Anaouttoerental:=AnaoutP2011);
-	P2021 : FB_Pomp(tag:= 'P2021',DigOutOn:=digoutP2021,Diginon:=diginP2021, Anaouttoerental:=AnaoutP2021);
-	
-	Regelingen : FB_Regelingen;
-	
-	ControllerInmalen : FB_Inmalen(OpenDichtKlepV2012 := V2012,
-								   OpenDichtKlepV2021 := V2021, 
-								   OpenDichtKlepV2023 := V2023, 
-								   OpenDichtKlepV2024 := V2024,
-								   RegelschuifV2013_AFO := V2013_AFO,
-								   RegelschuifV2022_AFO := V2022_AFO,
-								   RegelschuifV2013_DG := V2013_DG,
-								   RegelschuifV2022_DG := V2022_DG,
-								   PompP2021 := P2021 );
-								   
-	ControllerUitmalen : FB_Uitmalen(OpenDichtKlepV2012 := V2012,
-								   OpenDichtKlepV2014 := V2014,
-								   OpenDichtKlepV2021 := V2021, 
-								   OpenDichtKlepV2023 := V2023, 
-								   OpenDichtKlepV2024 := V2024,
-								   OpenDichtKlepV2025 := V2025,
-								   OpenDichtKlepV2026 := V2026,
-								   RegelschuifV2013_AFO := V2013_AFO,
-								   RegelschuifV2022_AFO := V2022_AFO,
-								   RegelschuifV2013_DG := V2013_DG,
-								   RegelschuifV2022_DG := V2022_DG,
-								   PompP2021 := P2021,
-								   PompP2011 := P2011 );
-								   
-									   
+
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -124,19 +86,9 @@ V2014();
 V2021();
 V2023();
 V2024();
-V2025();
-V2026();
-//End  function kleppen appeltjes
-
-P2021();
-P2011();
-
-Regelingen ();
-ControllerInmalen ();
-ControllerUitmalen ();]]></ST>
+//nick was hier]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="165" Count="0" />
       <LineId Id="69" Count="2" />
       <LineId Id="158" Count="0" />
       <LineId Id="123" Count="1" />
@@ -149,17 +101,9 @@ ControllerUitmalen ();]]></ST>
       <LineId Id="152" Count="0" />
       <LineId Id="157" Count="0" />
       <LineId Id="75" Count="0" />
-      <LineId Id="167" Count="0" />
       <LineId Id="125" Count="0" />
       <LineId Id="155" Count="1" />
-      <LineId Id="168" Count="1" />
-      <LineId Id="163" Count="0" />
-      <LineId Id="170" Count="0" />
-      <LineId Id="162" Count="0" />
-      <LineId Id="171" Count="1" />
       <LineId Id="161" Count="0" />
-      <LineId Id="2" Count="0" />
-      <LineId Id="166" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
