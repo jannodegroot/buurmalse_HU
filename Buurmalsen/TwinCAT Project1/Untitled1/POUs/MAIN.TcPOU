@@ -43,6 +43,7 @@ VAR
 	digOutOpeningV2022 : FB_SimulatedDigOutOpen_AFO;
 	digOutClosingV2022 :FB_SimulatedDigOutClose_AFO;
 	AnaInV2022 : FB_SimulatedAnaIn_AFO;
+	
 	// Einde digin digout van AFO
 
 	// Start digin digout van queens of harts
