@@ -44,9 +44,9 @@ END_VAR
 IF currentmodus = E_Besturingsmodus.uitmalen THEN	
 CASE stap OF
 	1:
-		Pomp1_P2011.PompGoTo(20);
-		pomp2_P2021.PompGoTo(20);
-		IF 20 = Pomp1_P2011.ActueelToerental  AND onPomp = Pomp1_P2011.StatePomp AND 20 = pomp2_P2021.ActueelToerental  AND onPomp = pomp2_P2021.StatePomp THEN
+		Pomp1_P2011.PompGoTo(0);
+		pomp2_P2021.PompGoTo(0);
+		IF 0 = Pomp1_P2011.ActueelToerental  AND offPomp = Pomp1_P2011.StatePomp AND 0 = pomp2_P2021.ActueelToerental  AND offPomp = pomp2_P2021.StatePomp THEN
 			stap := 2;
 		END_IF
 			
