@@ -83,7 +83,7 @@ VAR
 	P2011 : FB_Pomp(tag:= 'P2011',DigOutOn:=digoutP2011,Diginon:=diginP2011, Anaouttoerental:=AnaoutP2011);
 	P2021 : FB_Pomp(tag:= 'P2021',DigOutOn:=digoutP2021,Diginon:=diginP2021, Anaouttoerental:=AnaoutP2021);
 	
-	Regelingen : FB_Regelingen;
+	Regelingen : FB_Regelingen_1;
 	
 	ControllerInmalen : FB_Inmalen(OpenDichtKlepV2012 := V2012,
 								   OpenDichtKlepV2014 := V2014,
