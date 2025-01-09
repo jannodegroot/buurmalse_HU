@@ -13,7 +13,6 @@ VAR
 	currentState : E_RegelschuifState := E_RegelschuifState.standby;
 	expectedState : E_RegelschuifState := E_RegelschuifState.standby;
 	
-	SchuifPosition: SINT;
 	VorigePosition: SINT;
 	Marge : SINT := 2;
 	
@@ -34,7 +33,6 @@ END_IF
 
 //De actuele positie van de schuif wordt opgehaald
 ActueelPosition:= InputSchuif.get();
-SchuifPosition:= InputSchuif.get();
 
 error_Trigger(CLK:= ErrorTimer.Q);
 
@@ -182,7 +180,8 @@ END_VAR
       </Set>
     </Property>
     <LineIds Name="FB_Regelschuif_DG">
-      <LineId Id="1" Count="32" />
+      <LineId Id="1" Count="10" />
+      <LineId Id="13" Count="20" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_DG.ActueelPosition.Get">
       <LineId Id="1" Count="0" />
