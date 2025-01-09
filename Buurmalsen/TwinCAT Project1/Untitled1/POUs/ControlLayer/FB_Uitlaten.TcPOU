@@ -31,8 +31,8 @@ IF Besturing = E_Besturingsmodus.uitlaten THEN
 	KlepV2023.Close();
 	KlepV2024.Close();
 	
-	PompStatus11.StatePomp := E_PompState.off;
-	PompStatus21.StatePomp := E_PompState.off;
+	PompStatus11.PompGoTo(0);
+	PompStatus21.PompGoTo(0);
 	
 	//Op het moment dat de terugmelding is gegeven dan:
 	IF KlepV2012.StateKlep = E_OpenDichtKlepState.open AND KlepV2021.StateKlep = E_OpenDichtKlepState.open AND KlepV2023.StateKlep = E_OpenDichtKlepState.closed AND KlepV2024.StateKlep = E_OpenDichtKlepState.closed THEN		
