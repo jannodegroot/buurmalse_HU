@@ -5,7 +5,7 @@
       <Data>
         <o xml:space="preserve" t="VisualObject">
           <n n="LastVisuLanguageModelEntry" />
-          <v n="UniqueIdGenerator">"15"</v>
+          <v n="UniqueIdGenerator">"18"</v>
           <o n="VisualElemList" t="VisualElemList">
             <l n="VisualElementList" t="VisualElemCollection" cet="GenericVisualElem">
               <o>
@@ -7945,15 +7945,7 @@
                     <v n="VisualElementIdentifier">"GenElemInst_109"</v>
                     <n n="VisualElementOfflinePaintCommands" />
                     <n n="VisualElementFrameInformation" />
-                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="ToggleVarInputAction[]">
-                      <v>OnMouseDown</v>
-                      <a cet="ToggleVarInputAction">
-                        <o>
-                          <v n="ToggleVariable">"MAIN.digIn_V2024_2.internalState"</v>
-                          <n n="Error" />
-                        </o>
-                      </a>
-                    </d>
+                    <d n="VisualElementInputActions" t="Hashtable" />
                     <v n="VisualElementIdentification">{d70fdaa5-50cc-42ce-b9be-41cc5fc1edfc}</v>
                     <v n="VisualElementOwningObjectGuid">{cf74a335-0ba7-461e-8ba0-0c2c14956010}</v>
                     <a n="LMGuids" et="Guid" />
@@ -8471,11 +8463,11 @@
                     <v n="VisualElementIdentifier">"GenElemInst_112"</v>
                     <n n="VisualElementOfflinePaintCommands" />
                     <n n="VisualElementFrameInformation" />
-                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="STSnippetInputAction[]">
+                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="IInputAction[]">
                       <v>OnMouseDown</v>
                       <a cet="STSnippetInputAction">
                         <o>
-                          <v n="STSnippet">"MAIN.V2024.currentMode := E_Bedrijfstoestand.manual;"</v>
+                          <v n="STSnippet">"MAIN.V2013.currentMode := E_Bedrijfstoestand.manual;"</v>
                         </o>
                       </a>
                     </d>
@@ -8648,11 +8640,11 @@
                     <v n="VisualElementIdentifier">"GenElemInst_113"</v>
                     <n n="VisualElementOfflinePaintCommands" />
                     <n n="VisualElementFrameInformation" />
-                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="STSnippetInputAction[]">
+                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="IInputAction[]">
                       <v>OnMouseDown</v>
                       <a cet="STSnippetInputAction">
                         <o>
-                          <v n="STSnippet">"MAIN.V2024.currentMode := E_Bedrijfstoestand.auto;"</v>
+                          <v n="STSnippet">"MAIN.V2013.currentMode := E_Bedrijfstoestand.auto;"</v>
                         </o>
                       </a>
                     </d>
@@ -8825,11 +8817,11 @@
                     <v n="VisualElementIdentifier">"GenElemInst_116"</v>
                     <n n="VisualElementOfflinePaintCommands" />
                     <n n="VisualElementFrameInformation" />
-                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="STSnippetInputAction[]">
+                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="IInputAction[]">
                       <v>OnMouseDown</v>
                       <a cet="STSnippetInputAction">
                         <o>
-                          <v n="STSnippet">"MAIN.V2024.manClose := TRUE;"</v>
+                          <v n="STSnippet">"MAIN.V2013.manClose := TRUE;"</v>
                         </o>
                       </a>
                     </d>
@@ -9002,15 +8994,7 @@
                     <v n="VisualElementIdentifier">"GenElemInst_117"</v>
                     <n n="VisualElementOfflinePaintCommands" />
                     <n n="VisualElementFrameInformation" />
-                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="ToggleVarInputAction[]">
-                      <v>OnMouseDown</v>
-                      <a cet="ToggleVarInputAction">
-                        <o>
-                          <v n="ToggleVariable">"MAIN.digIn_V2024_1.internalState"</v>
-                          <n n="Error" />
-                        </o>
-                      </a>
-                    </d>
+                    <d n="VisualElementInputActions" t="Hashtable" />
                     <v n="VisualElementIdentification">{cea1af65-1ed1-445c-84d3-f393d252889f}</v>
                     <v n="VisualElementOwningObjectGuid">{cf74a335-0ba7-461e-8ba0-0c2c14956010}</v>
                     <a n="LMGuids" et="Guid" />
@@ -9180,11 +9164,11 @@
                     <v n="VisualElementIdentifier">"GenElemInst_118"</v>
                     <n n="VisualElementOfflinePaintCommands" />
                     <n n="VisualElementFrameInformation" />
-                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="STSnippetInputAction[]">
+                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="IInputAction[]">
                       <v>OnMouseDown</v>
                       <a cet="STSnippetInputAction">
                         <o>
-                          <v n="STSnippet">"MAIN.V2024.currentMode := E_Bedrijfstoestand.off;"</v>
+                          <v n="STSnippet">"MAIN.V2013.currentMode := E_Bedrijfstoestand.off;"</v>
                         </o>
                       </a>
                     </d>
@@ -9361,7 +9345,7 @@
                       <v>OnMouseDown</v>
                       <a cet="STSnippetInputAction">
                         <o>
-                          <v n="STSnippet">"MAIN.V2024.manOpen := TRUE; "</v>
+                          <v n="STSnippet">"MAIN.V2013.manOpen := TRUE; "</v>
                         </o>
                       </a>
                     </d>
@@ -9784,6 +9768,7 @@ END_VAR"</v>
         <Type n="Guid">System.Guid</Type>
         <Type n="Hashtable">System.Collections.Hashtable</Type>
         <Type n="HotkeyConfiguration">{6b108d46-58af-4e41-a3f4-174d8f160cc4}</Type>
+        <Type n="IInputAction[]">_3S.CoDeSys.VisualElem.IInputAction[], VisualElem, Version=4.6.0.0, Culture=neutral, PublicKeyToken=null</Type>
         <Type n="Int16">System.Int16</Type>
         <Type n="Int32">System.Int32</Type>
         <Type n="Int64">System.Int64</Type>
