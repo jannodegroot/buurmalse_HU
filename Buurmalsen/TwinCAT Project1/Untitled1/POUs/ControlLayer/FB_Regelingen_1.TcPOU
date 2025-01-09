@@ -12,7 +12,7 @@ END_VAR
 
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[internalToerentalP2011 := 50;
+      <ST><![CDATA[internalToerentalP2011 := 0;
 internalToerentalP2021 := 70;]]></ST>
     </Implementation>
     <Folder Name="Properties" Id="{7c6e2fb9-4775-4dab-baa7-e5b89aec5c3b}" />
@@ -99,7 +99,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[ToerentalP2011 := internalToerentalP2021;]]></ST>
+          <ST><![CDATA[ToerentalP2021 := internalToerentalP2021;]]></ST>
         </Implementation>
       </Get>
       <Set Name="Set" Id="{810193cf-b8f4-44af-854a-e5e0ee173417}">
@@ -107,7 +107,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[internalToerentalP2011 := ToerentalP2021;]]></ST>
+          <ST><![CDATA[internalToerentalP2021 := ToerentalP2021;]]></ST>
         </Implementation>
       </Set>
     </Property>
