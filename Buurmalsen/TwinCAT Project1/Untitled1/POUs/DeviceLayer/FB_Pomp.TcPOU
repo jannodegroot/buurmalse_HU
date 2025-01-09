@@ -34,7 +34,7 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//visvriendelijk
-IF visvriendelijkactief AND (StatePomp = E_PompState.off OR bezig_visvriendelijkopstarten) THEN
+IF visvriendelijkactief AND (StatePomp = E_PompState.off OR bezig_visvriendelijkopstarten) AND globaaldoeltoerental>0 THEN
 	bezig_visvriendelijkopstarten:=TRUE;
 	visvriendelijk();
 END_IF
