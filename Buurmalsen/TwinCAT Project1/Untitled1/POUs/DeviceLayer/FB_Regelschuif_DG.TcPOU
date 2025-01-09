@@ -19,6 +19,7 @@ VAR
 	
 	error_Trigger: R_TRIG;
 	ErrorTimer: TON;
+	//t
 END_VAR
 ]]></Declaration>
     <Implementation>
