@@ -2,15 +2,65 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
   <POU Name="FB_Uitlaten" Id="{a1b74111-7dea-4521-89a1-4c1341f39b91}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Uitlaten
-VAR_INPUT
-END_VAR
-VAR_OUTPUT
-END_VAR
 VAR
-END_VAR
-]]></Declaration>
+	Besturing : E_Besturingsmodus;
+	Klepstatus : E_OpenDichtKlepState;	
+	PompStatus : E_PompState;
+	Regelschuif : E_RegelschuifState;
+	
+	TimerError : TON;
+	
+	PompStatus11 : ITF_Pomp;
+	PompStatus21 : ITF_Pomp;
+	
+	KlepV2012 : ITF_OpenDichtKlep;
+	KlepV2021 : ITF_OpenDichtKlep;
+	KlepV2023 : ITF_OpenDichtKlep;
+	KlepV2024 : ITF_OpenDichtKlep;
+	
+	SchuifV2013_AFG : ITF_Regelschuif;
+	SchuifV2022_AFG : ITF_Regelschuif;
+	
+	SchuifV2013_DG : ITF_Regelschuif;
+	SchuifV2022_DG : ITF_Regelschuif;
+	TussenwaardeV2013 : SINT;
+	TussenwaardeV2013AFG : SINT;
+	Tolerance13 : REAL;
+	
+END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[Besturing := main.Regelingen.BestuurMode;
+Tolerance13 := 0.1;
+IF Besturing = E_Besturingsmodus.uitlaten THEN
+	
+	KlepV2012 := KlepStatus.opening;
+	KlepV2021 := Klepstatus.opening;
+	KlepV2023 := Klepstatus.closing;
+	KlepV2024 := Klepstatus.closing;
+	
+	PompStatus11 := PompStatus.off;
+	PompStatus21 := PompStatus.off;
+	
+	//Op het moment dat de terugmelding is gegeven dan:
+	IF KlepV2012 := Klepstatus.open AND KlepV2021 := Klepstatus.open AND KlepV2023 := Klepstatus.closed AND KlepV2024 := Klepstatus.closed THEN		
+        SchuifV2013_AFG := Regelschuif.standby;
+	    SchuifV2013_DG := Regelschuif.standby;
+        TussenwaardeV2013 := SchuifV2013_DG.ActueelPosition - SchuifV2013_DG.RegelSchuifGoTo;
+        TussenwaardeV2013AFG := SchuifV2013_AFG.ActueelPosition - SchuifV2013_DG.RegelSchuifGoTo;
+		IF (ABS(TussenwaardeV2013 < Tolerance13) AND (TussenwaardeV2013AFG < Tolerance13 THEN
+	        SchuifV2022_AFG := Regelschuif.standby;
+	        SchuifV2022_DG := Regelschuif.standby;
+	    END_IF
+	ELSE
+		TimerError(IN := TRUE, PT := T#15S);
+		IF TimerError.Q THEN
+			Klepstatus := E_OpenDichtKlepState.error;
+			Pompstatus := E_PompState.error;
+			Regelschuif := E_RegelschuifState.error;
+			TimerError(IN := FALSE);
+		END_IF
+	END_IF
+END_IF]]></ST>
     </Implementation>
     <Method Name="FB_Init" Id="{d9f73871-464c-4614-bf1b-96c514a43dd2}">
       <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
@@ -20,17 +70,52 @@ END_VAR
 METHOD FB_Init: BOOL
 VAR_INPUT
     bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
-    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)  
+	OpenDichtKlepV2012: ITF_OpenDichtKlep;
+	OpenDichtKlepV2021: ITF_OpenDichtKlep;
+	OpenDichtKlepV2023: ITF_OpenDichtKlep;
+	OpenDichtKlepV2024: ITF_OpenDichtKlep;
+	
+	V2013_DG: ITF_Regelschuif;
+	V2022_DG: ITF_Regelschuif;
+	
+	V2013_AFO: ITF_Regelschuif;
+	V2022_AFO: ITF_Regelschuif;
+	
+	Pomp2011: ITF_Regelschuif;
+	Pomp2021: ITF_Regelschuif;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[KlepV2012:= OpenDichtKlepV2012;
+KlepV2021:= OpenDichtKlepV2021;
+KlepV2023:= OpenDichtKlepV2023;
+KlepV2024:= OpenDichtKlepV2024;
+
+SchuifV2013_DG:= V2013_DG;
+SchuifV2022_DG:= V2022_DG;
+
+SchuifV2013_AFG:= V2013_AFO;
+SchuifV2022_AFG:= V2022_AFO;
+
+Pompstatus11:= Pomp2011;
+Pompstatus21:= Pomp2021; ]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_Uitlaten">
+      <LineId Id="4" Count="30" />
       <LineId Id="3" Count="0" />
     </LineIds>
     <LineIds Name="FB_Uitlaten.FB_Init">
       <LineId Id="1" Count="0" />
+      <LineId Id="3" Count="3" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="13" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
