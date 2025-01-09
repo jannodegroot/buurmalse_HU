@@ -3,11 +3,26 @@
   <POU Name="FB_Regelschuif_DG" Id="{197a057b-7e77-4001-97d3-497a9b935830}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Regelschuif_DG IMPLEMENTS ITF_Regelschuif
 VAR
+	TagName: STRING;
 	
+	OpenSchuif: ITF_Regelschuif_OutOpen_DG;
+	SluitSchuif: ITF_Regelschuif_OutClose_DG;
+	InputSchuif: ITF_Regelschuif_In_DG;
+	
+	CurrentMode: E_Bedrijfstoestand:= E_Bedrijfstoestand.off;
+	currentState : E_RegelschuifState := E_RegelschuifState.standby;
+	expectedState : E_RegelschuifState := E_RegelschuifState.standby;
+	
+	SchuifPosition: SINT;
+	VorigePosition: SINT;
+	Marge : SINT := 2;
+	
+	error_Trigger: R_TRIG;
+	ErrorTimer: TON;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[//test]]></ST>
     </Implementation>
     <Folder Name="Methods" Id="{a5c8f5f8-d7b2-406e-83cb-5c27f5fd8301}" />
     <Folder Name="Properties" Id="{b6eb3f6c-3011-4a7e-8816-c7f569303f45}" />
@@ -35,32 +50,22 @@ END_VAR
 VAR_INPUT
 	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
-	
-
-	
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[
+
 ]]></ST>
       </Implementation>
     </Method>
     <Method Name="RegelschuifGoTo" Id="{a4a1d9ca-2482-46aa-ba66-9fb460cea5bb}" FolderPath="Methods\">
       <Declaration><![CDATA[METHOD RegelSchuifGoTo : SINT
-VAR
-	PulseTimer: TON;
-	StartPulse: BOOL;
-	OpenTimer: TON;
-	StartOpen: BOOL;
-END_VAR
 VAR_INPUT
 	regelschuifdoel: SINT;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[
-
-]]></ST>
+        <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
     <Property Name="StateRegelschuif" Id="{6308ac59-5f2f-4aa8-a02c-ba74a875ce56}" FolderPath="Properties\">
@@ -83,7 +88,7 @@ END_VAR
       </Set>
     </Property>
     <LineIds Name="FB_Regelschuif_DG">
-      <LineId Id="11" Count="0" />
+      <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_DG.ActueelPosition.Get">
       <LineId Id="1" Count="0" />
@@ -92,10 +97,10 @@ END_VAR
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_DG.FB_init">
-      <LineId Id="5" Count="1" />
+      <LineId Id="1" Count="2" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_DG.RegelschuifGoTo">
-      <LineId Id="31" Count="2" />
+      <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_DG.StateRegelschuif.Get">
       <LineId Id="1" Count="0" />

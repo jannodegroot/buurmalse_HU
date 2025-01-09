@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
+  <Itf Name="ITF_Regelschuif_In_DG" Id="{9b33a0ca-525b-478a-ac94-1f494bb5dbb6}">
+    <Declaration><![CDATA[INTERFACE ITF_Regelschuif_In_DG
+]]></Declaration>
+    <Method Name="get" Id="{505b80cc-8804-424e-afea-4cfa6331bd6f}">
+      <Declaration><![CDATA[METHOD get : SINT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>
