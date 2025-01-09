@@ -18,8 +18,8 @@ VAR
 	KlepV2023 : ITF_OpenDichtKlep;
 	KlepV2024 : ITF_OpenDichtKlep;
 	
-	SchuifV2013_AFG : ITF_Regelschuif;
-	SchuifV2022_AFG : ITF_Regelschuif;
+	SchuifV2013_AFO : ITF_Regelschuif;
+	SchuifV2022_AFO : ITF_Regelschuif;
 	
 	SchuifV2013_DG : ITF_Regelschuif;
 	SchuifV2022_DG : ITF_Regelschuif;
@@ -43,12 +43,12 @@ IF Besturing = E_Besturingsmodus.uitlaten THEN
 	
 	//Op het moment dat de terugmelding is gegeven dan:
 	IF KlepV2012 := Klepstatus.open AND KlepV2021 := Klepstatus.open AND KlepV2023 := Klepstatus.closed AND KlepV2024 := Klepstatus.closed THEN		
-        SchuifV2013_AFG := Regelschuif.standby;
+        SchuifV2013_AFO := Regelschuif.standby;
 	    SchuifV2013_DG := Regelschuif.standby;
         TussenwaardeV2013 := SchuifV2013_DG.ActueelPosition - SchuifV2013_DG.RegelSchuifGoTo;
-        TussenwaardeV2013AFG := SchuifV2013_AFG.ActueelPosition - SchuifV2013_DG.RegelSchuifGoTo;
+        TussenwaardeV2013AFG := SchuifV2013_AFO.ActueelPosition - SchuifV2013_DG.RegelSchuifGoTo;
 		IF (ABS(TussenwaardeV2013 < Tolerance13) AND (TussenwaardeV2013AFG < Tolerance13)) THEN
-	        SchuifV2022_AFG := Regelschuif.standby;
+	        SchuifV2022_AFO := Regelschuif.standby;
 	        SchuifV2022_DG := Regelschuif.standby;
 	    END_IF
 	ELSE
@@ -94,8 +94,8 @@ KlepV2024:= OpenDichtKlepV2024;
 SchuifV2013_DG:= V2013_DG;
 SchuifV2022_DG:= V2022_DG;
 
-SchuifV2013_AFG:= V2013_AFO;
-SchuifV2022_AFG:= V2022_AFO;
+SchuifV2013_AFO:= V2013_AFO;
+SchuifV2022_AFO:= V2022_AFO;
 
 Pompstatus11:= Pomp2011;
 Pompstatus21:= Pomp2021; ]]></ST>
