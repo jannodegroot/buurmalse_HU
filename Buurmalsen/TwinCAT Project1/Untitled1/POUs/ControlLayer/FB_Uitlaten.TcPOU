@@ -47,7 +47,7 @@ IF Besturing = E_Besturingsmodus.uitlaten THEN
 	    SchuifV2013_DG := Regelschuif.standby;
         TussenwaardeV2013 := SchuifV2013_DG.ActueelPosition - SchuifV2013_DG.RegelSchuifGoTo;
         TussenwaardeV2013AFG := SchuifV2013_AFG.ActueelPosition - SchuifV2013_DG.RegelSchuifGoTo;
-		IF (ABS(TussenwaardeV2013 < Tolerance13) AND (TussenwaardeV2013AFG < Tolerance13 THEN
+		IF (ABS(TussenwaardeV2013 < Tolerance13) AND (TussenwaardeV2013AFG < Tolerance13)) THEN
 	        SchuifV2022_AFG := Regelschuif.standby;
 	        SchuifV2022_DG := Regelschuif.standby;
 	    END_IF
