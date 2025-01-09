@@ -83,22 +83,85 @@ END_VAR
 VAR_INPUT
 	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
-END_VAR
-]]></Declaration>
+	
+	tag: STRING;
+	SchuifInput: ITF_Regelschuif_In_DG;
+	OutputOpen: ITF_Regelschuif_OutOpen_DG;
+	OutputClose: ITF_Regelschuif_OutClose_DG;
+	
+END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[
+        <ST><![CDATA[TagName:= tag;
+InputSchuif := SchuifInput;
+OpenSchuif := OutputOpen;
+SluitSchuif := OutputClose;
 
 ]]></ST>
       </Implementation>
     </Method>
     <Method Name="RegelschuifGoTo" Id="{a4a1d9ca-2482-46aa-ba66-9fb460cea5bb}" FolderPath="Methods\">
       <Declaration><![CDATA[METHOD RegelSchuifGoTo : SINT
+VAR
+	PulseTimer: TON;
+	StartPulse: BOOL := TRUE;
+	OpenTimer: TON;
+	StartOpen: BOOL := FALSE;
+END_VAR
 VAR_INPUT
 	regelschuifdoel: SINT;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[//Zet de timer voor de puls op 1 minuut/10 seconden voor testen
+PulseTimer(IN:=StartPulse ,PT:= T#10S);
+Opentimer(IN:=StartOpen , PT:= T#1S);
+
+regelschuifdoel := Inputschuif.get();
+
+IF PulseTimer.Q AND (stateRegelschuif <> E_RegelschuifState.error) AND (Currentmode <> E_Bedrijfstoestand.off) THEN
+	//Als de regelschuif zijn actuele positie op zijn doel is wordt hij uitgezet
+	IF (regelschuifdoel = ActueelPosition)THEN
+		StateRegelschuif := E_RegelschuifState.standby;
+	END_IF
+	//Als het doel kleiner is dan de actuele positie gaat hij sluiten
+	IF (regelschuifdoel < ActueelPosition) THEN
+		StateRegelschuif := E_RegelschuifState.closing;
+		OpenSchuif.set(FALSE);
+		SluitSchuif.set(TRUE);
+	END_IF
+	//Als het doel groter is dan de actuele positie gaat hij openen
+	IF (regelschuifdoel > ActueelPosition) THEN
+		StateRegelschuif := E_RegelschuifState.opening;
+		OpenSchuif.set(TRUE);
+		Sluitschuif.set(FALSE);
+	END_IF	
+	StartPulse := FALSE;
+	StartPulse := TRUE;
+END_IF 	
+
+//De regelschuif wordt geopend
+IF StateRegelschuif = E_RegelschuifState.opening THEN
+	StartOpen := TRUE;
+	IF OpenTimer.Q THEN
+	ActueelPosition := ActueelPosition + 1;
+	END_IF
+	StartOpen := FALSE;
+END_IF
+
+//De regelschuif wordt gesloten
+IF StateRegelschuif = E_RegelschuifState.closing THEN
+	StartOpen := TRUE;
+	IF OpenTimer.Q THEN
+	ActueelPosition := ActueelPosition - 1;
+	END_IF
+	StartOpen := FALSE;
+END_IF
+
+//Zorgt ervoor dat de schuif stopt met bewegen als hij wordt uitgeschakeld
+IF CurrentMode = E_Bedrijfstoestand.off THEN
+	regelschuifdoel := ActueelPosition;
+END_IF
+]]></ST>
       </Implementation>
     </Method>
     <Property Name="StateRegelschuif" Id="{6308ac59-5f2f-4aa8-a02c-ba74a875ce56}" FolderPath="Properties\">
@@ -130,9 +193,11 @@ END_VAR
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_DG.FB_init">
+      <LineId Id="4" Count="2" />
       <LineId Id="1" Count="2" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_DG.RegelschuifGoTo">
+      <LineId Id="2" Count="48" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_DG.StateRegelschuif.Get">

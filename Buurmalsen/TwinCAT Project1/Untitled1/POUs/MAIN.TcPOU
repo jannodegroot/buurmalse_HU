@@ -167,6 +167,7 @@ P2011();
 Regelingen ();
 ControllerInmalen ();
 ControllerUitmalen ();
+ControllerUitlaten();
 
 //AFO
 digOutOpeningV2013();
@@ -177,10 +178,26 @@ V2013_AFO.RegelSchuifGoTo(20);
 digOutOpeningV2022();
 digOutClosingV2022();
 AnaInV2022();
-V2022_AFO();]]></ST>
+V2022_AFO();
+
+//DG
+OutOpeningV2013();
+OutClosingV2013();
+InV2013();
+V2013_DG();
+OutopeningV2022();
+OutclosingV2022();
+Inv2022();
+V2022_DG();]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="1" Count="31" />
+      <LineId Id="35" Count="2" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="38" Count="10" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="51" Count="7" />
     </LineIds>
   </POU>
 </TcPlcObject>
