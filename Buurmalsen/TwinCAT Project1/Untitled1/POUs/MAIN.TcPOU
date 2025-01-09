@@ -150,12 +150,12 @@ ControllerUitmalen ();
 digOutOpeningV2013();
 digOutClosingV2013();
 AnaInV2013();
-V2013();
-V2013.RegelSchuifGoTo(20);
+V2013_AFO();
+V2013_AFO.RegelSchuifGoTo(20);
 digOutOpeningV2022();
 digOutClosingV2022();
 AnaInV2022();
-V2022();]]></ST>
+V2022_AFO();]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="36" Count="30" />
