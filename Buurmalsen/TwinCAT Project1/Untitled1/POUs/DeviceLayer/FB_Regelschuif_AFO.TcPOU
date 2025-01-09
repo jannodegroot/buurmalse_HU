@@ -29,14 +29,17 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF currentMode = E_Bedrijfstoestand.off THEN
+      <ST><![CDATA[// Als de mode is uit dan worden de outputs false geset 
+IF currentMode = E_Bedrijfstoestand.off THEN
 	outputOpen.set(FALSE);
 	outputClose.set(FALSE);
 END_IF
 
+// De feedback positie staat hiet zodat we de waardes kunnen veranderen
 feedbackPosition := inputPosition.get();
 ActueelPosition := inputPosition.get();
 
+// Dit is de timer om te checken of er een error moet zijn 
 timeOut(IN :=(StateRegelSchuif <> E_RegelschuifState.standby) AND NOT timeOut.Q, PT := T#30S);
 errorTrigger(CLK := timeOut.Q);
 
@@ -58,7 +61,6 @@ IF errorTrigger.Q THEN
 END_IF
 
 expectedState := StateRegelSchuif;
-
 ]]></ST>
     </Implementation>
     <Folder Name="Methods" Id="{19e33316-aa4d-4340-a18c-c48173f3eae7}" />
@@ -170,7 +172,6 @@ ELSE
 	timerrunt := 1; //reser reset timer
 END_IF
 
-
 positie := regelschuifdoel;
 			]]></ST>
       </Implementation>
@@ -195,9 +196,14 @@ END_VAR
       </Set>
     </Property>
     <LineIds Name="FB_Regelschuif_AFO">
+      <LineId Id="116" Count="0" />
       <LineId Id="1" Count="2" />
-      <LineId Id="5" Count="2" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="117" Count="0" />
+      <LineId Id="115" Count="0" />
+      <LineId Id="114" Count="0" />
       <LineId Id="89" Count="0" />
+      <LineId Id="118" Count="0" />
       <LineId Id="8" Count="2" />
       <LineId Id="90" Count="2" />
       <LineId Id="94" Count="0" />
@@ -212,7 +218,6 @@ END_VAR
       <LineId Id="106" Count="1" />
       <LineId Id="88" Count="0" />
       <LineId Id="84" Count="0" />
-      <LineId Id="98" Count="0" />
       <LineId Id="97" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_AFO.ActueelPosition.Get">
@@ -275,7 +280,6 @@ END_VAR
       <LineId Id="62" Count="0" />
       <LineId Id="30" Count="2" />
       <LineId Id="19" Count="0" />
-      <LineId Id="26" Count="0" />
       <LineId Id="25" Count="0" />
       <LineId Id="27" Count="0" />
     </LineIds>
