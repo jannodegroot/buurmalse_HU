@@ -27,7 +27,9 @@ VAR
 	timerpomperror: ton;
 	timerpomperrortijd: TIME:=T#20S;
 	noodstop:BOOL;
-
+	
+	
+	testingbool : bool;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -45,9 +47,9 @@ IF InternalToerental = 0 AND globaaldoeltoerental=0 THEN
 ELSIF globaaldoeltoerental>0 THEN
 	outputpompon.set(TRUE);
 END_IF
-
+testingbool:= inputpompon.get(FALSE);
 //inputs errorcheck
-timerpomperror(in:=(inputpompon.get(FALSE) AND(globaaldoeltoerental>0 AND ActueelToerental>0)) OR(inputpompon.get(TRUE) AND ((InternalToerental = 0 AND globaaldoeltoerental=0) OR ActueelToerental=0)), PT:=timerpomperrortijd);
+timerpomperror(in:=( NOT (inputpompon.get(FALSE)) AND(globaaldoeltoerental>0 AND ActueelToerental>0)) OR(inputpompon.get(TRUE) AND ((InternalToerental = 0 AND globaaldoeltoerental=0) OR ActueelToerental=0)), PT:=timerpomperrortijd);
 IF timerpomperror.Q THEN
 	InternalState := E_PompState.error;
 END_IF
