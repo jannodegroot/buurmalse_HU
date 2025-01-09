@@ -22,7 +22,39 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//test]]></ST>
+      <ST><![CDATA[//De errortimer wordt gestart zodra de schuif niet in standby staat en de timer niet is afgelopen
+ErrorTimer(IN:= StateRegelschuif <> E_Regelschuifstate.standby AND NOT ErrorTimer.Q ,PT:= T#5S);
+
+//Als de schuif uit staat stopt de regelschuif met openen of sluiten
+IF CurrentMode = E_Bedrijfstoestand.off THEN
+	Openschuif.set(FALSE);
+	SluitSchuif.set(FALSE);
+END_IF
+
+//De actuele positie van de schuif wordt opgehaald
+ActueelPosition:= InputSchuif.get();
+SchuifPosition:= InputSchuif.get();
+
+error_Trigger(CLK:= ErrorTimer.Q);
+
+IF error_Trigger.Q THEN
+	//Als de schuif niet snel genoeg opent of sluit schiet hij in error
+	IF (ActueelPosition < (Vorigeposition + Marge) AND StateRegelschuif = E_Regelschuifstate.opening) OR
+		(ActueelPosition > (Vorigeposition - Marge) AND StateRegelschuif = E_Regelschuifstate.closing)THEN
+		Stateregelschuif:= E_RegelschuifState.error;
+		main.alarms.Append(tag:= TagName, msg := 'Schuifstroing gedetecteerd: Schuif beweegt niet snel genoeg');
+	END_IF
+	//De regelschuif kan uit error schieten als hij wel weer snel genoeg opent of sluit
+	IF Stateregelschuif = E_Regelschuifstate.error THEN
+		IF ActueelPosition > (VorigePosition + Marge) THEN
+			Stateregelschuif:= E_RegelschuifState.opening;
+		END_IF
+		IF ActueelPosition < (VorigePosition - Marge) THEN
+			Stateregelschuif:= E_RegelschuifState.closing;
+		END_IF
+	END_IF
+	VorigePosition:= ActueelPosition;
+END_IF]]></ST>
     </Implementation>
     <Folder Name="Methods" Id="{a5c8f5f8-d7b2-406e-83cb-5c27f5fd8301}" />
     <Folder Name="Properties" Id="{b6eb3f6c-3011-4a7e-8816-c7f569303f45}" />
@@ -88,7 +120,7 @@ END_VAR
       </Set>
     </Property>
     <LineIds Name="FB_Regelschuif_DG">
-      <LineId Id="1" Count="0" />
+      <LineId Id="1" Count="32" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_DG.ActueelPosition.Get">
       <LineId Id="1" Count="0" />
