@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
-  <POU Name="FB_Regelingen_1" Id="{ba4530f9-bec4-46f8-8992-3ba5eead477b}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_Regelingen_1
+  <POU Name="FB_Regelingen" Id="{ba4530f9-bec4-46f8-8992-3ba5eead477b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Regelingen
 VAR
 	internalBesturingsMode : E_Besturingsmodus;
 	internalRegelschuifStandV2013 : SINT;
@@ -111,37 +111,37 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <LineIds Name="FB_Regelingen_1">
+    <LineIds Name="FB_Regelingen">
       <LineId Id="1" Count="1" />
     </LineIds>
-    <LineIds Name="FB_Regelingen_1.BestuurMode.Get">
+    <LineIds Name="FB_Regelingen.BestuurMode.Get">
       <LineId Id="1" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Regelingen_1.BestuurMode.Set">
+    <LineIds Name="FB_Regelingen.BestuurMode.Set">
       <LineId Id="1" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Regelingen_1.RegelschuifStandV2013.Get">
+    <LineIds Name="FB_Regelingen.RegelschuifStandV2013.Get">
       <LineId Id="1" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Regelingen_1.RegelschuifStandV2013.Set">
+    <LineIds Name="FB_Regelingen.RegelschuifStandV2013.Set">
       <LineId Id="1" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Regelingen_1.RegelschuifStandV2022.Get">
+    <LineIds Name="FB_Regelingen.RegelschuifStandV2022.Get">
       <LineId Id="1" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Regelingen_1.RegelschuifStandV2022.Set">
+    <LineIds Name="FB_Regelingen.RegelschuifStandV2022.Set">
       <LineId Id="1" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Regelingen_1.ToerentalP2011.Get">
+    <LineIds Name="FB_Regelingen.ToerentalP2011.Get">
       <LineId Id="1" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Regelingen_1.ToerentalP2011.Set">
+    <LineIds Name="FB_Regelingen.ToerentalP2011.Set">
       <LineId Id="1" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Regelingen_1.ToerentalP2021.Get">
+    <LineIds Name="FB_Regelingen.ToerentalP2021.Get">
       <LineId Id="1" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Regelingen_1.ToerentalP2021.Set">
+    <LineIds Name="FB_Regelingen.ToerentalP2021.Set">
       <LineId Id="1" Count="0" />
     </LineIds>
   </POU>
