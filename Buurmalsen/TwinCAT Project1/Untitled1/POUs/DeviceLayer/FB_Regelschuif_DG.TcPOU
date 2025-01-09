@@ -116,8 +116,6 @@ END_VAR
 PulseTimer(IN:=StartPulse ,PT:= T#10S);
 Opentimer(IN:=StartOpen , PT:= T#1S);
 
-regelschuifdoel := Inputschuif.get();
-
 IF PulseTimer.Q AND (stateRegelschuif <> E_RegelschuifState.error) AND (Currentmode <> E_Bedrijfstoestand.off) THEN
 	//Als de regelschuif zijn actuele positie op zijn doel is wordt hij uitgezet
 	IF (regelschuifdoel = ActueelPosition)THEN
@@ -197,7 +195,8 @@ END_VAR
       <LineId Id="1" Count="2" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_DG.RegelschuifGoTo">
-      <LineId Id="2" Count="48" />
+      <LineId Id="2" Count="2" />
+      <LineId Id="7" Count="43" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_DG.StateRegelschuif.Get">
