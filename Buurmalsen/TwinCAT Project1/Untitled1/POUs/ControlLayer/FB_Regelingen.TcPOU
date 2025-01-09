@@ -1,153 +1,148 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
-  <POU Name="FB_Regelingen" Id="{10454be2-17f1-45a6-927c-6671ec7f7806}" SpecialFunc="None">
+  <POU Name="FB_Regelingen" Id="{ba4530f9-bec4-46f8-8992-3ba5eead477b}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Regelingen
-VAR_INPUT
-    BestuurMode : INT;            (* 0 = Handmatig, 1 = Automatisch *)
-    RegelStand1 : REAL;           (* Setpoint debiet in m³/s *)
-    RegelStand2 : REAL;           (* Setpoint polderpeil in m NAP *)
-END_VAR
-
 VAR
-    (* Uitgangen *)
-    Pomp1 : INT;                  (* Status pomp 1: 0 = uit, 1 = aan *)
-    Pomp2 : INT;                  (* Status pomp 2: 0 = uit, 1 = aan *)
+	internalBesturingsMode : E_Besturingsmodus;
+	internalRegelschuifStandV2013 : SINT;
+	internalRegelschuifStandV2022 : SINT;
+	internalToerentalP2011 : INT;
+	internalToerentalP2021 : INT;
+END_VAR
 
-    (* Interne variabelen *)
-    ModeStatus : STRING[20];      (* Beschrijft huidige modus *)
-    ActiveStand : STRING[20];     (* Beschrijft actieve regelstand *)
-
-    (* Instanties van subfunctieblokken *)
-    Uitlaten : FB_Uitlaten;
-    Uitmalen : FB_Uitmalen;
-    Inmalen : FB_Inmalen;
-
-    (* Interne statusbewaking *)
-    DebietError : REAL;           (* Foutwaarde van debietregeling *)
-    PolderpeilError : REAL;       (* Foutwaarde van polderpeilregeling *)
-
-    (* Variabelen voor pompberekening *)
-    berekendeRPM_REAL : LREAL;
-    berekendeRPM_UINT : UINT;
-    M2021_ON : BOOL;
-    stuurRPM_M2021 : UINT;
-    currentRPM_M2021 : UINT;
-    minRPM_M2021 : UINT := 20;
-    maxRPM_M2021 : UINT := 1000;
-    P2021_status : BOOL;
-    P2021_setpoint : UINT;
-    P2021_stand : INT;            (* 1 = actief, 0 = uit *)
-    polderHoogteVerschil : REAL;  (* Hoogteverschil in meters *)
-
-    (* Variabelen voor pomp 2 berekening *)
-    berekendeRPM2_REAL : LREAL;
-    berekendeRPM2_UINT : UINT;
-    M2011_ON : BOOL;
-    stuurRPM_M2011 : UINT;
-    currentRPM_M2011 : UINT;
-    minRPM_M2011 : UINT := 20;
-    maxRPM_M2011 : UINT := 1000;
-    P2011_status : BOOL;
-    P2011_setpoint : UINT;
-    P2011_stand : INT;            (* 1 = actief, 0 = uit *)
-    zomerPijl : BOOL;
-    streefPijl : REAL;
-END_VAR]]></Declaration>
+]]></Declaration>
     <Implementation>
-      <ST><![CDATA[
-]]></ST>
+      <ST><![CDATA[internalToerentalP2011 := 50;
+internalToerentalP2021 := 70;]]></ST>
     </Implementation>
-    <Folder Name="Methods" Id="{7a5154a8-d0ab-4aca-a913-d3242cae32ca}" />
-    <Folder Name="Properties" Id="{64d43a35-4d5a-4d04-a035-1c51de5047d0}" />
-    <Method Name="Excute" Id="{63571029-8e9a-4487-8846-7eb1ac19ffd7}" FolderPath="Methods\">
-      <Declaration><![CDATA[METHOD Excute : BOOL
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="StartRegeling" Id="{b46af18e-9800-4f78-8701-c2159a7865ad}" FolderPath="Methods\">
-      <Declaration><![CDATA[METHOD StartRegeling : BOOL
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Method>
-    <Property Name="Statusdebiet" Id="{27f04e5c-872c-417b-b202-7a7edac38bfd}" FolderPath="Properties\">
-      <Declaration><![CDATA[PROPERTY Statusdebiet : BOOL]]></Declaration>
-      <Get Name="Get" Id="{0df83d80-bdac-4b44-bc88-00d562838eb3}">
+    <Folder Name="Properties" Id="{7c6e2fb9-4775-4dab-baa7-e5b89aec5c3b}" />
+    <Property Name="BestuurMode" Id="{ef2a99b5-5f20-4b0a-b6bc-351e2bd448d2}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY BestuurMode : E_Besturingsmodus]]></Declaration>
+      <Get Name="Get" Id="{e2d7c206-8f7f-426b-82b2-78ed55082002}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[BestuurMode := internalBesturingsMode;]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{c175d2e1-d2b4-4540-a5e4-9545957390d2}">
+      <Set Name="Set" Id="{8657565b-1ccc-48a7-a1b2-ee5eec85ab16}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[internalBesturingsMode := BestuurMode ;]]></ST>
         </Implementation>
       </Set>
     </Property>
-    <Property Name="StatusPolderpeil" Id="{32e1e152-1b90-473e-b502-821a058bfe88}" FolderPath="Properties\">
-      <Declaration><![CDATA[PROPERTY StatusPolderpeil : BOOL]]></Declaration>
-      <Get Name="Get" Id="{7201f6cb-5b60-4ee4-b9b6-21f564618a85}">
+    <Property Name="RegelschuifStandV2013" Id="{22aaed06-7a4e-4fb5-9a38-f497238e5600}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY RegelschuifStandV2013 : SINT]]></Declaration>
+      <Get Name="Get" Id="{df927b81-0b19-4ba5-8491-c549fdf3679f}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[RegelschuifStandV2013 := internalRegelschuifStandV2013;]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{b9b5e7b8-ea12-4383-8890-4ea40e547a06}">
+      <Set Name="Set" Id="{46201dd7-77e4-4f26-9ef1-8e4e09797119}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[internalRegelschuifStandV2013 := RegelschuifStandV2013;]]></ST>
         </Implementation>
       </Set>
     </Property>
-    <Method Name="StopRegeling" Id="{f9e49943-4756-4a73-b531-44f685a43df0}" FolderPath="Methods\">
-      <Declaration><![CDATA[METHOD StopRegeling : BOOL
-VAR_INPUT
+    <Property Name="RegelschuifStandV2022" Id="{25ca217c-5af0-4a23-9400-b185b560c6f4}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY RegelschuifStandV2022 : SINT]]></Declaration>
+      <Get Name="Get" Id="{baefb7a1-259b-4e50-b712-7341c25b1805}">
+        <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Method>
+        <Implementation>
+          <ST><![CDATA[RegelschuifStandV2022 := internalRegelschuifStandV2022;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{9059e5f4-2721-43bc-8e0e-724abee52b74}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[internalRegelschuifStandV2022 := RegelschuifStandV2022;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ToerentalP2011" Id="{a0f08cbb-fea4-4e47-9c72-4a53599b6c38}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY ToerentalP2011 : INT]]></Declaration>
+      <Get Name="Get" Id="{cde78827-a38d-4b92-81d4-9333a5eb2ad4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ToerentalP2011 := internalToerentalP2011;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{c50b0b11-1f65-436f-bc39-0a87e0b63fbe}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[internalToerentalP2011 := ToerentalP2011;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ToerentalP2021" Id="{8985ff52-3298-4fc8-aa83-ceecf5a234e2}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY ToerentalP2021 : INT]]></Declaration>
+      <Get Name="Get" Id="{64ce7207-5106-4e28-8d0f-a19017054c1e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ToerentalP2011 := internalToerentalP2021;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{810193cf-b8f4-44af-854a-e5e0ee173417}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[internalToerentalP2011 := ToerentalP2021;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <LineIds Name="FB_Regelingen">
-      <LineId Id="22" Count="0" />
-      <LineId Id="11" Count="0" />
+      <LineId Id="1" Count="1" />
     </LineIds>
-    <LineIds Name="FB_Regelingen.Excute">
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Regelingen.StartRegeling">
-      <LineId Id="71" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Regelingen.Statusdebiet.Get">
+    <LineIds Name="FB_Regelingen.BestuurMode.Get">
       <LineId Id="1" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Regelingen.Statusdebiet.Set">
+    <LineIds Name="FB_Regelingen.BestuurMode.Set">
       <LineId Id="1" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Regelingen.StatusPolderpeil.Get">
+    <LineIds Name="FB_Regelingen.RegelschuifStandV2013.Get">
       <LineId Id="1" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Regelingen.StatusPolderpeil.Set">
+    <LineIds Name="FB_Regelingen.RegelschuifStandV2013.Set">
       <LineId Id="1" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Regelingen.StopRegeling">
-      <LineId Id="5" Count="0" />
+    <LineIds Name="FB_Regelingen.RegelschuifStandV2022.Get">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Regelingen.RegelschuifStandV2022.Set">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Regelingen.ToerentalP2011.Get">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Regelingen.ToerentalP2011.Set">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Regelingen.ToerentalP2021.Get">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Regelingen.ToerentalP2021.Set">
+      <LineId Id="1" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
