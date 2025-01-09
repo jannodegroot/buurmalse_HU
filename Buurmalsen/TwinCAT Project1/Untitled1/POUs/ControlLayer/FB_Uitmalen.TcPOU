@@ -62,15 +62,11 @@ CASE stap OF
 		END_IF
 	3:
 		// totaal toerental
-		pompP2011 := main.Regelingen.ToerentalP2011; // get toerental
-		IF pompP2011 >= 386 THEN 
-			pompP2021 := pompP2011 - 385;
-			Pomp1_P2011.PompGoTo(385);// set toerental 11 max
-			pomp2_P2021.PompGoTo(pompP2021);//Set toerental 21
-		ELSE 
-			Pomp1_P2011.ActueelToerental := pompP2011; // set toerenal 11
-			Pomp1_P2011.PompGoTo(pompP2011);
-		END_IF
+		pompP2011 := main.Regelingen.ToerentalP2011; // get toerental 11
+		pompP2021 := main.Regelingen.ToerentalP2021; // get toerental 21
+		pomp2_P2021.PompGoTo(pompP2021);//Set toerental 21
+		Pomp1_P2011.PompGoTo(pompP2011); // set toerental 11
+		
 		
 		IF optoeren = Pomp1_P2011.StatePomp THEN 
 			KlepV2012.Open();
@@ -158,7 +154,10 @@ pomp1_p2011 := PompP2011;
     <LineIds Name="FB_Uitmalen">
       <LineId Id="69" Count="0" />
       <LineId Id="65" Count="0" />
-      <LineId Id="1" Count="47" />
+      <LineId Id="1" Count="20" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="28" Count="20" />
       <LineId Id="68" Count="0" />
       <LineId Id="49" Count="14" />
     </LineIds>
