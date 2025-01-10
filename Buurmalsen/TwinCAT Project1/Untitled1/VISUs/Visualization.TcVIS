@@ -5,7 +5,7 @@
       <Data>
         <o xml:space="preserve" t="VisualObject">
           <n n="LastVisuLanguageModelEntry" />
-          <v n="UniqueIdGenerator">"132"</v>
+          <v n="UniqueIdGenerator">"135"</v>
           <o n="VisualElemList" t="VisualElemList">
             <l n="VisualElementList" t="VisualElemCollection" cet="GenericVisualElem">
               <o>
@@ -15415,7 +15415,7 @@
                       <v>OnMouseDown</v>
                       <a cet="STSnippetInputAction">
                         <o>
-                          <v n="STSnippet">"Main.P2021.bedrijtoestand := E_bedrijfstoestand.off;"</v>
+                          <v n="STSnippet">"Main.P2021.bedrijftoestand := E_bedrijfstoestand.off;"</v>
                         </o>
                       </a>
                     </d>
@@ -15596,7 +15596,7 @@
                       <v>OnMouseDown</v>
                       <a cet="STSnippetInputAction">
                         <o>
-                          <v n="STSnippet">"Main.P2021.bedrijtoestand := E_bedrijfstoestand.manual;"</v>
+                          <v n="STSnippet">"Main.P2021.bedrijftoestand := E_bedrijfstoestand.manual;"</v>
                         </o>
                       </a>
                     </d>
@@ -15777,7 +15777,7 @@
                       <v>OnMouseDown</v>
                       <a cet="STSnippetInputAction">
                         <o>
-                          <v n="STSnippet">"Main.P2021.bedrijtoestand := E_bedrijfstoestand.auto;"</v>
+                          <v n="STSnippet">"Main.P2021.bedrijftoestand := E_bedrijfstoestand.auto;"</v>
                         </o>
                       </a>
                     </d>
@@ -17954,7 +17954,7 @@
                       <v>OnMouseDown</v>
                       <a cet="STSnippetInputAction">
                         <o>
-                          <v n="STSnippet">"Main.P2011.bedrijtoestand := E_bedrijfstoestand.manual;"</v>
+                          <v n="STSnippet">"Main.P2011.bedrijftoestand := E_bedrijfstoestand.manual;"</v>
                         </o>
                       </a>
                     </d>
@@ -18135,7 +18135,7 @@
                       <v>OnMouseDown</v>
                       <a cet="STSnippetInputAction">
                         <o>
-                          <v n="STSnippet">"Main.P2011.bedrijtoestand := E_bedrijfstoestand.auto;"</v>
+                          <v n="STSnippet">"Main.P2011.bedrijftoestand := E_bedrijfstoestand.auto;"</v>
                         </o>
                       </a>
                     </d>
