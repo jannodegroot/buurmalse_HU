@@ -36,6 +36,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"441"</v>
+              <v n="TextDefault">"Bedrijftoestand: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"564"</v>
               <v n="TextDefault">"dig in p2011"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -88,6 +93,11 @@
             <o>
               <v n="TextID">"416"</v>
               <v n="TextDefault">"Manual Open"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"811"</v>
+              <v n="TextDefault">"Manualtoerental"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
