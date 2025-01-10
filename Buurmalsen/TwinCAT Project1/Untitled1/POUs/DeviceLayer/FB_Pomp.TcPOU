@@ -47,7 +47,6 @@ IF InternalToerental = 0 AND globaaldoeltoerental=0 THEN
 ELSIF globaaldoeltoerental>0 THEN
 	outputpompon.set(TRUE);
 END_IF
-testingbool:= inputpompon.get(FALSE);
 //inputs errorcheck
 timerpomperror(in:=( NOT (inputpompon.get(FALSE)) AND(globaaldoeltoerental>0 AND ActueelToerental>0)) OR(inputpompon.get(TRUE) AND ((InternalToerental = 0 AND globaaldoeltoerental=0) OR ActueelToerental=0)), PT:=timerpomperrortijd);
 IF timerpomperror.Q THEN
@@ -209,7 +208,6 @@ END_VAR
       <LineId Id="9" Count="1" />
       <LineId Id="13" Count="1" />
       <LineId Id="11" Count="0" />
-      <LineId Id="16" Count="0" />
       <LineId Id="15" Count="0" />
       <LineId Id="17" Count="1" />
       <LineId Id="20" Count="1" />

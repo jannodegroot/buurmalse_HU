@@ -57,7 +57,10 @@ CASE stap OF
 		KlepV2021.Close();
 		KlepV2024.Close();
 		KlepV2026.Close();
-		IF 0 = SchuifV2013_AFG.ActueelPosition  AND E_RegelschuifState.standby = SchuifV2013_AFG.StateRegelschuif AND  0 = SchuifV2022_AFG.ActueelPosition  AND E_RegelschuifState.standby = SchuifV2022_AFG.StateRegelschuif AND E_OpenDichtKlepState.closed = KlepV2014.StateKlep AND E_OpenDichtKlepState.closed = KlepV2021.StateKlep AND  E_OpenDichtKlepState.closed = KlepV2024.StateKlep  AND  E_OpenDichtKlepState.closed = KlepV2026.StateKlep  THEN
+		IF 0 = SchuifV2013_AFG.ActueelPosition  AND E_RegelschuifState.standby = SchuifV2013_AFG.StateRegelschuif AND
+		   0 = SchuifV2022_AFG.ActueelPosition  AND E_RegelschuifState.standby = SchuifV2022_AFG.StateRegelschuif AND 
+		   E_OpenDichtKlepState.closed = KlepV2014.StateKlep AND E_OpenDichtKlepState.closed = KlepV2021.StateKlep AND
+		   E_OpenDichtKlepState.closed = KlepV2024.StateKlep  AND  E_OpenDichtKlepState.closed = KlepV2026.StateKlep  THEN
 			stap := 3;
 		END_IF
 	3:
@@ -152,7 +155,9 @@ pomp1_p2011 := PompP2011;
       </Implementation>
     </Method>
     <LineIds Name="FB_Uitmalen">
-      <LineId Id="71" Count="60" />
+      <LineId Id="71" Count="17" />
+      <LineId Id="132" Count="2" />
+      <LineId Id="89" Count="42" />
       <LineId Id="63" Count="0" />
     </LineIds>
     <LineIds Name="FB_Uitmalen.FB_Init">
