@@ -48,17 +48,21 @@ CASE stap OF
 	2:
 		SchuifV2013_AFG.RegelschuifGoTo(0);
 		SchuifV2022_AFG.RegelschuifGoTo(0);
+		KlepV2012.Open();
 		KlepV2014.Close();
-		KlepV2021.Close();
-		KlepV2024.Close();
+		KlepV2021.Open();
+		KlepV2023.Close();
+		KlepV2024.Open();
 		KlepV2026.Close();
 		IF 0 = SchuifV2013_AFG.ActueelPosition  AND 
 		E_RegelschuifState.standby = SchuifV2013_AFG.StateRegelschuif AND
 		0 = SchuifV2022_AFG.ActueelPosition  AND 
 		E_RegelschuifState.standby = SchuifV2022_AFG.StateRegelschuif AND 
+		E_OpenDichtKlepState.open = KlepV2012.StateKlep AND 
 		E_OpenDichtKlepState.closed = KlepV2014.StateKlep AND 
-		E_OpenDichtKlepState.closed = KlepV2021.StateKlep AND
-		E_OpenDichtKlepState.closed = KlepV2024.StateKlep  AND  
+		E_OpenDichtKlepState.open = KlepV2021.StateKlep AND
+		E_OpenDichtKlepState.closed = KlepV2023.StateKlep AND 
+		E_OpenDichtKlepState.open = KlepV2024.StateKlep  AND  
 		E_OpenDichtKlepState.closed = KlepV2026.StateKlep  THEN
 			stap := 3;
 		END_IF
@@ -69,20 +73,17 @@ CASE stap OF
 		Pomp1_P2011.PompGoTo(pompP2011); // set toerental 11
 		
 		
-		IF E_PompState.optoeren = Pomp1_P2011.StatePomp THEN 
-			KlepV2012.Open();
-			IF E_OpenDichtKlepState.open = KlepV2012.StateKlep THEN
-				KlepV2012.Close();
+		IF E_PompState.optoeren = Pomp1_P2011.StatePomp THEN // onluchtingklep p2011
+			KlepV2014.Open();
+			IF E_OpenDichtKlepState.open = KlepV2014.StateKlep THEN
+				KlepV2014.Close();
 			END_IF
 		END_IF
 		
-		IF E_PompState.optoeren = pomp2_P2021.StatePomp THEN 
-			KlepV2021.Open();
-			KlepV2024.Open();
-			IF E_OpenDichtKlepState.open = KlepV2021.StateKlep AND 
-			E_OpenDichtKlepState.open = KlepV2024.StateKlep THEN
-				KlepV2021.Close();
-				KlepV2024.Close();
+		IF E_PompState.optoeren = pomp2_P2021.StatePomp THEN // ontluchtingsklep p2021
+			KlepV2026.Open();
+			IF E_OpenDichtKlepState.open = KlepV2026.StateKlep THEN
+				KlepV2026.Close();
 			END_IF
 		END_IF
 		
@@ -156,18 +157,26 @@ pomp1_p2011 := PompP2011;
     <LineIds Name="FB_Uitmalen">
       <LineId Id="72" Count="5" />
       <LineId Id="135" Count="2" />
-      <LineId Id="78" Count="10" />
+      <LineId Id="78" Count="5" />
+      <LineId Id="148" Count="0" />
+      <LineId Id="84" Count="1" />
+      <LineId Id="150" Count="0" />
+      <LineId Id="86" Count="2" />
       <LineId Id="138" Count="0" />
       <LineId Id="132" Count="0" />
       <LineId Id="139" Count="0" />
+      <LineId Id="149" Count="0" />
       <LineId Id="133" Count="0" />
       <LineId Id="140" Count="0" />
+      <LineId Id="151" Count="0" />
       <LineId Id="134" Count="0" />
       <LineId Id="141" Count="0" />
-      <LineId Id="89" Count="3" />
-      <LineId Id="94" Count="15" />
-      <LineId Id="142" Count="0" />
-      <LineId Id="110" Count="21" />
+      <LineId Id="89" Count="1" />
+      <LineId Id="147" Count="0" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="94" Count="13" />
+      <LineId Id="109" Count="1" />
+      <LineId Id="112" Count="19" />
       <LineId Id="63" Count="0" />
     </LineIds>
     <LineIds Name="FB_Uitmalen.FB_Init">
