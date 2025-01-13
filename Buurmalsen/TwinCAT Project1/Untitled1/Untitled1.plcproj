@@ -44,7 +44,7 @@
     <Compile Include="POUs\ControlLayer\FB_Inmalen.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\ControlLayer\FB_Regelingen_1.TcPOU">
+    <Compile Include="POUs\ControlLayer\FB_Regelingen.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\ControlLayer\FB_Uitlaten.TcPOU">
