@@ -9,14 +9,7 @@ VAR_OUTPUT
 END_VAR
 VAR
 	stap : INT :=1;
-	offPomp : E_POMPSTATE :=E_POMPSTATE.off;
-	standbyRegelschuif : E_RegelschuifState := E_RegelschuifState.standby;
-	closed : E_OpenDichtKlepState :=E_OpenDichtKlepState.closed;
-	open : E_OpenDichtKlepState :=E_OpenDichtKlepState.open;
-	//toerentaltotaal 
-	optoeren : E_PompState :=E_PompState.optoeren;
 	
-	CurrentModus : E_Besturingsmodus;
 	KlepV2012 : ITF_OpenDichtKlep;
 	KlepV2014 : ITF_OpenDichtKlep;
 	KlepV2021 : ITF_OpenDichtKlep;
@@ -40,13 +33,15 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[currentmodus := main.Regelingen.BestuurMode;
-IF currentmodus = E_Besturingsmodus.uitmalen THEN	
+      <ST><![CDATA[IF main.Regelingen.BestuurMode = E_Besturingsmodus.uitmalen THEN	
 CASE stap OF
 	1:
 		Pomp1_P2011.PompGoTo(0);
 		pomp2_P2021.PompGoTo(0);
-		IF 0 = Pomp1_P2011.ActueelToerental  AND E_POMPSTATE.off = Pomp1_P2011.StatePomp AND 0 = pomp2_P2021.ActueelToerental  AND E_POMPSTATE.off = pomp2_P2021.StatePomp THEN
+		IF 0 = Pomp1_P2011.ActueelToerental  AND
+		E_POMPSTATE.off = Pomp1_P2011.StatePomp AND 
+		0 = pomp2_P2021.ActueelToerental  AND 
+		E_POMPSTATE.off = pomp2_P2021.StatePomp THEN
 			stap := 2;
 		END_IF
 			
@@ -57,14 +52,17 @@ CASE stap OF
 		KlepV2021.Close();
 		KlepV2024.Close();
 		KlepV2026.Close();
-		IF 0 = SchuifV2013_AFG.ActueelPosition  AND E_RegelschuifState.standby = SchuifV2013_AFG.StateRegelschuif AND
-		   0 = SchuifV2022_AFG.ActueelPosition  AND E_RegelschuifState.standby = SchuifV2022_AFG.StateRegelschuif AND 
-		   E_OpenDichtKlepState.closed = KlepV2014.StateKlep AND E_OpenDichtKlepState.closed = KlepV2021.StateKlep AND
-		   E_OpenDichtKlepState.closed = KlepV2024.StateKlep  AND  E_OpenDichtKlepState.closed = KlepV2026.StateKlep  THEN
+		IF 0 = SchuifV2013_AFG.ActueelPosition  AND 
+		E_RegelschuifState.standby = SchuifV2013_AFG.StateRegelschuif AND
+		0 = SchuifV2022_AFG.ActueelPosition  AND 
+		E_RegelschuifState.standby = SchuifV2022_AFG.StateRegelschuif AND 
+		E_OpenDichtKlepState.closed = KlepV2014.StateKlep AND 
+		E_OpenDichtKlepState.closed = KlepV2021.StateKlep AND
+		E_OpenDichtKlepState.closed = KlepV2024.StateKlep  AND  
+		E_OpenDichtKlepState.closed = KlepV2026.StateKlep  THEN
 			stap := 3;
 		END_IF
 	3:
-		// totaal toerental
 		pompP2011 := main.Regelingen.ToerentalP2011; // get toerental 11
 		pompP2021 := main.Regelingen.ToerentalP2021; // get toerental 21
 		pomp2_P2021.PompGoTo(pompP2021);//Set toerental 21
@@ -81,7 +79,8 @@ CASE stap OF
 		IF E_PompState.optoeren = pomp2_P2021.StatePomp THEN 
 			KlepV2021.Open();
 			KlepV2024.Open();
-			IF E_OpenDichtKlepState.open = KlepV2021.StateKlep AND E_OpenDichtKlepState.open = KlepV2024.StateKlep THEN
+			IF E_OpenDichtKlepState.open = KlepV2021.StateKlep AND 
+			E_OpenDichtKlepState.open = KlepV2024.StateKlep THEN
 				KlepV2021.Close();
 				KlepV2024.Close();
 			END_IF
@@ -155,9 +154,20 @@ pomp1_p2011 := PompP2011;
       </Implementation>
     </Method>
     <LineIds Name="FB_Uitmalen">
-      <LineId Id="71" Count="17" />
-      <LineId Id="132" Count="2" />
-      <LineId Id="89" Count="42" />
+      <LineId Id="72" Count="5" />
+      <LineId Id="135" Count="2" />
+      <LineId Id="78" Count="10" />
+      <LineId Id="138" Count="0" />
+      <LineId Id="132" Count="0" />
+      <LineId Id="139" Count="0" />
+      <LineId Id="133" Count="0" />
+      <LineId Id="140" Count="0" />
+      <LineId Id="134" Count="0" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="89" Count="3" />
+      <LineId Id="94" Count="15" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="110" Count="21" />
       <LineId Id="63" Count="0" />
     </LineIds>
     <LineIds Name="FB_Uitmalen.FB_Init">
