@@ -51,14 +51,14 @@ ELSIF globaaldoeltoerental>0 THEN
 	outputpompon.set(TRUE);
 END_IF
 //inputs errorcheck
-timerpomperror(in:=( NOT (inputpompon.get(FALSE)) AND(globaaldoeltoerental>0 AND ActueelToerental>0)) OR(inputpompon.get(TRUE) AND ((InternalToerental = 0 AND globaaldoeltoerental=0) OR ActueelToerental=0)), PT:=timerpomperrortijd);
+timerpomperror(in:=(  (NOT inputpompon.get(FALSE)) AND(globaaldoeltoerental>0 AND ActueelToerental>0)) OR(inputpompon.get(TRUE) AND ((InternalToerental = 0 AND globaaldoeltoerental=0) OR ActueelToerental=0)), PT:=timerpomperrortijd);
 IF timerpomperror.Q THEN
 	InternalState := E_PompState.error;
 END_IF
 
 //status pomp
 IF (NOT timerpomperror.Q) THEN
-	IF  inputpompon.get(FALSE) AND ActueelToerental=0 THEN
+	IF  (NOT inputpompon.get(FALSE)) AND ActueelToerental=0 THEN
 		InternalState := E_pompstate.off;
 	ELSIF inputpompon.get(TRUE) AND ActueelToerental<globaaldoeltoerental THEN
 		InternalState := E_pompstate.optoeren;
@@ -213,11 +213,12 @@ END_VAR
 IF visvriendelijkactief AND (StatePomp = E_PompState.off OR bezig_visvriendelijkopstarten) AND globaaldoeltoerental>0 THEN
 	bezig_visvriendelijkopstarten:=TRUE;
 END_IF
-
-IF timervisvriendelijk.Q THEN
-	bezig_visvriendelijkopstarten:=FALSE;
-ELSE
-	InternalToerental:=20;
+IF bezig_visvriendelijkopstarten=TRUE THEN
+	IF timervisvriendelijk.Q THEN
+		bezig_visvriendelijkopstarten:=FALSE;
+	ELSE
+		InternalToerental:=20;
+	END_IF
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -306,6 +307,7 @@ END_VAR
       <LineId Id="11" Count="0" />
       <LineId Id="8" Count="2" />
       <LineId Id="2" Count="5" />
+      <LineId Id="12" Count="0" />
     </LineIds>
     <LineIds Name="FB_Pomp.visvriendelijkopstartenactief.Get">
       <LineId Id="1" Count="0" />
