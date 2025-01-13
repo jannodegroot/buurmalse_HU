@@ -30,6 +30,17 @@ VAR
 	
 	pompP2011:INT;
 	pompP2021:INT;
+	
+	
+	
+	tijd: TIME := T#5s;
+	timerOntluchtingsklepV2014: TON;
+	timerOntluchtingsklepV2026: TON;
+	triggerOntluchtingsklepV2026: R_TRIG;
+	triggerOntluchtingsklepV2014: R_TRIG;
+	
+	EersteKeerV2014: BOOL := TRUE;
+	EersteKeerV2026: BOOL := TRUE;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -73,16 +84,24 @@ CASE stap OF
 		Pomp1_P2011.PompGoTo(pompP2011); // set toerental 11
 		
 		
-		IF E_PompState.optoeren = Pomp1_P2011.StatePomp THEN // onluchtingklep p2011
+		IF E_PompState.optoeren = Pomp1_P2011.StatePomp AND 
+			EersteKeerV2014 = TRUE THEN // onluchtingklep p2011
+			EersteKeerV2014 := FALSE;			
 			KlepV2014.Open();
-			IF E_OpenDichtKlepState.open = KlepV2014.StateKlep THEN
+			timerOntluchtingsklepV2014 (IN:= E_OpenDichtKLepState.Open = KlepV2014.StateKlep, PT := tijd);
+			triggerOntluchtingsklepV2014 (CLK := (timerOntluchtingsklepV2014.Q));
+			IF triggerOntluchtingsklepV2014.Q  THEN
 				KlepV2014.Close();
 			END_IF
 		END_IF
 		
-		IF E_PompState.optoeren = pomp2_P2021.StatePomp THEN // ontluchtingsklep p2021
+		IF E_PompState.optoeren = pomp2_P2021.StatePomp AND 
+			EersteKeerV2026 = TRUE THEN // ontluchtingsklep p2021
+			EersteKeerV2026 := FALSE;
 			KlepV2026.Open();
-			IF E_OpenDichtKlepState.open = KlepV2026.StateKlep THEN
+			timerOntluchtingsklepV2026 (IN:= E_OpenDichtKLepState.Open = KlepV2026.StateKlep, PT := tijd);
+			triggerOntluchtingsklepV2026(CLK := (timerOntluchtingsklepV2026.Q));
+			IF triggerOntluchtingsklepV2026.Q THEN
 				KlepV2026.Close();
 			END_IF
 		END_IF
@@ -174,9 +193,20 @@ pomp1_p2011 := PompP2011;
       <LineId Id="89" Count="1" />
       <LineId Id="147" Count="0" />
       <LineId Id="92" Count="0" />
-      <LineId Id="94" Count="13" />
-      <LineId Id="109" Count="1" />
-      <LineId Id="112" Count="19" />
+      <LineId Id="94" Count="5" />
+      <LineId Id="166" Count="0" />
+      <LineId Id="100" Count="0" />
+      <LineId Id="171" Count="0" />
+      <LineId Id="161" Count="2" />
+      <LineId Id="101" Count="0" />
+      <LineId Id="103" Count="3" />
+      <LineId Id="172" Count="0" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="173" Count="0" />
+      <LineId Id="157" Count="3" />
+      <LineId Id="112" Count="4" />
+      <LineId Id="156" Count="0" />
+      <LineId Id="118" Count="13" />
       <LineId Id="63" Count="0" />
     </LineIds>
     <LineIds Name="FB_Uitmalen.FB_Init">
