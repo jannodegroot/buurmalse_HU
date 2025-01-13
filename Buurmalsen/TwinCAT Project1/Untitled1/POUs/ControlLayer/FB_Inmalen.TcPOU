@@ -30,7 +30,11 @@ VAR
 	
 	timeOut : TON;
 	trigger : R_TRIG;
+	TimerOn : BOOL := FALSE;
 	
+	First : BOOL := FALSE;
+	
+	PompAan : BOOL := FALSE;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -39,17 +43,14 @@ CurrentModus:= main.Regelingen.BestuurMode;
 
 IF (CurrentModus = E_Besturingsmodus.uitlaten) OR (CurrentModus = E_Besturingsmodus.uitmalen) THEN
 	firstround := FALSE;
+	First := FALSE;
+	PompAan := FALSE;
 END_IF
-
-//flag for setting ontluchtingsklep open or closed
-IF pomp2_P2021.StatePomp = E_PompState.off THEN
-	Ontluchtingsklep := TRUE;
-ELSE 
-	Ontluchtingsklep := FALSE;
-END_IF	
 
 //Start modus inmalen			
 IF CurrentModus = E_Besturingsmodus.inmalen THEN
+	
+	IF First = FALSE THEN
 	//set position kleppen
 	KlepV2012.close();
 	KlepV2014.close();
@@ -57,6 +58,8 @@ IF CurrentModus = E_Besturingsmodus.inmalen THEN
 	KlepV2024.Close();
 	KlepV2025.close();
 	KlepV2026.close();
+	First := TRUE;
+	END_IF
 	
 	//set position regelschuiven
 	SchuifV2013_AFG.RegelSchuifGoTo(0);
@@ -86,21 +89,29 @@ IF CurrentModus = E_Besturingsmodus.inmalen THEN
 			//Set pomp on or off with toerental from regelingen
 			pomp2_P2011.PompGoTo(pompP2011);
 			pomp2_P2021.PompGoTo(pompP2021);
-			
-			//Ontluchtingsklep open and after 10 seconds closed only when 	
-			IF Ontluchtingsklep = TRUE AND firstRound = FALSE THEN
-				firstround := TRUE;
-				KlepV2025.open();
-			END_IF
-	
-			timeOut(IN := KlepV2025.StateKlep = E_OpenDichtKlepState.open, PT := T#10S);
-			trigger(CLK := (timeOut.Q));
-			
-			IF trigger.Q THEN
-				KlepV2025.close();
+
+			IF 	pomp2_P2021.StatePomp = E_PompState.on THEN
+				PompAan := TRUE;
 			END_IF
 		END_IF	
 	END_IF	
+	//Ontluchtingsklep open and after 10 seconds closed only when 
+	IF firstRound = FALSE AND PompAan = TRUE THEN
+		KlepV2025.open();
+		
+		IF KlepV2025.StateKlep = E_OpenDichtKlepState.open THEN
+			TimerOn := TRUE;
+	
+			IF trigger.Q THEN
+				KlepV2025.close();
+				firstround := TRUE;
+				TimerOn := FALSE;
+			END_IF
+		END_IF
+	END_IF
+	//timer ontluchtingsklep
+	timeOut(IN := TimerOn, PT := T#10S);
+	trigger(CLK := (timeOut.Q));
 END_IF]]></ST>
     </Implementation>
     <Method Name="FB_init" Id="{292cdf7f-9fce-4ac5-8a23-a71cd6cbd45e}">
@@ -152,19 +163,22 @@ pomp2_P2021 := PompP2021;
       <LineId Id="63" Count="0" />
       <LineId Id="117" Count="0" />
       <LineId Id="116" Count="0" />
-      <LineId Id="118" Count="1" />
-      <LineId Id="105" Count="0" />
-      <LineId Id="98" Count="4" />
-      <LineId Id="97" Count="0" />
+      <LineId Id="118" Count="0" />
+      <LineId Id="252" Count="0" />
+      <LineId Id="251" Count="0" />
+      <LineId Id="119" Count="0" />
       <LineId Id="106" Count="0" />
       <LineId Id="103" Count="0" />
-      <LineId Id="110" Count="0" />
+      <LineId Id="156" Count="0" />
+      <LineId Id="213" Count="0" />
+      <LineId Id="206" Count="0" />
       <LineId Id="22" Count="0" />
       <LineId Id="21" Count="0" />
       <LineId Id="109" Count="0" />
       <LineId Id="108" Count="0" />
       <LineId Id="107" Count="0" />
       <LineId Id="67" Count="1" />
+      <LineId Id="207" Count="1" />
       <LineId Id="25" Count="0" />
       <LineId Id="114" Count="0" />
       <LineId Id="11" Count="1" />
@@ -185,19 +199,15 @@ pomp2_P2021 := PompP2021;
       <LineId Id="54" Count="1" />
       <LineId Id="59" Count="0" />
       <LineId Id="65" Count="0" />
-      <LineId Id="88" Count="0" />
-      <LineId Id="94" Count="0" />
-      <LineId Id="84" Count="0" />
-      <LineId Id="115" Count="0" />
-      <LineId Id="124" Count="0" />
-      <LineId Id="73" Count="0" />
-      <LineId Id="95" Count="0" />
-      <LineId Id="76" Count="2" />
-      <LineId Id="80" Count="0" />
-      <LineId Id="82" Count="0" />
-      <LineId Id="74" Count="0" />
+      <LineId Id="248" Count="0" />
+      <LineId Id="247" Count="0" />
+      <LineId Id="249" Count="1" />
       <LineId Id="50" Count="0" />
       <LineId Id="32" Count="0" />
+      <LineId Id="274" Count="12" />
+      <LineId Id="243" Count="0" />
+      <LineId Id="272" Count="1" />
+      <LineId Id="230" Count="0" />
       <LineId Id="4" Count="0" />
     </LineIds>
     <LineIds Name="FB_Inmalen.FB_init">
