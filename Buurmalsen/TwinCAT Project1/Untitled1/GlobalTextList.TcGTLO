@@ -11,6 +11,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"664"</v>
+              <v n="TextDefault">"actual percentage: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"514"</v>
               <v n="TextDefault">"AFO regelschuif test"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -86,6 +91,16 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"230"</v>
+              <v n="TextDefault">"Manual Input V022"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"668"</v>
+              <v n="TextDefault">"Manual Input V2013"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"416"</v>
               <v n="TextDefault">"Manual Open"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -111,8 +126,28 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"250"</v>
+              <v n="TextDefault">"Positie van schuif: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"991"</v>
               <v n="TextDefault">"Position: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"587"</v>
+              <v n="TextDefault">"pulse?"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"874"</v>
+              <v n="TextDefault">"set target margin"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"9"</v>
+              <v n="TextDefault">"set target margin: %s"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -163,6 +198,11 @@
             <o>
               <v n="TextID">"211"</v>
               <v n="TextDefault">"Stop proces"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"980"</v>
+              <v n="TextDefault">"target percentage: %s"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
