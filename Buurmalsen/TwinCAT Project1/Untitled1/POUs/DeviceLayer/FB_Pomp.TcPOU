@@ -40,10 +40,7 @@ END_VAR
 END_IF
 
 //visvriendelijk
-IF visvriendelijkactief AND (StatePomp = E_PompState.off OR bezig_visvriendelijkopstarten) AND globaaldoeltoerental>0 THEN
-	bezig_visvriendelijkopstarten:=TRUE;
-	visvriendelijk();
-END_IF
+visvriendelijk();
 
 //outputs pomp
 ActueelToerental:=InternalToerental;
@@ -213,6 +210,10 @@ END_VAR
       <Implementation>
         <ST><![CDATA[timervisvriendelijk(IN:= bezig_visvriendelijkopstarten, PT:= timervisvriendelijktijd);
 
+IF visvriendelijkactief AND (StatePomp = E_PompState.off OR bezig_visvriendelijkopstarten) AND globaaldoeltoerental>0 THEN
+	bezig_visvriendelijkopstarten:=TRUE;
+END_IF
+
 IF timervisvriendelijk.Q THEN
 	bezig_visvriendelijkopstarten:=FALSE;
 ELSE
@@ -246,9 +247,7 @@ END_VAR
       <LineId Id="46" Count="0" />
       <LineId Id="44" Count="0" />
       <LineId Id="6" Count="0" />
-      <LineId Id="1" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="3" Count="1" />
+      <LineId Id="48" Count="0" />
       <LineId Id="42" Count="0" />
       <LineId Id="7" Count="0" />
       <LineId Id="41" Count="0" />
@@ -303,7 +302,10 @@ END_VAR
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_Pomp.visvriendelijk">
-      <LineId Id="1" Count="6" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="8" Count="2" />
+      <LineId Id="2" Count="5" />
     </LineIds>
     <LineIds Name="FB_Pomp.visvriendelijkopstartenactief.Get">
       <LineId Id="1" Count="0" />

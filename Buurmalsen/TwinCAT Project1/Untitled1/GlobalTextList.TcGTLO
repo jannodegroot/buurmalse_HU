@@ -76,18 +76,8 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"206"</v>
-              <v n="TextDefault">"Doeltoerental: %s"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
               <v n="TextID">"932"</v>
               <v n="TextDefault">"DoelToerental: %s"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"319"</v>
-              <v n="TextDefault">"Doeltoerentall: %s"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -208,6 +198,16 @@
             <o>
               <v n="TextID">"211"</v>
               <v n="TextDefault">"Stop proces"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"347"</v>
+              <v n="TextDefault">"Terugmelding"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"933"</v>
+              <v n="TextDefault">"TerugmeldingSensor"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
