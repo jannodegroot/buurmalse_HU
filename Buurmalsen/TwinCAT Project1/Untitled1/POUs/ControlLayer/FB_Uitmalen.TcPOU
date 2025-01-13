@@ -86,10 +86,10 @@ CASE stap OF
 		
 		IF  E_PompState.optoeren = Pomp1_P2011.StatePomp AND 
 			EersteKeerV2014 = TRUE THEN // onluchtingklep p2011
-			EersteKeerV2014 := FALSE;			
-			KlepV2014.Open();
-			timerOntluchtingsklepV2014 (IN:= E_OpenDichtKLepState.Open = KlepV2014.StateKlep, PT := tijd);
-			triggerOntluchtingsklepV2014 (CLK := (timerOntluchtingsklepV2014.Q));
+				EersteKeerV2014 := FALSE;			
+				KlepV2014.Open();
+				timerOntluchtingsklepV2014 (IN:= E_OpenDichtKLepState.Open = KlepV2014.StateKlep, PT := tijd);
+				triggerOntluchtingsklepV2014 (CLK := (timerOntluchtingsklepV2014.Q));
 			IF triggerOntluchtingsklepV2014.Q  THEN
 				KlepV2014.Close();
 			END_IF
@@ -97,12 +97,12 @@ CASE stap OF
 		
 		IF  E_PompState.optoeren = pomp2_P2021.StatePomp AND 
 			EersteKeerV2026 = TRUE THEN // ontluchtingsklep p2021
-			EersteKeerV2026 := FALSE;
-			KlepV2026.Open();
-			timerOntluchtingsklepV2026 (IN:= E_OpenDichtKLepState.Open = KlepV2026.StateKlep, PT := tijd);
-			triggerOntluchtingsklepV2026(CLK := (timerOntluchtingsklepV2026.Q));
-			IF triggerOntluchtingsklepV2026.Q THEN
-				KlepV2026.Close();
+				EersteKeerV2026 := FALSE;
+				KlepV2026.Open();
+				timerOntluchtingsklepV2026 (IN:= E_OpenDichtKLepState.Open = KlepV2026.StateKlep, PT := tijd);
+				triggerOntluchtingsklepV2026(CLK := (timerOntluchtingsklepV2026.Q));
+				IF triggerOntluchtingsklepV2026.Q THEN
+					KlepV2026.Close();
 			END_IF
 		END_IF
 		
