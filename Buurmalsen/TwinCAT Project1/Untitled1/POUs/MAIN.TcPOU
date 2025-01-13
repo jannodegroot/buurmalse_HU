@@ -123,6 +123,8 @@ VAR
 									V2022_AFO:=V2022_AFO,
 									Pomp2011:= P2011,
 									Pomp2021:= P2021);					   
+	ManToerental2011: INT;
+	ManToerental2021: INT;
 END_VAR
 
 
@@ -175,6 +177,9 @@ V2026();
 
 P2021();
 P2011();
+P2011.PompGoToManual(ManToerental2011);
+P2021.PompGoToManual(ManToerental2021);
+
 
 Regelingen ();
 ControllerInmalen ();
@@ -210,7 +215,10 @@ V2022_DG();]]></ST>
       <LineId Id="64" Count="0" />
       <LineId Id="69" Count="2" />
       <LineId Id="68" Count="0" />
-      <LineId Id="20" Count="12" />
+      <LineId Id="20" Count="11" />
+      <LineId Id="73" Count="1" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="32" Count="0" />
       <LineId Id="35" Count="2" />
       <LineId Id="59" Count="0" />
       <LineId Id="38" Count="10" />
