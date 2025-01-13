@@ -28,16 +28,19 @@ VAR
 	timerpomperrortijd: TIME:=T#20S;
 	noodstop:BOOL;
 	
+	Bedrijftoestand: E_Bedrijfstoestand := E_bedrijfstoestand.auto;
 	
-	testingbool : bool;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//visvriendelijk
-IF visvriendelijkactief AND (StatePomp = E_PompState.off OR bezig_visvriendelijkopstarten) THEN
-	bezig_visvriendelijkopstarten:=TRUE;
-	visvriendelijk();
+      <ST><![CDATA[IF bedrijftoestand = E_bedrijfstoestand.off THEN
+	internaltoerental := 0;
+	globaaldoeltoerental := 0;
 END_IF
+
+//visvriendelijk
+visvriendelijk();
 
 //outputs pomp
 ActueelToerental:=InternalToerental;
@@ -47,16 +50,15 @@ IF InternalToerental = 0 AND globaaldoeltoerental=0 THEN
 ELSIF globaaldoeltoerental>0 THEN
 	outputpompon.set(TRUE);
 END_IF
-testingbool:= inputpompon.get(FALSE);
 //inputs errorcheck
-timerpomperror(in:=( NOT (inputpompon.get(FALSE)) AND(globaaldoeltoerental>0 AND ActueelToerental>0)) OR(inputpompon.get(TRUE) AND ((InternalToerental = 0 AND globaaldoeltoerental=0) OR ActueelToerental=0)), PT:=timerpomperrortijd);
+timerpomperror(in:=(  (NOT inputpompon.get(FALSE)) AND(globaaldoeltoerental>0 AND ActueelToerental>0)) OR(inputpompon.get(TRUE) AND ((InternalToerental = 0 AND globaaldoeltoerental=0) OR ActueelToerental=0)), PT:=timerpomperrortijd);
 IF timerpomperror.Q THEN
 	InternalState := E_PompState.error;
 END_IF
 
 //status pomp
 IF (NOT timerpomperror.Q) THEN
-	IF  inputpompon.get(FALSE) AND ActueelToerental=0 THEN
+	IF  (NOT inputpompon.get(FALSE)) AND ActueelToerental=0 THEN
 		InternalState := E_pompstate.off;
 	ELSIF inputpompon.get(TRUE) AND ActueelToerental<globaaldoeltoerental THEN
 		InternalState := E_pompstate.optoeren;
@@ -120,7 +122,8 @@ VAR
 	toenamentoerental : INT :=20;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[timeroptoeren(IN := timerloopt, PT := optoerentimer);
+        <ST><![CDATA[IF Bedrijftoestand = E_Bedrijfstoestand.auto THEN
+timeroptoeren(IN := timerloopt, PT := optoerentimer);
 globaaldoeltoerental:=toerental;
 IF noodstop THEN
 	InternalToerental:=0;
@@ -139,6 +142,42 @@ ELSIF timeroptoeren.Q AND NOT bezig_visvriendelijkopstarten THEN
 	END_IF;
 ELSE
 	timerloopt:=TRUE;
+END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="PompGoToManual" Id="{e505c88b-2d6f-4af2-b53a-ed8ddec70f6f}">
+      <Declaration><![CDATA[METHOD PompGoToManual : INT
+VAR_INPUT
+	toerental	: INT;
+END_VAR
+
+VAR
+	afnametoerental : INT :=20;
+	toenamentoerental : INT :=20;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Bedrijftoestand = E_Bedrijfstoestand.manual THEN
+timeroptoeren(IN := timerloopt, PT := optoerentimer);
+globaaldoeltoerental:=toerental;
+IF noodstop THEN
+	InternalToerental:=0;
+ELSIF timeroptoeren.Q AND NOT bezig_visvriendelijkopstarten THEN
+	timerloopt := FALSE;
+	IF (toerental <= InternalToerental+toenamentoerental) AND (toerental >= InternalToerental-afnametoerental) THEN
+		IF toerental >20 OR TOERENTAL=0THEN	
+		InternalToerental:= toerental;
+		ELSIF TOERENTAL>0 THEN
+			INTERNALTOERENTAL:=20;
+		END_IF;
+	ELSIF toerental > InternalToerental THEN
+	InternalToerental := InternalToerental+toenamentoerental;
+	ELSIF toerental < internaltoerental THEN
+		internaltoerental := InternalToerental-afnametoerental;
+	END_IF;
+ELSE
+	timerloopt:=TRUE;
+END_IF
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -171,10 +210,15 @@ END_VAR
       <Implementation>
         <ST><![CDATA[timervisvriendelijk(IN:= bezig_visvriendelijkopstarten, PT:= timervisvriendelijktijd);
 
-IF timervisvriendelijk.Q THEN
-	bezig_visvriendelijkopstarten:=FALSE;
-ELSE
-	InternalToerental:=20;
+IF visvriendelijkactief AND (StatePomp = E_PompState.off OR bezig_visvriendelijkopstarten) AND globaaldoeltoerental>0 THEN
+	bezig_visvriendelijkopstarten:=TRUE;
+END_IF
+IF bezig_visvriendelijkopstarten=TRUE THEN
+	IF timervisvriendelijk.Q THEN
+		bezig_visvriendelijkopstarten:=FALSE;
+	ELSE
+		InternalToerental:=20;
+	END_IF
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -198,10 +242,13 @@ END_VAR
       </Set>
     </Property>
     <LineIds Name="FB_Pomp">
+      <LineId Id="43" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="44" Count="0" />
       <LineId Id="6" Count="0" />
-      <LineId Id="1" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="3" Count="1" />
+      <LineId Id="48" Count="0" />
       <LineId Id="42" Count="0" />
       <LineId Id="7" Count="0" />
       <LineId Id="41" Count="0" />
@@ -209,7 +256,6 @@ END_VAR
       <LineId Id="9" Count="1" />
       <LineId Id="13" Count="1" />
       <LineId Id="11" Count="0" />
-      <LineId Id="16" Count="0" />
       <LineId Id="15" Count="0" />
       <LineId Id="17" Count="1" />
       <LineId Id="20" Count="1" />
@@ -233,6 +279,7 @@ END_VAR
       <LineId Id="1" Count="3" />
     </LineIds>
     <LineIds Name="FB_Pomp.PompGoTo">
+      <LineId Id="25" Count="0" />
       <LineId Id="1" Count="0" />
       <LineId Id="18" Count="2" />
       <LineId Id="2" Count="1" />
@@ -244,6 +291,10 @@ END_VAR
       <LineId Id="12" Count="1" />
       <LineId Id="9" Count="0" />
       <LineId Id="5" Count="2" />
+      <LineId Id="26" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Pomp.PompGoToManual">
+      <LineId Id="1" Count="21" />
     </LineIds>
     <LineIds Name="FB_Pomp.StatePomp.Get">
       <LineId Id="1" Count="0" />
@@ -252,7 +303,11 @@ END_VAR
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_Pomp.visvriendelijk">
-      <LineId Id="1" Count="6" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="8" Count="2" />
+      <LineId Id="2" Count="5" />
+      <LineId Id="12" Count="0" />
     </LineIds>
     <LineIds Name="FB_Pomp.visvriendelijkopstartenactief.Get">
       <LineId Id="1" Count="0" />

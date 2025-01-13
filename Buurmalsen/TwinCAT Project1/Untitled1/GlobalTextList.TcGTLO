@@ -36,6 +36,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"441"</v>
+              <v n="TextDefault">"Bedrijftoestand: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"564"</v>
               <v n="TextDefault">"dig in p2011"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -71,38 +76,18 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"608"</v>
+              <v n="TextID">"932"</v>
               <v n="TextDefault">"DoelToerental: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"547"</v>
+              <v n="TextDefault">"DoelToerentall: %s"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
               <v n="TextID">"247"</v>
               <v n="TextDefault">"InputSensor"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"606"</v>
-              <v n="TextDefault">"InputSensor off"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"779"</v>
-              <v n="TextDefault">"InputSensor on"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"569"</v>
-              <v n="TextDefault">"InternalToerental: "</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"210"</v>
-              <v n="TextDefault">"InternalToerental: %i"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"871"</v>
-              <v n="TextDefault">"InternalToerental: %s"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -121,18 +106,8 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"534"</v>
-              <v n="TextDefault">"Manual Start"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"433"</v>
-              <v n="TextDefault">"Manual stop"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"396"</v>
-              <v n="TextDefault">"Manual Stop"</v>
+              <v n="TextID">"811"</v>
+              <v n="TextDefault">"Manualtoerental"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -143,11 +118,6 @@
             <o>
               <v n="TextID">"59"</v>
               <v n="TextDefault">"Off"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"930"</v>
-              <v n="TextDefault">"on/off"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -166,7 +136,7 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"53"</v>
+              <v n="TextID">"225"</v>
               <v n="TextDefault">"P2011"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
@@ -176,8 +146,8 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"611"</v>
-              <v n="TextDefault">"Pompen"</v>
+              <v n="TextID">"206"</v>
+              <v n="TextDefault">"P2099"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -236,8 +206,18 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"286"</v>
-              <v n="TextDefault">"Toerental: %s"</v>
+              <v n="TextID">"347"</v>
+              <v n="TextDefault">"Terugmelding"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"933"</v>
+              <v n="TextDefault">"TerugmeldingSensor"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"228"</v>
+              <v n="TextDefault">"Toerental SP (rpm)"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -305,26 +285,11 @@
               <v n="TextDefault">"Visvriendelijk"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
-            <o>
-              <v n="TextID">"731"</v>
-              <v n="TextDefault">"visvriendelijk"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"590"</v>
-              <v n="TextDefault">"Visvriendelijk off"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"971"</v>
-              <v n="TextDefault">"Visvriendelijk on"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
           </l>
           <l n="Languages" t="ArrayList" />
-          <v n="GuidInit">{429be581-1bfd-41cd-8e33-c862c62da85d}</v>
-          <v n="GuidReInit">{6fab0154-5130-4e96-b4de-bffcdca15fa6}</v>
-          <v n="GuidExitX">{011ec99b-3805-4f5f-b831-be5821d9304e}</v>
+          <v n="GuidInit">{16b0cf7a-c8f9-49a8-bf7f-62993507b9b8}</v>
+          <v n="GuidReInit">{2d3297c3-b333-4c27-8119-4c93f1ea3214}</v>
+          <v n="GuidExitX">{493be23f-0cad-4968-8b70-08e584a3b6c7}</v>
         </o>
       </Data>
       <TypeList>
