@@ -5,7 +5,7 @@
       <Data>
         <o xml:space="preserve" t="VisualObject">
           <n n="LastVisuLanguageModelEntry" />
-          <v n="UniqueIdGenerator">"138"</v>
+          <v n="UniqueIdGenerator">"144"</v>
           <o n="VisualElemList" t="VisualElemList">
             <l n="VisualElementList" t="VisualElemCollection" cet="GenericVisualElem">
               <o>
@@ -14363,8 +14363,8 @@
                           <v n="Id">135947015L</v>
                           <l n="Value" t="ArrayList" cet="NamedStyleColor">
                             <o>
-                              <v n="Color">-65536</v>
-                              <v n="CanonicalName">"BasicElement-Alarm-Frame-Color"</v>
+                              <v n="Color">-16776961</v>
+                              <v n="CanonicalName">"Blue"</v>
                             </o>
                           </l>
                         </o>
@@ -14372,8 +14372,8 @@
                           <v n="Id">493260384L</v>
                           <l n="Value" t="ArrayList" cet="NamedStyleColor">
                             <o>
-                              <v n="Color">-12337</v>
-                              <v n="CanonicalName">"BasicElement-Alarm-Fill-Color"</v>
+                              <v n="Color">-16716545</v>
+                              <v n="CanonicalName">"Lightblue"</v>
                             </o>
                           </l>
                         </o>
@@ -14719,8 +14719,8 @@
                           <v n="Id">135947015L</v>
                           <l n="Value" t="ArrayList" cet="NamedStyleColor">
                             <o>
-                              <v n="Color">-65536</v>
-                              <v n="CanonicalName">"BasicElement-Alarm-Frame-Color"</v>
+                              <v n="Color">-16776961</v>
+                              <v n="CanonicalName">"Blue"</v>
                             </o>
                           </l>
                         </o>
@@ -14728,8 +14728,8 @@
                           <v n="Id">493260384L</v>
                           <l n="Value" t="ArrayList" cet="NamedStyleColor">
                             <o>
-                              <v n="Color">-12337</v>
-                              <v n="CanonicalName">"BasicElement-Alarm-Fill-Color"</v>
+                              <v n="Color">-16716545</v>
+                              <v n="CanonicalName">"Lightblue"</v>
                             </o>
                           </l>
                         </o>
@@ -14911,8 +14911,8 @@
                           <v n="Id">135947015L</v>
                           <l n="Value" t="ArrayList" cet="NamedStyleColor">
                             <o>
-                              <v n="Color">-65536</v>
-                              <v n="CanonicalName">"BasicElement-Alarm-Frame-Color"</v>
+                              <v n="Color">-16776961</v>
+                              <v n="CanonicalName">"Blue"</v>
                             </o>
                           </l>
                         </o>
@@ -14920,8 +14920,8 @@
                           <v n="Id">493260384L</v>
                           <l n="Value" t="ArrayList" cet="NamedStyleColor">
                             <o>
-                              <v n="Color">-12337</v>
-                              <v n="CanonicalName">"BasicElement-Alarm-Fill-Color"</v>
+                              <v n="Color">-16716545</v>
+                              <v n="CanonicalName">"Lightblue"</v>
                             </o>
                           </l>
                         </o>
@@ -15019,7 +15019,7 @@
                         </o>
                         <o>
                           <v n="Id">390574330L</v>
-                          <v n="Value">"InputSensor"</v>
+                          <v n="Value">"TerugmeldingSensor"</v>
                         </o>
                         <o>
                           <v n="Id">2597686782L</v>
@@ -15027,7 +15027,7 @@
                         </o>
                         <o>
                           <v n="Id">823443203L</v>
-                          <v n="Value">"247"</v>
+                          <v n="Value">"933"</v>
                         </o>
                       </l>
                     </o>
@@ -15218,7 +15218,7 @@
                     <v n="VisualElementIdentifier">"GenElemInst_282"</v>
                     <n n="VisualElementOfflinePaintCommands" />
                     <n n="VisualElementFrameInformation" />
-                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="IInputAction[]">
+                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="InputBoxInputAction[]">
                       <v>OnMouseDown</v>
                       <a cet="InputBoxInputAction">
                         <o>
@@ -15411,7 +15411,7 @@
                     <v n="VisualElementIdentifier">"GenElemInst_283"</v>
                     <n n="VisualElementOfflinePaintCommands" />
                     <n n="VisualElementFrameInformation" />
-                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="IInputAction[]">
+                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="STSnippetInputAction[]">
                       <v>OnMouseDown</v>
                       <a cet="STSnippetInputAction">
                         <o>
@@ -15592,7 +15592,7 @@
                     <v n="VisualElementIdentifier">"GenElemInst_287"</v>
                     <n n="VisualElementOfflinePaintCommands" />
                     <n n="VisualElementFrameInformation" />
-                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="IInputAction[]">
+                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="STSnippetInputAction[]">
                       <v>OnMouseDown</v>
                       <a cet="STSnippetInputAction">
                         <o>
@@ -15773,7 +15773,7 @@
                     <v n="VisualElementIdentifier">"GenElemInst_288"</v>
                     <n n="VisualElementOfflinePaintCommands" />
                     <n n="VisualElementFrameInformation" />
-                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="IInputAction[]">
+                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="STSnippetInputAction[]">
                       <v>OnMouseDown</v>
                       <a cet="STSnippetInputAction">
                         <o>
@@ -16720,8 +16720,8 @@
                           <v n="Id">135947015L</v>
                           <l n="Value" t="ArrayList" cet="NamedStyleColor">
                             <o>
-                              <v n="Color">-65536</v>
-                              <v n="CanonicalName">"BasicElement-Alarm-Frame-Color"</v>
+                              <v n="Color">-16776961</v>
+                              <v n="CanonicalName">"Blue"</v>
                             </o>
                           </l>
                         </o>
@@ -16729,8 +16729,8 @@
                           <v n="Id">493260384L</v>
                           <l n="Value" t="ArrayList" cet="NamedStyleColor">
                             <o>
-                              <v n="Color">-12337</v>
-                              <v n="CanonicalName">"BasicElement-Alarm-Fill-Color"</v>
+                              <v n="Color">-16716545</v>
+                              <v n="CanonicalName">"Lightblue"</v>
                             </o>
                           </l>
                         </o>
@@ -17076,8 +17076,8 @@
                           <v n="Id">135947015L</v>
                           <l n="Value" t="ArrayList" cet="NamedStyleColor">
                             <o>
-                              <v n="Color">-65536</v>
-                              <v n="CanonicalName">"BasicElement-Alarm-Frame-Color"</v>
+                              <v n="Color">-16776961</v>
+                              <v n="CanonicalName">"Blue"</v>
                             </o>
                           </l>
                         </o>
@@ -17085,8 +17085,8 @@
                           <v n="Id">493260384L</v>
                           <l n="Value" t="ArrayList" cet="NamedStyleColor">
                             <o>
-                              <v n="Color">-12337</v>
-                              <v n="CanonicalName">"BasicElement-Alarm-Fill-Color"</v>
+                              <v n="Color">-16716545</v>
+                              <v n="CanonicalName">"Lightblue"</v>
                             </o>
                           </l>
                         </o>
@@ -17268,8 +17268,8 @@
                           <v n="Id">135947015L</v>
                           <l n="Value" t="ArrayList" cet="NamedStyleColor">
                             <o>
-                              <v n="Color">-65536</v>
-                              <v n="CanonicalName">"BasicElement-Alarm-Frame-Color"</v>
+                              <v n="Color">-16776961</v>
+                              <v n="CanonicalName">"Blue"</v>
                             </o>
                           </l>
                         </o>
@@ -17277,8 +17277,8 @@
                           <v n="Id">493260384L</v>
                           <l n="Value" t="ArrayList" cet="NamedStyleColor">
                             <o>
-                              <v n="Color">-12337</v>
-                              <v n="CanonicalName">"BasicElement-Alarm-Fill-Color"</v>
+                              <v n="Color">-16716545</v>
+                              <v n="CanonicalName">"Lightblue"</v>
                             </o>
                           </l>
                         </o>
@@ -17376,7 +17376,7 @@
                         </o>
                         <o>
                           <v n="Id">390574330L</v>
-                          <v n="Value">"InputSensor"</v>
+                          <v n="Value">"TerugmeldingSensor"</v>
                         </o>
                         <o>
                           <v n="Id">2597686782L</v>
@@ -17384,7 +17384,7 @@
                         </o>
                         <o>
                           <v n="Id">823443203L</v>
-                          <v n="Value">"247"</v>
+                          <v n="Value">"933"</v>
                         </o>
                       </l>
                     </o>
@@ -17575,7 +17575,7 @@
                     <v n="VisualElementIdentifier">"GenElemInst_281"</v>
                     <n n="VisualElementOfflinePaintCommands" />
                     <n n="VisualElementFrameInformation" />
-                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="IInputAction[]">
+                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="InputBoxInputAction[]">
                       <v>OnMouseDown</v>
                       <a cet="InputBoxInputAction">
                         <o>
@@ -17586,7 +17586,7 @@
                           <v n="InputBoxDialogTitle">""</v>
                           <v n="Password">false</v>
                           <v n="UseTextOutputVariable">false</v>
-                          <v n="TextOutputVariableInitialized">false</v>
+                          <v n="TextOutputVariableInitialized">true</v>
                           <v n="OtherVarConversion">""</v>
                           <v n="Format">""</v>
                           <v n="DialogPosition" t="DialogPositionSetting">UseGlobalSetting</v>
@@ -17946,7 +17946,7 @@
                     <v n="VisualElementIdentifier">"GenElemInst_291"</v>
                     <n n="VisualElementOfflinePaintCommands" />
                     <n n="VisualElementFrameInformation" />
-                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="IInputAction[]">
+                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="STSnippetInputAction[]">
                       <v>OnMouseDown</v>
                       <a cet="STSnippetInputAction">
                         <o>
@@ -18128,7 +18128,7 @@
                     <v n="VisualElementIdentifier">"GenElemInst_292"</v>
                     <n n="VisualElementOfflinePaintCommands" />
                     <n n="VisualElementFrameInformation" />
-                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="IInputAction[]">
+                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="STSnippetInputAction[]">
                       <v>OnMouseDown</v>
                       <a cet="STSnippetInputAction">
                         <o>
@@ -18309,7 +18309,7 @@
                     <v n="VisualElementIdentifier">"GenElemInst_293"</v>
                     <n n="VisualElementOfflinePaintCommands" />
                     <n n="VisualElementFrameInformation" />
-                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="IInputAction[]">
+                    <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="STSnippetInputAction[]">
                       <v>OnMouseDown</v>
                       <a cet="STSnippetInputAction">
                         <o>
@@ -18918,6 +18918,7 @@ END_VAR"</v>
         <Type n="IInputAction">{69265815-ba9d-4bec-bfcb-427fb9172844}</Type>
         <Type n="IInputAction[]">_3S.CoDeSys.VisualElem.IInputAction[], VisualElem, Version=4.6.0.0, Culture=neutral, PublicKeyToken=null</Type>
         <Type n="InputBoxInputAction">{e8e7e747-f76f-4dee-ab1c-b9637e41ac26}</Type>
+        <Type n="InputBoxInputAction[]">_3S.CoDeSys.VisualElem.InputBoxInputAction[], VisualElem.plugin, Version=4.6.0.0, Culture=neutral, PublicKeyToken=null</Type>
         <Type n="Int16">System.Int16</Type>
         <Type n="Int32">System.Int32</Type>
         <Type n="Int64">System.Int64</Type>

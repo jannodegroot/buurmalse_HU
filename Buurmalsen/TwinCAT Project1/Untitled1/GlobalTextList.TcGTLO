@@ -201,6 +201,16 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"347"</v>
+              <v n="TextDefault">"Terugmelding"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"933"</v>
+              <v n="TextDefault">"TerugmeldingSensor"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"493"</v>
               <v n="TextDefault">"V2012"</v>
               <l n="LanguageTexts" t="ArrayList" />
