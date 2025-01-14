@@ -6,6 +6,15 @@ VAR_INPUT
     BestuurMode : INT;            (* 0 = Handmatig, 1 = Automatisch *)
     RegelStand1 : REAL;           (* Setpoint debiet in m³/s *)
     RegelStand2 : REAL;           (* Setpoint polderpeil in m NAP *)
+	Mode : INT; // 0 = Uit, 1 = Polderpeil, 2 = Constant Debiet
+    CurrentPosition : REAL; // Terugmelding analoog
+    DeltaH : REAL; // Niveauverschil
+END_VAR
+
+VAR_OUTPUT
+    OpenSignal : BOOL;
+    CloseSignal : BOOL;
+    FlowRate : REAL;
 END_VAR
 
 VAR
@@ -53,28 +62,14 @@ VAR
     zomerPijl : BOOL;
     streefPijl : REAL;
 	END_METHOD: INT;
-END_VAR]]></Declaration>
-    <Implementation>
-      <ST><![CDATA[FUNCTION_BLOCK FB_ValveControl
-VAR_INPUT
-    Mode : INT; // 0 = Uit, 1 = Polderpeil, 2 = Constant Debiet
-    CurrentPosition : REAL; // Terugmelding analoog
-    DeltaH : REAL; // Niveauverschil
-END_VAR
-VAR_OUTPUT
-    OpenSignal : BOOL;
-    CloseSignal : BOOL;
-    FlowRate : REAL;
-END_VAR
-VAR
-    TargetPosition : REAL;
+	TargetPosition : REAL;
     Timer : TON;
     CD : REAL := 0.82;
     G : REAL := 9.81;
     Area : REAL;
-END_VAR
-
-// Bereken debiet
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Bereken debiet
 FlowRate := CD * Area * SQRT(2 * G * DeltaH);
 
 // Periodieke regeling
@@ -327,7 +322,7 @@ END_IF
       </Implementation>
     </Method>
     <LineIds Name="FB_Regelingen">
-      <LineId Id="16" Count="40" />
+      <LineId Id="35" Count="21" />
       <LineId Id="13" Count="0" />
       <LineId Id="8" Count="0" />
     </LineIds>
