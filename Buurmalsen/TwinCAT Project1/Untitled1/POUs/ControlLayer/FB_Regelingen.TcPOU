@@ -3,21 +3,37 @@
   <POU Name="FB_Regelingen" Id="{10454be2-17f1-45a6-927c-6671ec7f7806}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Regelingen
 VAR_INPUT
-    BestuurMode : INT;            (* 0 = Handmatig, 1 = Automatisch *)
-    RegelStand1 : REAL;           (* Setpoint debiet in m³/s *)
-    RegelStand2 : REAL;           (* Setpoint polderpeil in m NAP *)
 	Mode : INT; // 0 = Uit, 1 = Polderpeil, 2 = Constant Debiet
     CurrentPosition : REAL; // Terugmelding analoog
     DeltaH : REAL; // Niveauverschil
+	CurrentSpeed : REAL;
+    TargetFlow : REAL;
 END_VAR
+//////////////// output naar andere functie blokken
 
 VAR_OUTPUT
     OpenSignal : BOOL;
     CloseSignal : BOOL;
     FlowRate : REAL;
+	PumpOn : BOOL;
+    DesiredSpeed : REAL;
+    FlowRate : REAL;
 END_VAR
-
+////////////
 VAR
+    Q0 : REAL := 1.26; // Voorbeeldwaarde
+    H0 : REAL := 3.42;
+    NominalSpeed : REAL := 321;
+
+	Inmalen : FB_Inmalen;
+	Uitmalen : FB_Uitmalen;
+	Uitlaten : FB_Uitlaten;	
+
+	BestuurMode : E_RegelingState := E_RegelingState.uit;
+	RegelStand1 : E_RegelingState := E_RegelingState.polderpeil;
+	RegelStand2 : E_RegelingState := E_RegelingState.debiet;
+
+
     (* Uitgangen *)
     Pomp1 : INT;                  (* Status pomp 1: 0 = uit, 1 = aan *)
     Pomp2 : INT;                  (* Status pomp 2: 0 = uit, 1 = aan *)
@@ -69,7 +85,13 @@ VAR
     Area : REAL;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// Bereken debiet
+      <ST><![CDATA[IF BestuurMode = E_RegelingState.uit THEN
+	RegelStand1 := (uit);
+	
+END_IF
+
+
+// Bereken debiet
 FlowRate := CD * Area * SQRT(2 * G * DeltaH);
 
 // Periodieke regeling
@@ -276,6 +298,11 @@ END_IF
       </Implementation>
     </Method>
     <LineIds Name="FB_Regelingen">
+      <LineId Id="57" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="62" Count="0" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="58" Count="1" />
       <LineId Id="35" Count="21" />
       <LineId Id="13" Count="0" />
       <LineId Id="8" Count="0" />
