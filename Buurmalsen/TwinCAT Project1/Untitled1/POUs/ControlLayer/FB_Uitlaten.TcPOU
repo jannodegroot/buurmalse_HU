@@ -23,7 +23,8 @@ VAR
 	Stand2022: SINT; //Moeten we van de regelingen krijgen
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[Besturing := main.Regelingen.BestuurMode;
+      <ST><![CDATA[Stand2013 := main.Regelingen.RegelschuifStandV2013;
+Stand2022 := main.Regelingen.RegelschuifStandV2022;
 IF Besturing = E_Besturingsmodus.uitlaten THEN
 	
 	KlepV2012.Open();
@@ -86,7 +87,7 @@ Pompstatus21:= Pomp2021; ]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_Uitlaten">
-      <LineId Id="4" Count="0" />
+      <LineId Id="36" Count="1" />
       <LineId Id="6" Count="13" />
       <LineId Id="35" Count="0" />
       <LineId Id="22" Count="3" />
