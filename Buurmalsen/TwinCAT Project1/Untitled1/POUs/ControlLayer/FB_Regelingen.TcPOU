@@ -73,6 +73,7 @@ VAR
     CD : REAL := 0.82;
     G : REAL := 9.81;
     Area : REAL;
+	currentStateRegeling: E_RegelingState;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF BestuurMode = E_RegelingState.Uit THEN
@@ -85,24 +86,24 @@ END_IF
 FlowRate := CD * Area * SQRT(2 * G * DeltaH);
 
 // Periodieke regeling
-IF currentStateregeling THEN
-    CASE Mode OF
-        0: // Uit
+CASE currentStateRegeling OF
+    E_RegelingState.uit:
+        OpenSignal := FALSE;
+        CloseSignal := TRUE;
+
+    E_RegelingState.polderpeil:
+        IF CurrentPosition < TargetPosition THEN
+            OpenSignal := TRUE;
+            CloseSignal := FALSE;
+        ELSE
             OpenSignal := FALSE;
             CloseSignal := TRUE;
-        1: // Polderpeil
-            IF CurrentPosition < TargetPosition THEN
-                OpenSignal := TRUE;
-                CloseSignal := FALSE;
-            ELSE
-                OpenSignal := FALSE;
-                CloseSignal := TRUE;
-            END_IF;
-        2: // Constant Debiet
-            TargetPosition := CalculatePositionForFlow(FlowRate);
-    END_CASE;
-    Timer(IN := TRUE, PT := T#1m);
-END_IF;
+        END_IF;
+
+    E_RegelingState.debiet:
+        TargetPosition := CalculatePositionForFlow(FlowRate);
+END_CASE;
+
 
 ]]></ST>
     </Implementation>
@@ -240,9 +241,7 @@ END_IF
       </Implementation>
     </Method>
     <LineIds Name="FB_Regelingen">
-      <LineId Id="35" Count="21" />
-      <LineId Id="13" Count="0" />
-      <LineId Id="8" Count="0" />
+      <LineId Id="1" Count="29" />
     </LineIds>
     <LineIds Name="FB_Regelingen.Debiet">
       <LineId Id="1" Count="13" />
