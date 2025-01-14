@@ -95,7 +95,7 @@ END_IF
 FlowRate := CD * Area * SQRT(2 * G * DeltaH);
 
 // Periodieke regeling
-IF Timer.Q THEN
+IF currentStateregeling THEN
     CASE Mode OF
         0: // Uit
             OpenSignal := FALSE;
@@ -118,21 +118,67 @@ END_IF;
     </Implementation>
     <Folder Name="Methods" Id="{7a5154a8-d0ab-4aca-a913-d3242cae32ca}" />
     <Folder Name="Properties" Id="{64d43a35-4d5a-4d04-a035-1c51de5047d0}" />
-    <Method Name="Excute" Id="{63571029-8e9a-4487-8846-7eb1ac19ffd7}" FolderPath="Methods\">
-      <Declaration><![CDATA[METHOD Excute : BOOL
+    <Method Name="Debiet" Id="{2b69d816-b4da-4e63-b57a-877adece09f6}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Debiet : REAL
 VAR_INPUT
-END_VAR
-]]></Declaration>
+    DesiredFlow : REAL;
+    DeltaH : REAL;
+	Q0 : REAL := 1.26;
+	H0 : REAL := 3.42;
+	NominalSpeed : REAL := 321.0;
+    MaxSpeed : REAL := 350.0;
+    MinSpeed : REAL := 100.0;
+	CD : REAL := 0.82; 
+    G : REAL := 9.81;
+    Area : REAL;
+	MaxSchuifArea : REAL := 1.0;
+	CalculatePositionForFlow: REAL;
+	CalculateSpeedForFlow: REAL;
+END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF BestuurMode = 1 THEN  // Kijken of deze methode noodzakelijk is
-    StartRegeling();  (* Start automatische regeling als de modus actief is *)
+        <ST><![CDATA[IF DeltaH > 0 THEN
+    Area := DesiredFlow / (CD * SQRT(2 * G * DeltaH));
+    CalculatePositionForFlow := Area / (MaxSchuifArea); 
+	CalculateSpeedForFlow := NominalSpeed * SQRT(DesiredFlow / Q0 + DeltaH / H0);
+	IF CalculateSpeedForFlow > MaxSpeed THEN
+        CalculateSpeedForFlow := MaxSpeed; 
+    ELSIF CalculateSpeedForFlow < MinSpeed THEN
+        CalculateSpeedForFlow := MinSpeed; 
+    END_IF;
 ELSE
-    StopRegeling();   (* Zet de regeling uit in handmatige modus *)
-END_IF
+    CalculatePositionForFlow := 0.0; 
+	CalculateSpeedForFlow := MinSpeed;
+END_IF;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Polderpeil" Id="{4de05532-21a1-4e5c-8e2d-3a2285633ff7}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Polderpeil : REAL
+VAR_INPUT
+    DeltaH : REAL; 
+    MaxPosition : REAL := 1.0; 
+    MinPosition : REAL := 0.0; 
+	CalculatePositionForWaterLevel: REAL;
+	currentStateregeling: E_REGELINGSTATE;
+	CalculateSpeedForWaterLevel: REAL;
+	MinSpeed : REAL := 100.0;
+	NominalSpeed : REAL := 321.0;
+	MaxSpeed : REAL := 350.0;
+	H0 : REAL := 3.42;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF DeltaH > 0 THEN
+	CalculateSpeedForWaterLevel := MinSpeed + (NominalSpeed - MinSpeed) * (DeltaH / H0);
+    CalculatePositionForWaterLevel := MinPosition + (MaxPosition - MinPosition) * (DeltaH / 1.0); 
+	IF CalculateSpeedForWaterLevel > MaxSpeed THEN
+       CalculateSpeedForWaterLevel := MaxSpeed; 
+    END_IF;
+ELSE
+    CalculatePositionForWaterLevel := MinPosition; 
+	CalculateSpeedForWaterLevel := MinSpeed;
+END_IF;
 
-(* Gegevens doorsturen naar de subfunctieblokken *)
-Uitlaten.PompStatus := Pomp1;
-Uitmalen.PompStatus := Pomp2;]]></ST>
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="StartRegeling" Id="{b46af18e-9800-4f78-8701-c2159a7865ad}" FolderPath="Methods\">
@@ -283,7 +329,7 @@ Pomp2 := 0;
 VAR
 	currentStateregeling: E_REGELINGSTATE;
 	PumpOn: BOOL;
-	DesiredSpeed: LREAL;
+	DesiredSpeed: REAL;
 	OpenSignal: BOOL;
 	CloseSignal: BOOL;
 END_VAR]]></Declaration>
@@ -307,8 +353,11 @@ END_IF
       <LineId Id="13" Count="0" />
       <LineId Id="8" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Regelingen.Excute">
-      <LineId Id="1" Count="8" />
+    <LineIds Name="FB_Regelingen.Debiet">
+      <LineId Id="1" Count="13" />
+    </LineIds>
+    <LineIds Name="FB_Regelingen.Polderpeil">
+      <LineId Id="1" Count="11" />
     </LineIds>
     <LineIds Name="FB_Regelingen.StartRegeling">
       <LineId Id="72" Count="69" />
