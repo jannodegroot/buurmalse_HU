@@ -3,11 +3,12 @@
   <POU Name="FB_Regelingen" Id="{10454be2-17f1-45a6-927c-6671ec7f7806}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Regelingen
 VAR_INPUT
+    BestuurMode : INT;            (* 0 = Handmatig, 1 = Automatisch *)
+    RegelStand1 : REAL;           (* Setpoint debiet in m³/s *)
+    RegelStand2 : REAL;           (* Setpoint polderpeil in m NAP *)
 	Mode : INT; // 0 = Uit, 1 = Polderpeil, 2 = Constant Debiet
     CurrentPosition : REAL; // Terugmelding analoog
     DeltaH : REAL; // Niveauverschil
-	CurrentSpeed : REAL;
-    TargetFlow : REAL;
 END_VAR
 //////////////// output naar andere functie blokken
 
@@ -15,43 +16,32 @@ VAR_OUTPUT
     OpenSignal : BOOL;
     CloseSignal : BOOL;
     FlowRate : REAL;
-	PumpOn : BOOL;
-    DesiredSpeed : REAL;
-    FlowRate : REAL;
 END_VAR
 ////////////
 VAR
-    Q0 : REAL := 1.26; // Voorbeeldwaarde
-    H0 : REAL := 3.42;
-    NominalSpeed : REAL := 321;
-////// FB aanroepen en doorsturen
-	Inmalen : FB_Inmalen;
-	Uitmalen : FB_Uitmalen;
-	Uitlaten : FB_Uitlaten;	
-//// modus
-	BestuurMode : E_RegelingState := E_RegelingState.uit;
-	RegelStand1 : E_RegelingState := E_RegelingState.debiet;
-	RegelStand2 : E_RegelingState := E_RegelingState.polderpeil;
-
-
     (* Uitgangen *)
     Pomp1 : INT;                  (* Status pomp 1: 0 = uit, 1 = aan *)
     Pomp2 : INT;                  (* Status pomp 2: 0 = uit, 1 = aan *)
 
-    (* Interne variabelen *)
-    ModeStatus : STRING[20];      (* Beschrijft huidige modus *)
-    ActiveStand : STRING[20];     (* Beschrijft actieve regelstand *)
 
-    (* Instanties van subfunctieblokken *)
+    (* Uitgangen )
+    Pomp1 : INT;                  ( Status pomp 1: 0 = uit, 1 = aan )
+    Pomp2 : INT;                  ( Status pomp 2: 0 = uit, 1 = aan )
+
+    ( Interne variabelen )
+    ModeStatus : STRING[20];      ( Beschrijft huidige modus )
+    ActiveStand : STRING[20];     ( Beschrijft actieve regelstand )
+
+    ( Instanties van subfunctieblokken )
     Uitlaten : FB_Uitlaten;
     Uitmalen : FB_Uitmalen;
     Inmalen : FB_Inmalen;
 
-    (* Interne statusbewaking *)
-    DebietError : REAL;           (* Foutwaarde van debietregeling *)
-    PolderpeilError : REAL;       (* Foutwaarde van polderpeilregeling *)
+    ( Interne statusbewaking )
+    DebietError : REAL;           ( Foutwaarde van debietregeling )
+    PolderpeilError : REAL;       ( Foutwaarde van polderpeilregeling )
 
-    (* Variabelen voor pompberekening *)
+    ( Variabelen voor pompberekening )
     berekendeRPM_REAL : LREAL;
     berekendeRPM_UINT : UINT;
     M2021_ON : BOOL;
@@ -61,10 +51,10 @@ VAR
     maxRPM_M2021 : UINT := 1000;
     P2021_status : BOOL;
     P2021_setpoint : UINT;
-    P2021_stand : INT;            (* 1 = actief, 0 = uit *)
-    polderHoogteVerschil : REAL;  (* Hoogteverschil in meters *)
+    P2021_stand : INT;            ( 1 = actief, 0 = uit )
+    polderHoogteVerschil : REAL;  ( Hoogteverschil in meters )
 
-    (* Variabelen voor pomp 2 berekening *)
+    ( Variabelen voor pomp 2 berekening )
     berekendeRPM2_REAL : LREAL;
     berekendeRPM2_UINT : UINT;
     M2011_ON : BOOL;
@@ -74,17 +64,15 @@ VAR
     maxRPM_M2011 : UINT := 1000;
     P2011_status : BOOL;
     P2011_setpoint : UINT;
-    P2011_stand : INT;            (* 1 = actief, 0 = uit *)
+    P2011_stand : INT;            ( 1 = actief, 0 = uit *)
     zomerPijl : BOOL;
     streefPijl : REAL;
-	END_METHOD: INT;
-	TargetPosition : REAL;
+    END_METHOD: INT;
+    TargetPosition : REAL;
     Timer : TON;
     CD : REAL := 0.82;
     G : REAL := 9.81;
     Area : REAL;
-	CalculatePositionForFlow: REAL;
-
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF BestuurMode = E_RegelingState.Uit THEN
@@ -111,7 +99,7 @@ IF currentStateregeling THEN
                 CloseSignal := TRUE;
             END_IF;
         2: // Constant Debiet
-            TargetPosition := CalculatePositionForFlow(FlowRate); FB_Regelingen.Debiet(
+            TargetPosition := CalculatePositionForFlow(FlowRate);
     END_CASE;
     Timer(IN := TRUE, PT := T#1m);
 END_IF;
@@ -252,11 +240,6 @@ END_IF
       </Implementation>
     </Method>
     <LineIds Name="FB_Regelingen">
-      <LineId Id="57" Count="0" />
-      <LineId Id="60" Count="0" />
-      <LineId Id="62" Count="0" />
-      <LineId Id="61" Count="0" />
-      <LineId Id="58" Count="1" />
       <LineId Id="35" Count="21" />
       <LineId Id="13" Count="0" />
       <LineId Id="8" Count="0" />
