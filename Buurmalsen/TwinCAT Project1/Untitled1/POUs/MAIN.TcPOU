@@ -125,6 +125,9 @@ VAR
 									Pomp2021:= P2021);					   
 	ManToerental2011: INT;
 	ManToerental2021: INT;
+	
+	ManKlepstand2013_DG: SINT;
+	ManKlepstand2022_DG: SINT;
 END_VAR
 
 
@@ -202,10 +205,12 @@ OutOpeningV2013();
 OutClosingV2013();
 InV2013();
 V2013_DG();
+V2013_DG.RegelSchuifGoTo_Manual(ManKlepstand2013_DG);
 OutopeningV2022();
 OutclosingV2022();
 Inv2022();
-V2022_DG();]]></ST>
+V2022_DG();
+V2022_DG.RegelSchuifGoTo_Manual(ManKlepstand2022_DG);]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="1" Count="18" />
@@ -224,7 +229,10 @@ V2022_DG();]]></ST>
       <LineId Id="38" Count="10" />
       <LineId Id="50" Count="0" />
       <LineId Id="49" Count="0" />
-      <LineId Id="51" Count="7" />
+      <LineId Id="51" Count="3" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="55" Count="3" />
+      <LineId Id="76" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
