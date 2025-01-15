@@ -90,7 +90,7 @@ CASE currentStateRegeling OF
     E_RegelingState.uit:
         OpenSignal := FALSE;
         CloseSignal := TRUE;
-
+ 
     E_RegelingState.polderpeil:
         IF CurrentPosition < TargetPosition THEN
             OpenSignal := TRUE;
