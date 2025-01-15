@@ -38,6 +38,8 @@ VAR
 	V2013 : FB_Regelschuif_AFO(tag := 'V2013', DigOutOpening := digOutOpeningV2013, DigOutClosing := digOutClosingV2013, AnaInPosition := AnaInV2013);
 	
 	
+	AFOTarget: SINT := 20;
+	AFOTarget2: SINT;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -67,14 +69,16 @@ digOutOpeningV2013();
 digOutClosingV2013();
 AnaInV2013();
 V2013();
-V2013.RegelSchuifGoTo(20);
+V2013.RegelSchuifGoTo(AFOTarget);
 digOutOpeningV2022();
 digOutClosingV2022();
 AnaInV2022();
-V2022();]]></ST>
+V2022();
+V2022.RegelSchuifGoTo(AFOTarget2);]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="1" Count="30" />
+      <LineId Id="33" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
