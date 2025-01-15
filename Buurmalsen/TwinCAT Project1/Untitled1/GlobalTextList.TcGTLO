@@ -16,6 +16,16 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"323"</v>
+              <v n="TextDefault">"Actuele stand: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"718"</v>
+              <v n="TextDefault">"Actuelestand: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"128"</v>
               <v n="TextDefault">"analog out %s"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -38,6 +48,11 @@
             <o>
               <v n="TextID">"441"</v>
               <v n="TextDefault">"Bedrijftoestand: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"497"</v>
+              <v n="TextDefault">"Closing"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -163,6 +178,11 @@
             <o>
               <v n="TextID">"184"</v>
               <v n="TextDefault">"Open/Dicht kleppen"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"164"</v>
+              <v n="TextDefault">"Opening"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
