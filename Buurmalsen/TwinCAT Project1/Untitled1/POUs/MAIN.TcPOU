@@ -39,6 +39,7 @@ VAR
 	
 	
 	AFOTarget: SINT := 20;
+	AFOTarget2: SINT;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -72,10 +73,12 @@ V2013.RegelSchuifGoTo(AFOTarget);
 digOutOpeningV2022();
 digOutClosingV2022();
 AnaInV2022();
-V2022();]]></ST>
+V2022();
+V2022.RegelSchuifGoTo(AFOTarget2);]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="1" Count="30" />
+      <LineId Id="33" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
