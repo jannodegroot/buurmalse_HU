@@ -27,20 +27,18 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//De errortimer wordt gestart zodra de schuif niet in standby staat en de timer niet is afgelopen
-ErrorTimer(IN:= Currentstate <> E_Regelschuifstate.standby AND NOT ErrorTimer.Q ,PT:= T#5S);
-
-//Als de schuif uit staat stopt de regelschuif met openen of sluiten
+      <ST><![CDATA[//Als de schuif uit staat stopt de regelschuif met openen of sluiten
 IF CurrentMode = E_Bedrijfstoestand.off THEN
-	Openschuif.set(FALSE);
-	SluitSchuif.set(FALSE);
+	Currentstate:= E_Regelschuifstate.standby;
 END_IF
 
-//De actuele positie van de schuif wordt opgehaald
-ActueelPosition:= InputSchuif.get();
-FeedbackPosition:= ActueelPosition;
+//De actuele positie van de schuif wordt geupdate
+ActueelPosition:= Feedbackposition;
 
+ErrorTimer(IN:= Currentstate <> E_Regelschuifstate.standby AND NOT ErrorTimer.Q ,PT:= T#5S);
 error_Trigger(CLK:= ErrorTimer.Q);
+
+PulseTimer(IN:=StartPulse ,PT:= T#10S);
 
 IF error_Trigger.Q THEN
 	//Als de schuif niet snel genoeg opent of sluit schiet hij in error
@@ -59,6 +57,20 @@ IF error_Trigger.Q THEN
 		END_IF
 	END_IF
 	VorigePosition:= ActueelPosition;
+END_IF
+
+IF (Pulsetimer.Q AND CurrentMode <> E_Bedrijfstoestand.off)THEN
+	Startpulse:= FALSE;
+	IF (Doelschuif >= (ActueelPosition - 2) AND Doelschuif <= (Actueelposition + 2)) OR (Actueelposition <= 0) OR (Actueelposition >= 100)THEN
+		Currentstate := E_RegelschuifState.standby;
+	END_IF
+	IF (Doelschuif < (ActueelPosition - 2))THEN
+		Currentstate := E_RegelschuifState.closing;
+	END_IF	
+	IF (Doelschuif > (ActueelPosition + 2))THEN
+		Currentstate := E_RegelschuifState.opening;
+	END_IF	
+	StartPulse:= TRUE;
 END_IF]]></ST>
     </Implementation>
     <Folder Name="Methods" Id="{a5c8f5f8-d7b2-406e-83cb-5c27f5fd8301}" />
@@ -113,45 +125,30 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF currentmode = E_Bedrijfstoestand.auto THEN
-	//Zet de timer voor de puls op 1 minuut/10 seconden voor testen
-	PulseTimer(IN:=StartPulse ,PT:= T#10S);
 	regelschuifdoel:= Inputschuif.get();
 	Doelschuif:= regelschuifdoel;
-
-	IF PulseTimer.Q AND (Currentmode <> E_Bedrijfstoestand.off) THEN
-		StartPulse := FALSE;
-		//Als de regelschuif zijn actuele positie op zijn doel is binnen de 2% of als hij groter dan 100 of kleiner dan 0 is wordt hij uitgezet 
-		IF (regelschuifdoel >= (ActueelPosition - 2) AND regelschuifdoel <= (Actueelposition + 2)) OR (Actueelposition <= 0) OR (Actueelposition >= 100)THEN
-			StateRegelschuif := E_RegelschuifState.standby;
-		END_IF
-		//Als het doel kleiner is dan de actuele positie gaat hij sluiten
-		IF (regelschuifdoel < (ActueelPosition - 2))THEN
-			StateRegelschuif := E_RegelschuifState.closing;
-			OpenSchuif.set(FALSE);
-			SluitSchuif.set(TRUE);
-		END_IF
-		//Als het doel groter is dan de actuele positie of hij wordt kleiner dan 0 gaat hij openen
-		IF (regelschuifdoel > (ActueelPosition + 2))THEN
-			StateRegelschuif := E_RegelschuifState.opening;
-			OpenSchuif.set(TRUE);
-			Sluitschuif.set(FALSE);
-		END_IF	
-		StartPulse := TRUE;
-	END_IF 	
-
+	//De regelschuif staat in standby
+	IF Currentstate = E_RegelschuifState.standby THEN
+		Openschuif.set(FALSE);
+		Sluitschuif.set(FALSE);
+	END_IF
 	//De regelschuif wordt geopend
-	IF StateRegelschuif = E_RegelschuifState.opening THEN
-		ActueelPosition := ActueelPosition + schuifverandering;
+	IF Currentstate = E_RegelschuifState.opening THEN
+		OpenSchuif.set(TRUE);
+		SluitSchuif.set(FALSE);
+		Feedbackposition := Feedbackposition + schuifverandering;
 	END_IF
 
 	//De regelschuif wordt gesloten
-	IF StateRegelschuif = E_RegelschuifState.closing THEN
-		ActueelPosition := ActueelPosition - schuifverandering;
+	IF Currentstate = E_RegelschuifState.closing THEN
+		Openschuif.set(FALSE);
+		SluitSchuif.set(TRUE);
+		Feedbackposition := feedbackposition - schuifverandering;
 	END_IF
 
 	//Zorgt ervoor dat de schuif stopt met bewegen als hij wordt uitgeschakeld
 	IF CurrentMode = E_Bedrijfstoestand.off THEN
-	regelschuifdoel := ActueelPosition;
+	regelschuifdoel := Feedbackposition;
 	END_IF
 END_IF
 ]]></ST>
@@ -167,44 +164,29 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF currentmode = E_Bedrijfstoestand.manual THEN
-	//Zet de timer voor de puls op 1 minuut/10 seconden voor testen
-	PulseTimer(IN:=StartPulse ,PT:= T#10S);
 	Doelschuif:= regelschuifdoel;
-
-	IF PulseTimer.Q AND (Currentmode <> E_Bedrijfstoestand.off) THEN
-		StartPulse := FALSE;
-		//Als de regelschuif zijn actuele positie op zijn doel is binnen de 2% of als hij groter dan 100 of kleiner dan 0 is wordt hij uitgezet 
-		IF (regelschuifdoel >= (ActueelPosition - 2) AND regelschuifdoel <= (Actueelposition + 2)) OR (Actueelposition <= 0) OR (Actueelposition >= 100)THEN
-			StateRegelschuif := E_RegelschuifState.standby;
-		END_IF
-		//Als het doel kleiner is dan de actuele positie gaat hij sluiten
-		IF (regelschuifdoel < (ActueelPosition - 2))THEN
-			StateRegelschuif := E_RegelschuifState.closing;
-			OpenSchuif.set(FALSE);
-			SluitSchuif.set(TRUE);
-		END_IF
-		//Als het doel groter is dan de actuele positie of hij wordt kleiner dan 0 gaat hij openen
-		IF (regelschuifdoel > (ActueelPosition + 2))THEN
-			StateRegelschuif := E_RegelschuifState.opening;
-			OpenSchuif.set(TRUE);
-			Sluitschuif.set(FALSE);
-		END_IF	
-		StartPulse := TRUE;
-	END_IF 	
-
+	//De regelschuif staat in standby
+	IF Currentstate = E_RegelschuifState.standby THEN
+		Openschuif.set(FALSE);
+		Sluitschuif.set(FALSE);
+	END_IF
 	//De regelschuif wordt geopend
 	IF StateRegelschuif = E_RegelschuifState.opening THEN
-		ActueelPosition := ActueelPosition + schuifverandering;
+		Openschuif.set(TRUE);
+		Sluitschuif.set(FALSE);
+		Feedbackposition := Feedbackposition + schuifverandering;
 	END_IF
 
 	//De regelschuif wordt gesloten
 	IF StateRegelschuif = E_RegelschuifState.closing THEN
-		ActueelPosition := ActueelPosition - schuifverandering;
+		Openschuif.set(TRUE);
+		Sluitschuif.set(FALSE);
+		Feedbackposition := Feedbackposition - schuifverandering;
 	END_IF
 
 	//Zorgt ervoor dat de schuif stopt met bewegen als hij wordt uitgeschakeld
 	IF CurrentMode = E_Bedrijfstoestand.off THEN
-	regelschuifdoel := ActueelPosition;
+	regelschuifdoel := Feedbackposition;
 	END_IF
 END_IF
 ]]></ST>
@@ -230,9 +212,26 @@ END_VAR
       </Set>
     </Property>
     <LineIds Name="FB_Regelschuif_DG">
-      <LineId Id="1" Count="10" />
+      <LineId Id="4" Count="1" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="8" Count="2" />
       <LineId Id="34" Count="0" />
-      <LineId Id="13" Count="20" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="13" Count="1" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="15" Count="18" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="42" Count="1" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="45" Count="1" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="50" Count="1" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="40" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_DG.ActueelPosition.Get">
       <LineId Id="1" Count="0" />
@@ -246,28 +245,34 @@ END_VAR
     </LineIds>
     <LineIds Name="FB_Regelschuif_DG.RegelschuifGoTo">
       <LineId Id="52" Count="0" />
-      <LineId Id="54" Count="0" />
-      <LineId Id="3" Count="0" />
       <LineId Id="51" Count="0" />
       <LineId Id="57" Count="0" />
-      <LineId Id="7" Count="1" />
-      <LineId Id="56" Count="0" />
-      <LineId Id="9" Count="15" />
-      <LineId Id="26" Count="4" />
+      <LineId Id="62" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="29" Count="1" />
+      <LineId Id="58" Count="1" />
       <LineId Id="33" Count="0" />
       <LineId Id="36" Count="3" />
+      <LineId Id="60" Count="1" />
       <LineId Id="42" Count="0" />
       <LineId Id="45" Count="5" />
       <LineId Id="53" Count="0" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_DG.RegelschuifGoTo_Manual">
-      <LineId Id="1" Count="2" />
+      <LineId Id="1" Count="0" />
       <LineId Id="45" Count="0" />
-      <LineId Id="5" Count="1" />
-      <LineId Id="44" Count="0" />
-      <LineId Id="7" Count="15" />
-      <LineId Id="24" Count="18" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="51" Count="2" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="27" Count="1" />
+      <LineId Id="46" Count="1" />
+      <LineId Id="29" Count="4" />
+      <LineId Id="48" Count="1" />
+      <LineId Id="34" Count="8" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_DG.StateRegelschuif.Get">
       <LineId Id="1" Count="0" />
