@@ -6,42 +6,37 @@ VAR_INPUT
     BestuurMode : INT;            (* 0 = Handmatig, 1 = Automatisch *)
     RegelStand1 : REAL;           (* Setpoint debiet in m³/s *)
     RegelStand2 : REAL;           (* Setpoint polderpeil in m NAP *)
-	Mode : INT; // 0 = Uit, 1 = Polderpeil, 2 = Constant Debiet
-    CurrentPosition : REAL; // Terugmelding analoog
-    DeltaH : REAL; // Niveauverschil
+    Mode : INT;                   (* 0 = Uit, 1 = Polderpeil, 2 = Constant Debiet *)
+    CurrentPosition : REAL;       (* Terugmelding analoog *)
+    DeltaH : REAL;                (* Niveauverschil *)
 END_VAR
-//////////////// output naar andere functie blokken
 
+// Output naar andere functieblokken
 VAR_OUTPUT
     OpenSignal : BOOL;
     CloseSignal : BOOL;
     FlowRate : REAL;
 END_VAR
-////////////
+
 VAR
     (* Uitgangen *)
     Pomp1 : INT;                  (* Status pomp 1: 0 = uit, 1 = aan *)
     Pomp2 : INT;                  (* Status pomp 2: 0 = uit, 1 = aan *)
 
+    (* Interne variabelen *)
+    ModeStatus : STRING[20];      (* Beschrijft huidige modus *)
+    ActiveStand : STRING[20];     (* Beschrijft actieve regelstand *)
 
-    (* Uitgangen )
-    Pomp1 : INT;                  ( Status pomp 1: 0 = uit, 1 = aan )
-    Pomp2 : INT;                  ( Status pomp 2: 0 = uit, 1 = aan )
-
-    ( Interne variabelen )
-    ModeStatus : STRING[20];      ( Beschrijft huidige modus )
-    ActiveStand : STRING[20];     ( Beschrijft actieve regelstand )
-
-    ( Instanties van subfunctieblokken )
+    (* Instanties van subfunctieblokken *)
     Uitlaten : FB_Uitlaten;
     Uitmalen : FB_Uitmalen;
     Inmalen : FB_Inmalen;
 
-    ( Interne statusbewaking )
-    DebietError : REAL;           ( Foutwaarde van debietregeling )
-    PolderpeilError : REAL;       ( Foutwaarde van polderpeilregeling )
+    (* Interne statusbewaking *)
+    DebietError : REAL;           (* Foutwaarde van debietregeling *)
+    PolderpeilError : REAL;       (* Foutwaarde van polderpeilregeling *)
 
-    ( Variabelen voor pompberekening )
+    (* Variabelen voor pompberekeningen *)
     berekendeRPM_REAL : LREAL;
     berekendeRPM_UINT : UINT;
     M2021_ON : BOOL;
@@ -51,10 +46,10 @@ VAR
     maxRPM_M2021 : UINT := 1000;
     P2021_status : BOOL;
     P2021_setpoint : UINT;
-    P2021_stand : INT;            ( 1 = actief, 0 = uit )
-    polderHoogteVerschil : REAL;  ( Hoogteverschil in meters )
+    P2021_stand : INT;            (* 1 = actief, 0 = uit *)
+    polderHoogteVerschil : REAL;  (* Hoogteverschil in meters *)
 
-    ( Variabelen voor pomp 2 berekening )
+    (* Variabelen voor pomp 2 berekening *)
     berekendeRPM2_REAL : LREAL;
     berekendeRPM2_UINT : UINT;
     M2011_ON : BOOL;
@@ -64,111 +59,163 @@ VAR
     maxRPM_M2011 : UINT := 1000;
     P2011_status : BOOL;
     P2011_setpoint : UINT;
-    P2011_stand : INT;            ( 1 = actief, 0 = uit *)
+    P2011_stand : INT;            (* 1 = actief, 0 = uit *)
     zomerPijl : BOOL;
     streefPijl : REAL;
-    END_METHOD: INT;
+
+    (* Methodes voor regeling *)
     TargetPosition : REAL;
     Timer : TON;
     CD : REAL := 0.82;
     G : REAL := 9.81;
     Area : REAL;
-	currentStateRegeling: E_RegelingState;
+    currentStateRegeling: E_RegelingState;
+    MaxPosition: REAL;
+    MinPosition: REAL;
+    MinSpeed: REAL;
+    NominalSpeed: REAL;
+    MaxSpeed: REAL;
+    H0: REAL;
+	Q0: REAL;
+	MaxSchuifArea: REAL;
+	CalculatePositionForFlow: REAL;
+	CalculateSpeedForFlow: REAL;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF BestuurMode = E_RegelingState.Uit THEN
-	
-	
-END_IF
-
-
-// Bereken debiet
-FlowRate := CD * Area * SQRT(2 * G * DeltaH);
-
-// Periodieke regeling
-CASE currentStateRegeling OF
-    E_RegelingState.uit:
+      <ST><![CDATA[CASE BestuurMode OF
+    0:  // Handmatige modus
+        // Zet alle uitvoer naar een veilige stand
         OpenSignal := FALSE;
-        CloseSignal := TRUE;
- 
-    E_RegelingState.polderpeil:
-        IF CurrentPosition < TargetPosition THEN
-            OpenSignal := TRUE;
-            CloseSignal := FALSE;
-        ELSE
-            OpenSignal := FALSE;
-            CloseSignal := TRUE;
-        END_IF;
+        CloseSignal := FALSE;
+        FlowRate := 0.0;
 
-    E_RegelingState.debiet:
-        TargetPosition := CalculatePositionForFlow(FlowRate);
+    1:  // Automatische modus
+        CASE currentStateRegeling OF
+            E_RegelingState.uit:
+                // Roep de `Uit`-methode aan
+                Uit();
+                // Zet alle uitvoer naar veilige stand in de 'uit' modus
+                FlowRate := 0.0;
+                OpenSignal := FALSE;
+                CloseSignal := TRUE;
+
+            E_RegelingState.polderpeil:
+                // Roep de `Polderpeil`-methode aan voor het regelen van het waterpeil
+                FlowRate := Polderpeil(DeltaH, MaxPosition, MinPosition, currentStateRegeling, MinSpeed, NominalSpeed, MaxSpeed, H0);
+                // Controleer of de klep open of gesloten moet zijn op basis van de flowrate
+                OpenSignal := (FlowRate > 0.0);
+                CloseSignal := NOT OpenSignal;
+
+            E_RegelingState.debiet:
+    // Roep de `Debiet`-methode aan voor het regelen van het debiet
+    FlowRate := Debiet(RegelStand1, DeltaH, Q0, H0, NominalSpeed, MaxSpeed, MinSpeed, CD, G, Area, MaxSchuifArea, CalculatePositionForFlow, CalculateSpeedForFlow);
+    // Controleer of de klep open of gesloten moet zijn op basis van de flowrate
+    OpenSignal := (FlowRate > 0.0);
+    CloseSignal := NOT OpenSignal;
+	
+        END_CASE;
 END_CASE;
 
+// Zorg ervoor dat de signaalwaarden (OpenSignal, CloseSignal) doorgegeven worden naar de andere functieblokken
+Uitlaten.FlowRate := FlowRate; // Doorgeven van de FlowRate naar FB_Uitlaten
+Uitlaten.OpenSignal := OpenSignal; // Doorgeven van OpenSignal naar FB_Uitlaten
+Uitlaten.CloseSignal := CloseSignal; // Doorgeven van CloseSignal naar FB_Uitlaten
 
-]]></ST>
+Uitmalen.FlowRate := FlowRate; // Doorgeven van de FlowRate naar FB_Uitmalen
+Uitmalen.OpenSignal := OpenSignal; // Doorgeven van OpenSignal naar FB_Uitmalen
+Uitmalen.CloseSignal := CloseSignal; // Doorgeven van CloseSignal naar FB_Uitmalen
+
+// Voeg eventueel de logica voor andere functieblokken toe, zoals FB_Inmalen]]></ST>
     </Implementation>
     <Folder Name="Methods" Id="{7a5154a8-d0ab-4aca-a913-d3242cae32ca}" />
     <Folder Name="Properties" Id="{64d43a35-4d5a-4d04-a035-1c51de5047d0}" />
     <Method Name="Debiet" Id="{2b69d816-b4da-4e63-b57a-877adece09f6}" FolderPath="Methods\">
       <Declaration><![CDATA[METHOD Debiet : REAL
 VAR_INPUT
-    DesiredFlow : REAL;
-    DeltaH : REAL;
-	Q0 : REAL := 1.26;
-	H0 : REAL := 3.42;
-	NominalSpeed : REAL := 321.0;
-    MaxSpeed : REAL := 350.0;
-    MinSpeed : REAL := 100.0;
-	CD : REAL := 0.82; 
-    G : REAL := 9.81;
-    Area : REAL;
-	MaxSchuifArea : REAL := 1.0;
-	CalculatePositionForFlow: REAL;
-	CalculateSpeedForFlow: REAL;
+    DesiredFlow : REAL;           (* Het gewenste debiet in m³/s *)
+    DeltaH : REAL;                (* Niveauverschil *)
+    Q0 : REAL := 1.26;            (* Referentiedebiet *)
+    H0 : REAL := 3.42;            (* Referentiehoogte *)
+    NominalSpeed : REAL := 321.0; (* Nominale snelheid van de pomp *)
+    MaxSpeed : REAL := 350.0;     (* Maximale snelheid van de pomp *)
+    MinSpeed : REAL := 100.0;     (* Minimale snelheid van de pomp *)
+    CD : REAL := 0.82;            (* Coëfficiënt van de pomp *)
+    G : REAL := 9.81;             (* Gravitatieversnelling *)
+    Area : REAL;                  (* Oppervlakte van de schuif *)
+    MaxSchuifArea : REAL := 1.0;  (* Maximale schuifopendiameter *)
+    CalculatePositionForFlow : REAL; (* Berekening van de positie op basis van debiet *)
+    CalculateSpeedForFlow : REAL;   (* Berekening van de snelheid op basis van debiet *)
+END_VAR
+
+VAR
+    FlowRate : REAL;             (* Het berekende debiet *)
+    SpeedForFlow : REAL;         (* De snelheid op basis van het debiet *)
+    PositionForFlow : REAL;      (* De positie op basis van het debiet *)
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF DeltaH > 0 THEN
-    Area := DesiredFlow / (CD * SQRT(2 * G * DeltaH));
-    CalculatePositionForFlow := Area / (MaxSchuifArea); 
-	CalculateSpeedForFlow := NominalSpeed * SQRT(DesiredFlow / Q0 + DeltaH / H0);
-	IF CalculateSpeedForFlow > MaxSpeed THEN
-        CalculateSpeedForFlow := MaxSpeed; 
-    ELSIF CalculateSpeedForFlow < MinSpeed THEN
-        CalculateSpeedForFlow := MinSpeed; 
+        <ST><![CDATA[(* Bereken de FlowRate op basis van het niveauverschil en andere parameters *)
+IF DeltaH > 0 THEN
+    Area := DesiredFlow / (CD * SQRT(2 * G * DeltaH));  (* Bereken de benodigde oppervlakte *)
+    PositionForFlow := Area / MaxSchuifArea;              (* Bereken de positie voor het debiet *)
+    SpeedForFlow := NominalSpeed * SQRT(DesiredFlow / Q0 + DeltaH / H0); (* Bereken de snelheid *)
+
+    (* Beperk de snelheid binnen de limieten van de pomp *)
+    IF SpeedForFlow > MaxSpeed THEN
+        SpeedForFlow := MaxSpeed; 
+    ELSIF SpeedForFlow < MinSpeed THEN
+        SpeedForFlow := MinSpeed; 
     END_IF;
+
+    (* Het debiet wordt berekend *)
+    FlowRate := SpeedForFlow * Area; (* Bereken het debiet met de opgegeven snelheid en oppervlakte *)
+
 ELSE
-    CalculatePositionForFlow := 0.0; 
-	CalculateSpeedForFlow := MinSpeed;
+    (* Als het niveauverschil nul of negatief is, wordt het debiet als nul beschouwd *)
+    PositionForFlow := 0.0;
+    SpeedForFlow := MinSpeed;  (* Stel de snelheid in op de minimale snelheid *)
+    FlowRate := 0.0;          (* Het debiet is nul bij negatieve of nul DeltaH *)
 END_IF;
-]]></ST>
+
+(* Teruggeven van de berekende debiet *)
+Debiet := FlowRate;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Polderpeil" Id="{4de05532-21a1-4e5c-8e2d-3a2285633ff7}" FolderPath="Methods\">
       <Declaration><![CDATA[METHOD Polderpeil : REAL
 VAR_INPUT
     DeltaH : REAL; 
-    MaxPosition : REAL := 1.0; 
-    MinPosition : REAL := 0.0; 
-	CalculatePositionForWaterLevel: REAL;
-	currentStateregeling: E_REGELINGSTATE;
-	CalculateSpeedForWaterLevel: REAL;
-	MinSpeed : REAL := 100.0;
-	NominalSpeed : REAL := 321.0;
-	MaxSpeed : REAL := 350.0;
-	H0 : REAL := 3.42;
+    MaxPosition : REAL := 1.0;  // Maximale positie
+    MinPosition : REAL := 0.0;  // Minimale positie
+    currentStateRegeling: E_RegelingState;
+    MinSpeed : REAL := 100.0;  // Minimale snelheid
+    NominalSpeed : REAL := 321.0;  // Nominale snelheid
+    MaxSpeed : REAL := 350.0;  // Maximale snelheid
+    H0 : REAL := 3.42;  // Referentiehoogte
+END_VAR
+
+VAR
+    CalculatePositionForWaterLevel : REAL;  // Berekende positie voor waterpeil
+    CalculateSpeedForWaterLevel : REAL;     // Berekende snelheid voor waterpeil
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF DeltaH > 0 THEN
-	CalculateSpeedForWaterLevel := MinSpeed + (NominalSpeed - MinSpeed) * (DeltaH / H0);
+        <ST><![CDATA[// Berekeningen voor het waterpeil
+IF DeltaH > 0 THEN
+    // Bereken de snelheid en positie voor het waterpeil
+    CalculateSpeedForWaterLevel := MinSpeed + (NominalSpeed - MinSpeed) * (DeltaH / H0);
     CalculatePositionForWaterLevel := MinPosition + (MaxPosition - MinPosition) * (DeltaH / 1.0); 
-	IF CalculateSpeedForWaterLevel > MaxSpeed THEN
-       CalculateSpeedForWaterLevel := MaxSpeed; 
+    
+    // Beperk de snelheid tot de maximale waarde
+    IF CalculateSpeedForWaterLevel > MaxSpeed THEN
+        CalculateSpeedForWaterLevel := MaxSpeed; 
     END_IF;
 ELSE
+    // Zet de positie en snelheid naar de minimale waarden als het niveauverschil niet positief is
     CalculatePositionForWaterLevel := MinPosition; 
-	CalculateSpeedForWaterLevel := MinSpeed;
+    CalculateSpeedForWaterLevel := MinSpeed;
 END_IF;
 
+// Retourneer de berekende snelheid voor gebruik in de regeling
+RETURN CalculateSpeedForWaterLevel;
 ]]></ST>
       </Implementation>
     </Method>
@@ -224,30 +271,43 @@ END_VAR
     <Method Name="Uit" Id="{09b90ffb-84c9-47ca-b34d-35c9241a6e0a}" FolderPath="Methods\">
       <Declaration><![CDATA[METHOD Uit : VOID
 VAR
-	currentStateregeling: E_REGELINGSTATE;
-	PumpOn: BOOL;
-	DesiredSpeed: REAL;
-	OpenSignal: BOOL;
-	CloseSignal: BOOL;
+    currentStateregeling: E_REGELINGSTATE;
+    PumpOn: BOOL;
+    DesiredSpeed: REAL;
+    OpenSignal: BOOL;
+    CloseSignal: BOOL;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF currentStateregeling := E_RegelingState.uit THEN
-	PumpOn := FALSE;
+        <ST><![CDATA[// Controleer of de regeling in de "Uit" stand staat
+IF currentStateregeling = E_RegelingState.uit THEN
+    // Zet de pompen uit
+    PumpOn := FALSE;  // Pompstatus uitzetten
+
+    // Zet de gewenste snelheid naar 0 (geen beweging)
     DesiredSpeed := 0.0;
-	OpenSignal := FALSE;
-    CloseSignal := TRUE;
-END_IF
-]]></ST>
+
+    // Zet de kleppen uit
+    OpenSignal := FALSE;  // Geen open signaal voor de kleppen
+    CloseSignal := TRUE;  // Sluit de kleppen
+    
+    // Extra actie kan hier toegevoegd worden (bijvoorbeeld reset van andere systemen)
+END_IF]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_Regelingen">
-      <LineId Id="1" Count="29" />
+      <LineId Id="118" Count="23" />
+      <LineId Id="166" Count="4" />
+      <LineId Id="147" Count="0" />
+      <LineId Id="165" Count="0" />
+      <LineId Id="148" Count="11" />
+      <LineId Id="72" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelingen.Debiet">
-      <LineId Id="1" Count="13" />
+      <LineId Id="40" Count="24" />
     </LineIds>
     <LineIds Name="FB_Regelingen.Polderpeil">
-      <LineId Id="1" Count="11" />
+      <LineId Id="13" Count="17" />
+      <LineId Id="12" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelingen.Statusdebiet.Get">
       <LineId Id="1" Count="0" />
@@ -265,7 +325,8 @@ END_IF
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelingen.Uit">
-      <LineId Id="1" Count="6" />
+      <LineId Id="27" Count="12" />
+      <LineId Id="7" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
