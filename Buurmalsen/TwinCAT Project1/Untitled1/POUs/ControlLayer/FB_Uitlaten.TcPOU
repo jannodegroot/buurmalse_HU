@@ -39,7 +39,7 @@ IF Besturing = E_Besturingsmodus.uitlaten THEN
 	IF KlepV2012.StateKlep = E_OpenDichtKlepState.open AND KlepV2021.StateKlep = E_OpenDichtKlepState.open AND KlepV2023.StateKlep = E_OpenDichtKlepState.closed AND KlepV2024.StateKlep = E_OpenDichtKlepState.closed THEN		
 		SchuifV2013_DG.RegelSchuifGoTo(Stand2013);
 		
-		IF ((SchuifV2013_AFO.ActueelPosition = Stand2013) OR (SchuifV2022_DG.ActueelPosition = Stand2013 ))THEN    
+		IF ((SchuifV2013_AFO.ActueelPosition = Stand2013) OR (SchuifV2013_DG.ActueelPosition = Stand2013 ))THEN    
 		SchuifV2022_DG.RegelSchuifGoTo(Stand2022);
 	    END_IF
 	END_IF

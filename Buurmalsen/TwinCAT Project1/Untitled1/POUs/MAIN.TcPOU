@@ -198,9 +198,9 @@ V2022_AFO();
 
 //DG
 V2013_DG();
-V2013_DG.RegelSchuifGoTo(ManKlepstand2013_DG);
+V2013_DG.RegelSchuifGoToManual(ManKlepstand2013_DG);
 V2022_DG();
-V2022_DG.RegelSchuifGoTo(ManKlepstand2022_DG);]]></ST>
+V2022_DG.RegelSchuifGoToManual(ManKlepstand2022_DG);]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="5" Count="14" />
