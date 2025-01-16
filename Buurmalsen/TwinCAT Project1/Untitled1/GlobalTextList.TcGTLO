@@ -56,6 +56,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"497"</v>
+              <v n="TextDefault">"Closing"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"564"</v>
               <v n="TextDefault">"dig in p2011"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -101,6 +106,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"359"</v>
+              <v n="TextDefault">"Feedback stand: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"247"</v>
               <v n="TextDefault">"InputSensor"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -118,6 +128,16 @@
             <o>
               <v n="TextID">"416"</v>
               <v n="TextDefault">"Manual Open"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"525"</v>
+              <v n="TextDefault">"Manualstand"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"513"</v>
+              <v n="TextDefault">"ManualStand"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -148,6 +168,11 @@
             <o>
               <v n="TextID">"184"</v>
               <v n="TextDefault">"Open/Dicht kleppen"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"164"</v>
+              <v n="TextDefault">"Opening"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -281,6 +306,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"826"</v>
+              <v n="TextDefault">"V2013_DG"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"322"</v>
               <v n="TextDefault">"V2014"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -298,6 +328,11 @@
             <o>
               <v n="TextID">"554"</v>
               <v n="TextDefault">"V2021 State: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"946"</v>
+              <v n="TextDefault">"V2022_DG"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
