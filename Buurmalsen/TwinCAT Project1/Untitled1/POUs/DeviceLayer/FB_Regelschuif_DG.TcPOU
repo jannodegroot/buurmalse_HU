@@ -74,7 +74,6 @@ AND CurrentMode = E_Bedrijfstoestand.manual) THEN
 	IF (Doelschuif >= (ActueelPosition - Marge) AND Doelschuif <= (Actueelposition + Marge)) 
 		OR (Actueelposition <= 0) OR (Actueelposition >= 100)THEN
 		Currentstate := E_RegelschuifState.standby;
-		IF 
 	END_IF
 	IF (Doelschuif < (ActueelPosition - Marge))THEN
 		Currentstate := E_RegelschuifState.closing;
@@ -224,7 +223,6 @@ END_VAR
       <LineId Id="42" Count="0" />
       <LineId Id="95" Count="0" />
       <LineId Id="43" Count="0" />
-      <LineId Id="129" Count="0" />
       <LineId Id="41" Count="0" />
       <LineId Id="45" Count="1" />
       <LineId Id="48" Count="0" />
