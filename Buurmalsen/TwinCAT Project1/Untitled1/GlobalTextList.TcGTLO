@@ -21,6 +21,16 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"114"</v>
+              <v n="TextDefault">"AFO regelschuif test (V2013)"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"887"</v>
+              <v n="TextDefault">"AFO regelschuif test (V2022)"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"128"</v>
               <v n="TextDefault">"analog out %s"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -113,6 +123,11 @@
             <o>
               <v n="TextID">"811"</v>
               <v n="TextDefault">"Manualtoerental"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"702"</v>
+              <v n="TextDefault">"niet final"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
