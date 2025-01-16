@@ -8,12 +8,22 @@ VAR
 	internalRegelschuifStandV2022 : SINT;
 	internalToerentalP2011 : INT;
 	internalToerentalP2021 : INT;
+	toerntalP2011p : INT := 40;
+	toerentalP2021p : INT := 70;
+	regelschuifV2013: SINT:=90;
+	regelschuifV2022: SINT:=30;
+	b: E_Besturingsmodus;
 END_VAR
 
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[internalToerentalP2011 := 0;
-internalToerentalP2021 := 70;]]></ST>
+      <ST><![CDATA[internalToerentalP2011 := toerntalP2011p;
+internalToerentalP2021 := toerentalP2021p;
+internalRegelschuifStandV2013 :=regelschuifV2013;
+internalRegelschuifStandV2022 :=regelschuifV2022;
+internalBesturingsMode := b;
+
+]]></ST>
     </Implementation>
     <Folder Name="Properties" Id="{7c6e2fb9-4775-4dab-baa7-e5b89aec5c3b}" />
     <Property Name="BestuurMode" Id="{ef2a99b5-5f20-4b0a-b6bc-351e2bd448d2}" FolderPath="Properties\">
@@ -113,6 +123,9 @@ END_VAR
     </Property>
     <LineIds Name="FB_Regelingen">
       <LineId Id="1" Count="1" />
+      <LineId Id="4" Count="1" />
+      <LineId Id="7" Count="1" />
+      <LineId Id="6" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelingen.BestuurMode.Get">
       <LineId Id="1" Count="0" />
