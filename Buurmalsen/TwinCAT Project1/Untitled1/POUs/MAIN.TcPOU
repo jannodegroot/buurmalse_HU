@@ -85,7 +85,7 @@ VAR
 	P2011 : FB_Pomp(tag:= 'P2011',DigOutOn:=digoutP2011,Diginon:=diginP2011, Anaouttoerental:=AnaoutP2011);
 	P2021 : FB_Pomp(tag:= 'P2021',DigOutOn:=digoutP2021,Diginon:=diginP2021, Anaouttoerental:=AnaoutP2021);
 	
-	Regelingen : FB_Regelingen_1;
+	Regelingen : FB_Regelingen;
 	
 	ControllerInmalen : FB_Inmalen(OpenDichtKlepV2012 := V2012,
 								   OpenDichtKlepV2014 := V2014,
@@ -127,6 +127,9 @@ VAR
 									Pomp2021:= P2021);					   
 	ManToerental2011: INT;
 	ManToerental2021: INT;
+	
+	ManKlepstand2013_DG: SINT;
+	ManKlepstand2022_DG: SINT;
 END_VAR
 
 
@@ -136,11 +139,7 @@ END_VAR
 
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[
-V2013_DG();
-V2022_DG();
-
-digIn_V2012_1();
+      <ST><![CDATA[digIn_V2012_1();
 digIn_V2012_2();
 digOut_V2012();
 
@@ -156,6 +155,18 @@ digIn_V2024_1();
 digIn_V2024_2();
 digOut_V2024();
 
+digIn_V2025_1();
+digIn_V2025_2();
+digOut_V2025();
+
+digIn_V2026_1();
+digIn_V2026_2();
+digOut_V2026();
+
+digIn_V2014_1();
+digIn_V2014_2();
+digOut_V2014();
+
 V2012();
 V2014();
 V2021();
@@ -169,6 +180,7 @@ P2021();
 P2011();
 P2011.PompGoToManual(ManToerental2011);
 P2021.PompGoToManual(ManToerental2021);
+
 
 Regelingen ();
 ControllerInmalen ();
@@ -188,18 +200,23 @@ V2022_AFO();
 V2022_AFO.RegelSchuifGoTo(AFOTarget2);
 
 //DG
-OutOpeningV2013();
-OutClosingV2013();
-InV2013();
 V2013_DG();
-OutopeningV2022();
-OutclosingV2022();
-Inv2022();
-V2022_DG();]]></ST>
+V2013_DG.RegelSchuifGoToManual(ManKlepstand2013_DG);
+V2022_DG();
+V2022_DG.RegelSchuifGoToManual(ManKlepstand2022_DG);]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="1" Count="31" />
-      <LineId Id="60" Count="1" />
+      <LineId Id="5" Count="14" />
+      <LineId Id="61" Count="2" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="65" Count="2" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="69" Count="2" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="20" Count="11" />
+      <LineId Id="73" Count="1" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="32" Count="0" />
       <LineId Id="35" Count="2" />
       <LineId Id="59" Count="0" />
       <LineId Id="38" Count="1" />
@@ -207,7 +224,10 @@ V2022_DG();]]></ST>
       <LineId Id="48" Count="0" />
       <LineId Id="50" Count="0" />
       <LineId Id="49" Count="0" />
-      <LineId Id="51" Count="7" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="79" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

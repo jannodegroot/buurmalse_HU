@@ -23,7 +23,8 @@ VAR
 	Stand2022: SINT; //Moeten we van de regelingen krijgen
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[Besturing := main.Regelingen.BestuurMode;
+      <ST><![CDATA[Stand2013 := main.Regelingen.RegelschuifStandV2013;
+Stand2022 := main.Regelingen.RegelschuifStandV2022;
 IF Besturing = E_Besturingsmodus.uitlaten THEN
 	
 	KlepV2012.Open();
@@ -36,12 +37,10 @@ IF Besturing = E_Besturingsmodus.uitlaten THEN
 	
 	//Op het moment dat de terugmelding is gegeven dan:
 	IF KlepV2012.StateKlep = E_OpenDichtKlepState.open AND KlepV2021.StateKlep = E_OpenDichtKlepState.open AND KlepV2023.StateKlep = E_OpenDichtKlepState.closed AND KlepV2024.StateKlep = E_OpenDichtKlepState.closed THEN		
-        SchuifV2013_AFO.RegelSchuifGoTo(Stand2013);
-	    SchuifV2013_DG.RegelSchuifGoTo(Stand2013);
+		SchuifV2013_DG.RegelSchuifGoTo(Stand2013);
 		
-		IF ((SchuifV2013_AFO.ActueelPosition = Stand2013) OR (SchuifV2022_DG.ActueelPosition = Stand2013 ))THEN
-	        SchuifV2022_AFO.RegelSchuifGoTo(Stand2022);
-	        SchuifV2022_DG.RegelSchuifGoTo(Stand2022);
+		IF ((SchuifV2013_AFO.ActueelPosition = Stand2013) OR (SchuifV2013_DG.ActueelPosition = Stand2013 ))THEN    
+		SchuifV2022_DG.RegelSchuifGoTo(Stand2022);
 	    END_IF
 	END_IF
 END_IF]]></ST>
@@ -86,10 +85,13 @@ Pompstatus21:= Pomp2021; ]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_Uitlaten">
-      <LineId Id="4" Count="0" />
-      <LineId Id="6" Count="13" />
+      <LineId Id="36" Count="1" />
+      <LineId Id="6" Count="11" />
+      <LineId Id="39" Count="0" />
       <LineId Id="35" Count="0" />
-      <LineId Id="22" Count="3" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="25" Count="0" />
       <LineId Id="34" Count="0" />
       <LineId Id="3" Count="0" />
     </LineIds>
