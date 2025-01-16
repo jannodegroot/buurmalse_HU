@@ -29,6 +29,8 @@ VAR
 	
 	error_Trigger: R_TRIG;
 	ErrorTimer: TON;
+	SchuifsturingOpen: BOOL;
+	SchuifsturingSluit: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -68,26 +70,26 @@ IF error_Trigger.Q THEN
 	VorigePosition:= ActueelPosition;
 END_IF
 
-IF (Pulsetrigger.Q) OR ((Doelschuif <> Vorigdoel) 
+IF (Pulsetrigger.Q) OR ((Doelschuif <> Vorigdoel)
 AND CurrentMode = E_Bedrijfstoestand.manual) THEN
 	Startpulse:= 0;
-	IF (Doelschuif >= (ActueelPosition - Marge) AND Doelschuif <= (Actueelposition + Marge)) 
-		OR (Actueelposition <= 0) OR (Actueelposition >= 100)THEN
-		Currentstate := E_RegelschuifState.standby;
-		Schuifsturing();
-	END_IF
-	IF (Doelschuif < (ActueelPosition - Marge))THEN
+	IF (Doelschuif < Feedbackposition)THEN
 		Currentstate := E_RegelschuifState.closing;
-		Schuifsturing();
+		SchuifsturingOpen := FALSE;
+		SchuifsturingSluit := TRUE;
 	END_IF	
-	IF (Doelschuif > (ActueelPosition + Marge))THEN
+	IF (Doelschuif > Feedbackposition)THEN
 		Currentstate := E_RegelschuifState.opening;
-		Schuifsturing();
+		SchuifsturingOpen := TRUE;
+		SchuifsturingSluit := FALSE;
 	END_IF	
 	StartPulse:= 1;
 	Vorigdoel:= Doelschuif;
 END_IF
-]]></ST>
+
+IF SchuifsturingSluit OR SchuifsturingOpen THEN
+	Schuifsturing();
+END_IF]]></ST>
     </Implementation>
     <Folder Name="Methods" Id="{a5c8f5f8-d7b2-406e-83cb-5c27f5fd8301}" />
     <Folder Name="Properties" Id="{b6eb3f6c-3011-4a7e-8816-c7f569303f45}" />
@@ -164,7 +166,7 @@ IF Currentstate = E_RegelschuifState.standby THEN
 		Sluitschuif.set(FALSE);
 	END_IF
 	//De regelschuif wordt geopend
-	IF Currentstate = E_RegelschuifState.opening THEN
+	IF SchuifsturingOpen THEN
 		Startoptel:= 1;
 		OpenSchuif.set(TRUE);
 		SluitSchuif.set(FALSE);
@@ -175,12 +177,12 @@ IF Currentstate = E_RegelschuifState.standby THEN
 	END_IF
 
 	//De regelschuif wordt gesloten
-	IF Currentstate = E_RegelschuifState.closing THEN
+	IF SchuifsturingSluit THEN
 		Startoptel:= 1;
 		Openschuif.set(FALSE);
 		SluitSchuif.set(TRUE);
 		IF Opteltimer.Q THEN
-		Feedbackposition := feedbackposition - schuifverandering;
+		Feedbackposition := Feedbackposition - schuifverandering;
 		startoptel:= 0;
 		END_IF
 	END_IF
@@ -222,22 +224,21 @@ END_VAR
       <LineId Id="37" Count="0" />
       <LineId Id="117" Count="0" />
       <LineId Id="56" Count="0" />
-      <LineId Id="42" Count="0" />
-      <LineId Id="95" Count="0" />
-      <LineId Id="43" Count="0" />
-      <LineId Id="131" Count="0" />
-      <LineId Id="41" Count="0" />
       <LineId Id="45" Count="1" />
       <LineId Id="132" Count="0" />
+      <LineId Id="134" Count="0" />
       <LineId Id="48" Count="0" />
       <LineId Id="50" Count="0" />
       <LineId Id="89" Count="0" />
       <LineId Id="133" Count="0" />
+      <LineId Id="135" Count="0" />
       <LineId Id="49" Count="0" />
       <LineId Id="57" Count="0" />
       <LineId Id="121" Count="0" />
       <LineId Id="40" Count="0" />
+      <LineId Id="136" Count="0" />
       <LineId Id="125" Count="0" />
+      <LineId Id="137" Count="1" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_DG.ActueelPosition.Get">
       <LineId Id="1" Count="0" />
