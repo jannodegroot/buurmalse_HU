@@ -43,7 +43,7 @@ ActueelPosition:= Feedbackposition;
 ErrorTimer(IN:= Currentstate <> E_Regelschuifstate.standby AND NOT ErrorTimer.Q ,PT:= T#5S);
 error_Trigger(CLK:= ErrorTimer.Q);
 
-PulseTimer(IN:=StartPulse ,PT:= T#10S);
+PulseTimer(IN:=StartPulse AND NOT PulseTimer.Q ,PT:= T#10S);
 Pulsetrigger(CLK:= Pulsetimer.Q);
 IF (Currentmode <> E_Bedrijfstoestand.off) AND NOT Pulsetimer.Q THEN
 	Startpulse:= 1;
@@ -74,15 +74,17 @@ AND CurrentMode = E_Bedrijfstoestand.manual) THEN
 	IF (Doelschuif >= (ActueelPosition - Marge) AND Doelschuif <= (Actueelposition + Marge)) 
 		OR (Actueelposition <= 0) OR (Actueelposition >= 100)THEN
 		Currentstate := E_RegelschuifState.standby;
+		Schuifsturing();
 	END_IF
 	IF (Doelschuif < (ActueelPosition - Marge))THEN
 		Currentstate := E_RegelschuifState.closing;
+		Schuifsturing();
 	END_IF	
 	IF (Doelschuif > (ActueelPosition + Marge))THEN
 		Currentstate := E_RegelschuifState.opening;
+		Schuifsturing();
 	END_IF	
 	StartPulse:= 1;
-	StartPulse:= 0;
 	Vorigdoel:= Doelschuif;
 END_IF
 ]]></ST>
@@ -223,14 +225,16 @@ END_VAR
       <LineId Id="42" Count="0" />
       <LineId Id="95" Count="0" />
       <LineId Id="43" Count="0" />
+      <LineId Id="131" Count="0" />
       <LineId Id="41" Count="0" />
       <LineId Id="45" Count="1" />
+      <LineId Id="132" Count="0" />
       <LineId Id="48" Count="0" />
       <LineId Id="50" Count="0" />
       <LineId Id="89" Count="0" />
+      <LineId Id="133" Count="0" />
       <LineId Id="49" Count="0" />
       <LineId Id="57" Count="0" />
-      <LineId Id="104" Count="0" />
       <LineId Id="121" Count="0" />
       <LineId Id="40" Count="0" />
       <LineId Id="125" Count="0" />
