@@ -21,22 +21,28 @@ VAR
 	secondTimerTrigger : R_TRIG;
 	
 	timerrunt: BOOL:=1;
+	waitExtraMinute: BOOL;
 	minuteTimer : TON;
+	doubleMinuteTimer : TON;
 	secondTimer : TON;
 	
 	veranderingsMargeError : SINT := 3;
 	OldPosition: SINT;
+	regelschuifMargin: SINT := 3;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF currentMode = E_Bedrijfstoestand.off THEN
+      <ST><![CDATA[// Als de mode is uit dan worden de outputs false geset 
+IF currentMode = E_Bedrijfstoestand.off THEN
 	outputOpen.set(FALSE);
 	outputClose.set(FALSE);
 END_IF
 
+// De feedback positie staat hiet zodat we de waardes kunnen veranderen
 feedbackPosition := inputPosition.get();
 ActueelPosition := inputPosition.get();
 
+// Dit is de timer om te checken of er een error moet zijn 
 timeOut(IN :=(StateRegelSchuif <> E_RegelschuifState.standby) AND NOT timeOut.Q, PT := T#30S);
 errorTrigger(CLK := timeOut.Q);
 
@@ -58,7 +64,6 @@ IF errorTrigger.Q THEN
 END_IF
 
 expectedState := StateRegelSchuif;
-
 ]]></ST>
     </Implementation>
     <Folder Name="Methods" Id="{19e33316-aa4d-4340-a18c-c48173f3eae7}" />
@@ -110,27 +115,16 @@ VAR
 	checkPositions : BOOL;
 	currentstatet: E_RegelschuifState;
 	secondTriggerTrigger: BOOL;
-	waitExtraMinute: BOOL;
 END_VAR
 VAR_INPUT
 	regelschuifdoel : SINT;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[minuteTimer(IN:= timerrunt,PT:= T#10S);
+doubleMinuteTimer(IN:= waitExtraMinute,PT:= T#10S); // tweede timer om een extra minuut te wachten na pulse maar niet langer te wachten met scannen
 
 // dit is zodat het gefaseerd gaat een pulse per sec sturen
-secondTimer(IN:= secondTimerRun,PT:= T#5S); // pulse lengte langer ivm testen
-secondTimerTrigger(CLK := secondTriggerTrigger);
-IF secondTimerTrigger.Q THEN
-	secondTimerRun := TRUE;
-END_IF
-IF secondTimer.Q THEN
-	outputClose.set(FALSE);
-	outputOpen.set(FALSE);
-	secondTimerRun := FALSE;
-	secondTriggerTrigger := FALSE;
-END_IF
-
+secondTimer(IN:= secondTimerRun,PT:= T#2S); // pulse lengte langer ivm testen
 
 IF currentMode = E_Bedrijfstoestand.off THEN
 	regelschuifdoel := ActueelPosition;
@@ -138,38 +132,46 @@ END_IF
 
 IF minuteTimer.Q THEN
 	
-	IF ActueelPosition >= (regelschuifdoel - 3) AND ActueelPosition <= (regelschuifdoel + 3) THEN // huidige positie is correct binnen 3%
+	IF ActueelPosition >= (regelschuifdoel - regelschuifMargin) AND ActueelPosition <= (regelschuifdoel + regelschuifMargin) THEN // huidige positie is correct binnen marge
 		StateRegelSchuif := E_RegelschuifState.standby;
+		outputOpen.set(FALSE); // set outputs naar 0 als extra backup
+		outputClose.set(FALSE);
 	
 	END_IF
 	
-	IF ActueelPosition > (regelschuifdoel + 3) AND waitExtraMinute = FALSE THEN // huidige positie is te hoog
+	IF ActueelPosition > (regelschuifdoel + regelschuifMargin) AND waitExtraMinute = FALSE THEN // huidige positie is te hoog
 		IF stateRegelschuif <> E_RegelschuifState.error THEN
 			StateRegelSchuif := E_RegelschuifState.closing;
 		END_IF
 		// voor de pulse		
 		outputOpen.set(FALSE);
 		outputClose.set(TRUE);
-		secondTriggerTrigger := TRUE; 
+		secondTimerRun := TRUE; // start pulse time
 		waitExtraMinute := TRUE; // wacht een minuut extra als er een pulse is gestuurd
 	END_IF
 
-	IF ActueelPosition < (regelschuifdoel - 3) AND waitExtraMinute = FALSE THEN // huidige positie is te laag
+	IF ActueelPosition < (regelschuifdoel - regelschuifMargin) AND waitExtraMinute = FALSE THEN // huidige positie is te laag
 		IF stateRegelschuif <> E_RegelschuifState.error THEN
 			StateRegelSchuif := E_RegelschuifState.opening;
 		END_IF
 		// voor de pulse
 		outputClose.set(FALSE);
 		outputOpen.set(TRUE);
-		secondTriggerTrigger := TRUE; 
+		secondTimerRun := TRUE; // start pulse time
 		waitExtraMinute := TRUE;
 	END_IF
 	timerrunt := 0; // reset timer
+ELSIF waitExtraMinute = FALSE OR doubleMinuteTimer.Q THEN 
 	waitExtraMinute := FALSE;
-ELSE
 	timerrunt := 1; //reser reset timer
 END_IF
 
+// pulse timer structuur
+IF secondTimer.Q THEN
+	outputClose.set(FALSE);
+	outputOpen.set(FALSE);
+	secondTimerRun := FALSE;
+END_IF
 
 positie := regelschuifdoel;
 			]]></ST>
@@ -195,9 +197,14 @@ END_VAR
       </Set>
     </Property>
     <LineIds Name="FB_Regelschuif_AFO">
+      <LineId Id="116" Count="0" />
       <LineId Id="1" Count="2" />
-      <LineId Id="5" Count="2" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="117" Count="0" />
+      <LineId Id="115" Count="0" />
+      <LineId Id="114" Count="0" />
       <LineId Id="89" Count="0" />
+      <LineId Id="118" Count="0" />
       <LineId Id="8" Count="2" />
       <LineId Id="90" Count="2" />
       <LineId Id="94" Count="0" />
@@ -212,7 +219,6 @@ END_VAR
       <LineId Id="106" Count="1" />
       <LineId Id="88" Count="0" />
       <LineId Id="84" Count="0" />
-      <LineId Id="98" Count="0" />
       <LineId Id="97" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_AFO.ActueelPosition.Get">
@@ -226,19 +232,10 @@ END_VAR
     </LineIds>
     <LineIds Name="FB_Regelschuif_AFO.RegelSchuifGoTo">
       <LineId Id="17" Count="0" />
+      <LineId Id="80" Count="0" />
       <LineId Id="58" Count="0" />
       <LineId Id="56" Count="0" />
       <LineId Id="41" Count="0" />
-      <LineId Id="48" Count="0" />
-      <LineId Id="43" Count="0" />
-      <LineId Id="50" Count="1" />
-      <LineId Id="42" Count="0" />
-      <LineId Id="44" Count="0" />
-      <LineId Id="46" Count="0" />
-      <LineId Id="49" Count="0" />
-      <LineId Id="55" Count="0" />
-      <LineId Id="45" Count="0" />
-      <LineId Id="57" Count="0" />
       <LineId Id="37" Count="0" />
       <LineId Id="33" Count="0" />
       <LineId Id="35" Count="0" />
@@ -247,6 +244,7 @@ END_VAR
       <LineId Id="18" Count="0" />
       <LineId Id="29" Count="0" />
       <LineId Id="4" Count="1" />
+      <LineId Id="76" Count="1" />
       <LineId Id="16" Count="0" />
       <LineId Id="3" Count="0" />
       <LineId Id="13" Count="0" />
@@ -272,10 +270,14 @@ END_VAR
       <LineId Id="63" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="20" Count="0" />
-      <LineId Id="62" Count="0" />
-      <LineId Id="30" Count="2" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="81" Count="1" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="69" Count="3" />
+      <LineId Id="74" Count="0" />
       <LineId Id="19" Count="0" />
-      <LineId Id="26" Count="0" />
       <LineId Id="25" Count="0" />
       <LineId Id="27" Count="0" />
     </LineIds>

@@ -23,6 +23,9 @@
     <Compile Include="DUTs\E_OpenDichtKlepState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\E_RegelingState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\E_RegelschuifState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
