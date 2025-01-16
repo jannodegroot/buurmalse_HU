@@ -4,7 +4,6 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Regelschuif_DG IMPLEMENTS ITF_Regelschuif
 VAR
 	TagName: STRING;
-	Schuif: ITF_Regelschuif;
 	
 	OpenSchuif: ITF_Regelschuif_OutOpen_DG;
 	SluitSchuif: ITF_Regelschuif_OutClose_DG;
@@ -18,19 +17,18 @@ VAR
 	VorigePosition: SINT;
 	Marge : SINT := 2;
 	schuifverandering: SINT:= 1;
+	Doelschuif: SINT;
+	VorigDoel: SINT;
 	
 	PulseTimer: TON;
-	StartPulse: BOOL := TRUE;
+	StartPulse: BOOL;
+	Pulsetrigger: R_TRIG;
 	
 	OptelTimer: TON;
 	StartOptel: BOOL;
 	
 	error_Trigger: R_TRIG;
 	ErrorTimer: TON;
-END_VAR
-
-VAR_OUTPUT
-	DoelSchuif: SINT;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -46,6 +44,10 @@ ErrorTimer(IN:= Currentstate <> E_Regelschuifstate.standby AND NOT ErrorTimer.Q 
 error_Trigger(CLK:= ErrorTimer.Q);
 
 PulseTimer(IN:=StartPulse ,PT:= T#10S);
+Pulsetrigger(CLK:= Pulsetimer.Q);
+IF (Currentmode <> E_Bedrijfstoestand.off) AND NOT Pulsetimer.Q THEN
+	Startpulse:= 1;
+END_IF
 
 IF error_Trigger.Q THEN
 	//Als de schuif niet snel genoeg opent of sluit schiet hij in error
@@ -66,23 +68,25 @@ IF error_Trigger.Q THEN
 	VorigePosition:= ActueelPosition;
 END_IF
 
-IF (Pulsetimer.Q AND CurrentMode <> E_Bedrijfstoestand.off)THEN
-	Startpulse:= FALSE;
+IF (Pulsetrigger.Q) OR ((Doelschuif <> Vorigdoel) 
+AND CurrentMode = E_Bedrijfstoestand.manual) THEN
+	Startpulse:= 0;
 	IF (Doelschuif >= (ActueelPosition - Marge) AND Doelschuif <= (Actueelposition + Marge)) 
 		OR (Actueelposition <= 0) OR (Actueelposition >= 100)THEN
 		Currentstate := E_RegelschuifState.standby;
-		Schuifsturing();
+		IF 
 	END_IF
 	IF (Doelschuif < (ActueelPosition - Marge))THEN
 		Currentstate := E_RegelschuifState.closing;
-		Schuifsturing();
 	END_IF	
 	IF (Doelschuif > (ActueelPosition + Marge))THEN
 		Currentstate := E_RegelschuifState.opening;
-		Schuifsturing();
 	END_IF	
-	StartPulse:= TRUE;
-END_IF]]></ST>
+	StartPulse:= 1;
+	StartPulse:= 0;
+	Vorigdoel:= Doelschuif;
+END_IF
+]]></ST>
     </Implementation>
     <Folder Name="Methods" Id="{a5c8f5f8-d7b2-406e-83cb-5c27f5fd8301}" />
     <Folder Name="Properties" Id="{b6eb3f6c-3011-4a7e-8816-c7f569303f45}" />
@@ -157,27 +161,26 @@ END_VAR
 IF Currentstate = E_RegelschuifState.standby THEN
 		Openschuif.set(FALSE);
 		Sluitschuif.set(FALSE);
-		StartOptel:= FALSE;
 	END_IF
 	//De regelschuif wordt geopend
 	IF Currentstate = E_RegelschuifState.opening THEN
-		Startoptel:= TRUE;
+		Startoptel:= 1;
 		OpenSchuif.set(TRUE);
 		SluitSchuif.set(FALSE);
 		IF Opteltimer.Q THEN
 		Feedbackposition := Feedbackposition + schuifverandering;
-		StartOptel:= FALSE;
+		Startoptel:= 0;
 		END_IF
 	END_IF
 
 	//De regelschuif wordt gesloten
 	IF Currentstate = E_RegelschuifState.closing THEN
-		StartOptel:= TRUE;
+		Startoptel:= 1;
 		Openschuif.set(FALSE);
 		SluitSchuif.set(TRUE);
 		IF Opteltimer.Q THEN
 		Feedbackposition := feedbackposition - schuifverandering;
-		StartOptel:= FALSE;
+		startoptel:= 0;
 		END_IF
 	END_IF
 ]]></ST>
@@ -211,24 +214,28 @@ END_VAR
       <LineId Id="13" Count="1" />
       <LineId Id="55" Count="0" />
       <LineId Id="54" Count="0" />
+      <LineId Id="101" Count="0" />
+      <LineId Id="98" Count="2" />
       <LineId Id="15" Count="18" />
       <LineId Id="38" Count="0" />
       <LineId Id="37" Count="0" />
+      <LineId Id="117" Count="0" />
       <LineId Id="56" Count="0" />
       <LineId Id="42" Count="0" />
       <LineId Id="95" Count="0" />
       <LineId Id="43" Count="0" />
-      <LineId Id="96" Count="0" />
+      <LineId Id="129" Count="0" />
       <LineId Id="41" Count="0" />
       <LineId Id="45" Count="1" />
-      <LineId Id="92" Count="0" />
       <LineId Id="48" Count="0" />
       <LineId Id="50" Count="0" />
       <LineId Id="89" Count="0" />
-      <LineId Id="86" Count="0" />
       <LineId Id="49" Count="0" />
       <LineId Id="57" Count="0" />
+      <LineId Id="104" Count="0" />
+      <LineId Id="121" Count="0" />
       <LineId Id="40" Count="0" />
+      <LineId Id="125" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelschuif_DG.ActueelPosition.Get">
       <LineId Id="1" Count="0" />
@@ -249,21 +256,19 @@ END_VAR
     </LineIds>
     <LineIds Name="FB_Regelschuif_DG.Schuifsturing">
       <LineId Id="23" Count="1" />
-      <LineId Id="1" Count="2" />
-      <LineId Id="38" Count="0" />
-      <LineId Id="4" Count="2" />
-      <LineId Id="41" Count="0" />
+      <LineId Id="1" Count="5" />
+      <LineId Id="25" Count="0" />
       <LineId Id="7" Count="1" />
       <LineId Id="19" Count="0" />
       <LineId Id="9" Count="0" />
-      <LineId Id="34" Count="0" />
+      <LineId Id="26" Count="0" />
       <LineId Id="20" Count="0" />
       <LineId Id="10" Count="3" />
-      <LineId Id="40" Count="0" />
+      <LineId Id="27" Count="0" />
       <LineId Id="14" Count="1" />
       <LineId Id="21" Count="0" />
       <LineId Id="16" Count="0" />
-      <LineId Id="36" Count="0" />
+      <LineId Id="28" Count="0" />
       <LineId Id="22" Count="0" />
       <LineId Id="17" Count="1" />
     </LineIds>
