@@ -1,26 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
-  <POU Name="FB_Regelingen" Id="{10454be2-17f1-45a6-927c-6671ec7f7806}" SpecialFunc="None">
+  <POU Name="FB_Regelingen" Id="{ba4530f9-bec4-46f8-8992-3ba5eead477b}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Regelingen
-VAR_INPUT
-END_VAR
-VAR_OUTPUT
-END_VAR
 VAR
+	internalBesturingsMode : E_Besturingsmodus;
+	internalRegelschuifStandV2013 : SINT;
+	internalRegelschuifStandV2022 : SINT;
+	internalToerentalP2011 : INT;
+	internalToerentalP2021 : INT;
 END_VAR
+
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[internalToerentalP2011 := 0;
+internalToerentalP2021 := 70;]]></ST>
     </Implementation>
     <Folder Name="Properties" Id="{7c6e2fb9-4775-4dab-baa7-e5b89aec5c3b}" />
+    <Property Name="BestuurMode" Id="{ef2a99b5-5f20-4b0a-b6bc-351e2bd448d2}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY BestuurMode : E_Besturingsmodus]]></Declaration>
+      <Get Name="Get" Id="{e2d7c206-8f7f-426b-82b2-78ed55082002}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[BestuurMode := internalBesturingsMode;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{8657565b-1ccc-48a7-a1b2-ee5eec85ab16}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[internalBesturingsMode := BestuurMode ;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <Property Name="RegelschuifStandV2013" Id="{22aaed06-7a4e-4fb5-9a38-f497238e5600}" FolderPath="Properties\">
-      <Declaration><![CDATA[PROPERTY RegelschuifStandV2013 : INT]]></Declaration>
+      <Declaration><![CDATA[PROPERTY RegelschuifStandV2013 : SINT]]></Declaration>
       <Get Name="Get" Id="{df927b81-0b19-4ba5-8491-c549fdf3679f}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[RegelschuifStandV2013 := internalRegelschuifStandV2013;]]></ST>
         </Implementation>
       </Get>
       <Set Name="Set" Id="{46201dd7-77e4-4f26-9ef1-8e4e09797119}">
@@ -28,18 +50,18 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[internalRegelschuifStandV2013 := RegelschuifStandV2013;]]></ST>
         </Implementation>
       </Set>
     </Property>
     <Property Name="RegelschuifStandV2022" Id="{25ca217c-5af0-4a23-9400-b185b560c6f4}" FolderPath="Properties\">
-      <Declaration><![CDATA[PROPERTY RegelschuifStandV2022 : INT]]></Declaration>
+      <Declaration><![CDATA[PROPERTY RegelschuifStandV2022 : SINT]]></Declaration>
       <Get Name="Get" Id="{baefb7a1-259b-4e50-b712-7341c25b1805}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[RegelschuifStandV2022 := internalRegelschuifStandV2022;]]></ST>
         </Implementation>
       </Get>
       <Set Name="Set" Id="{9059e5f4-2721-43bc-8e0e-724abee52b74}">
@@ -47,7 +69,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[internalRegelschuifStandV2022 := RegelschuifStandV2022;]]></ST>
         </Implementation>
       </Set>
     </Property>
@@ -58,7 +80,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[ToerentalP2011 := internalToerentalP2011;]]></ST>
         </Implementation>
       </Get>
       <Set Name="Set" Id="{c50b0b11-1f65-436f-bc39-0a87e0b63fbe}">
@@ -66,7 +88,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[internalToerentalP2011 := ToerentalP2011;]]></ST>
         </Implementation>
       </Set>
     </Property>
@@ -77,7 +99,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[ToerentalP2021 := internalToerentalP2021;]]></ST>
         </Implementation>
       </Get>
       <Set Name="Set" Id="{810193cf-b8f4-44af-854a-e5e0ee173417}">
@@ -85,11 +107,17 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[internalToerentalP2021 := ToerentalP2021;]]></ST>
         </Implementation>
       </Set>
     </Property>
     <LineIds Name="FB_Regelingen">
+      <LineId Id="1" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_Regelingen.BestuurMode.Get">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Regelingen.BestuurMode.Set">
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_Regelingen.RegelschuifStandV2013.Get">

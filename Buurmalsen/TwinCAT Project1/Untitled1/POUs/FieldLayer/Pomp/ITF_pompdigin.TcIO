@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
+  <Itf Name="ITF_pompdigin" Id="{885f5844-e201-4c58-87be-cb8e9c58d523}">
+    <Declaration><![CDATA[INTERFACE ITF_pompdigin
+]]></Declaration>
+    <Method Name="get" Id="{610a700c-2748-4877-861d-6fd3abc371b2}">
+      <Declaration><![CDATA[METHOD get : bool
+VAR_INPUT
+	state : BOOL;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
+  <POU Name="FB_SimulatedDigOutClose_AFO" Id="{74c5bc87-2149-467a-b240-e636fd7104c0}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_SimulatedDigOutClose_AFO IMPLEMENTS ITF_Schuif_DigOutClose_AFO
+VAR
+	internalState : BOOL := FALSE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="set" Id="{5f1fbc6f-4731-49e0-bf19-9086eeb636a7}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD set : BOOL
+VAR_INPUT
+	state : BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[internalState := state;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_SimulatedDigOutClose_AFO">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_SimulatedDigOutClose_AFO.set">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

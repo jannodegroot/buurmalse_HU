@@ -3,14 +3,127 @@
   <POU Name="FB_Uitmalen" Id="{9ae4d82e-20f8-4e09-9aaa-bd1ddcd0f3cd}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Uitmalen
 VAR_INPUT
+	
 END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
+	stap : INT :=1;
+	
+	KlepV2012 : ITF_OpenDichtKlep;
+	KlepV2014 : ITF_OpenDichtKlep;
+	KlepV2021 : ITF_OpenDichtKlep;
+	KlepV2023 : ITF_OpenDichtKlep;
+	KlepV2024 : ITF_OpenDichtKlep;
+	KlepV2025 : ITF_OpenDichtKlep;
+	KlepV2026 : ITF_OpenDichtKlep;
+	
+	
+	SchuifV2013_AFG : ITF_Regelschuif;
+	SchuifV2022_AFG : ITF_Regelschuif;
+	
+	SchuifV2013_DG : ITF_Regelschuif;
+	SchuifV2022_DG : ITF_Regelschuif;
+	
+	Pomp1_P2011 : ITF_Pomp;
+	pomp2_P2021 : ITF_Pomp;
+	
+	pompP2011:INT;
+	pompP2021:INT;
+	
+	
+	
+	tijd: TIME := T#5s;
+	timerOntluchtingsklepV2014: TON;
+	timerOntluchtingsklepV2026: TON;
+	triggerOntluchtingsklepV2026: R_TRIG;
+	triggerOntluchtingsklepV2014: R_TRIG;
+	
+	EersteKeerV2014: BOOL := TRUE;
+	EersteKeerV2026: BOOL := TRUE;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[IF main.Regelingen.BestuurMode = E_Besturingsmodus.uitmalen THEN	
+CASE stap OF
+	1:
+		Pomp1_P2011.PompGoTo(0);
+		pomp2_P2021.PompGoTo(0);
+		IF 0 = Pomp1_P2011.ActueelToerental  AND
+		   E_POMPSTATE.off = Pomp1_P2011.StatePomp AND 
+		   0 = pomp2_P2021.ActueelToerental  AND 
+		   E_POMPSTATE.off = pomp2_P2021.StatePomp THEN
+			stap := 2;
+		END_IF
+			
+	2:
+		SchuifV2013_AFG.RegelschuifGoTo(0);
+		SchuifV2022_AFG.RegelschuifGoTo(0);
+		KlepV2012.Open();
+		KlepV2014.Close();
+		KlepV2021.Open();
+		KlepV2023.Close();
+		KlepV2024.Open();
+		KlepV2026.Close();
+		IF 0 = SchuifV2013_AFG.ActueelPosition  AND 
+		   E_RegelschuifState.standby = SchuifV2013_AFG.StateRegelschuif AND
+		   0 = SchuifV2022_AFG.ActueelPosition  AND 
+		   E_RegelschuifState.standby = SchuifV2022_AFG.StateRegelschuif AND 
+		   E_OpenDichtKlepState.open = KlepV2012.StateKlep AND 
+		   E_OpenDichtKlepState.closed = KlepV2014.StateKlep AND 
+		   E_OpenDichtKlepState.open = KlepV2021.StateKlep AND
+		   E_OpenDichtKlepState.closed = KlepV2023.StateKlep AND 
+		   E_OpenDichtKlepState.open = KlepV2024.StateKlep  AND  
+		   E_OpenDichtKlepState.closed = KlepV2026.StateKlep  THEN
+			  stap := 3;
+		END_IF
+	3:
+		pompP2011 := main.Regelingen.ToerentalP2011; // get toerental 11
+		pompP2021 := main.Regelingen.ToerentalP2021; // get toerental 21
+		pomp2_P2021.PompGoTo(pompP2021);//Set toerental 21
+		Pomp1_P2011.PompGoTo(pompP2011); // set toerental 11
+		
+		
+		IF  E_PompState.optoeren = Pomp1_P2011.StatePomp AND 
+			EersteKeerV2014 = TRUE THEN // onluchtingklep p2011
+				EersteKeerV2014 := FALSE;			
+				KlepV2014.Open();
+				timerOntluchtingsklepV2014 (IN:= E_OpenDichtKLepState.Open = KlepV2014.StateKlep, PT := tijd);
+				triggerOntluchtingsklepV2014 (CLK := (timerOntluchtingsklepV2014.Q));
+			IF triggerOntluchtingsklepV2014.Q  THEN
+				KlepV2014.Close();
+			END_IF
+		END_IF
+		
+		IF  E_PompState.optoeren = pomp2_P2021.StatePomp AND 
+			EersteKeerV2026 = TRUE THEN // ontluchtingsklep p2021
+				EersteKeerV2026 := FALSE;
+				KlepV2026.Open();
+				timerOntluchtingsklepV2026 (IN:= E_OpenDichtKLepState.Open = KlepV2026.StateKlep, PT := tijd);
+				triggerOntluchtingsklepV2026(CLK := (timerOntluchtingsklepV2026.Q));
+				IF triggerOntluchtingsklepV2026.Q THEN
+					KlepV2026.Close();
+			END_IF
+		END_IF
+		
+END_CASE
+END_IF
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+]]></ST>
     </Implementation>
     <Method Name="FB_Init" Id="{f1bb211c-677d-41cb-9dca-60535f7173bb}">
       <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
@@ -21,16 +134,58 @@ METHOD FB_Init: BOOL
 VAR_INPUT
     bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
     bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
+		OpenDichtKlepV2012: ITF_OpenDichtKlep;
+	OpenDichtKlepV2014: ITF_OpenDichtKlep;
+	OpenDichtKlepV2021: ITF_OpenDichtKlep;
+	OpenDichtKlepV2023: ITF_OpenDichtKlep;
+	OpenDichtKlepV2024: ITF_OpenDichtKlep;
+	OpenDichtKlepV2025: ITF_OpenDichtKlep;
+	OpenDichtKlepV2026: ITF_OpenDichtKlep;
+
+	RegelschuifV2013_AFO: ITF_Regelschuif;
+	RegelschuifV2022_AFO: ITF_Regelschuif;
+	
+	PompP2021: ITF_Pomp;
+	PompP2011: ITF_Pomp;
+
+
+	RegelschuifV2013_DG: ITF_Regelschuif;
+	RegelschuifV2022_DG: ITF_Regelschuif;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[
+	
+KlepV2012 := OpenDichtKlepV2012;
+KlepV2014 := OpenDichtKlepV2014;
+KlepV2021 := OpenDichtKlepV2021;
+KlepV2023 := OpenDichtKlepV2023;
+KlepV2024 := OpenDichtKlepV2024;
+KlepV2025 := OpenDichtKlepV2025;
+KlepV2026 := OpenDichtKlepV2026;
+
+SchuifV2013_AFG := RegelschuifV2013_AFO;
+SchuifV2022_AFG := RegelschuifV2022_AFO;
+SchuifV2013_DG := RegelschuifV2013_DG;
+SchuifV2022_DG := RegelschuifV2022_DG;
+
+pomp2_P2021 := PompP2021;
+pomp1_p2011 := PompP2011;
+]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_Uitmalen">
-      <LineId Id="1" Count="0" />
+      <LineId Id="1" Count="79" />
     </LineIds>
     <LineIds Name="FB_Uitmalen.FB_Init">
       <LineId Id="1" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="21" Count="3" />
+      <LineId Id="30" Count="1" />
+      <LineId Id="25" Count="4" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="32" Count="1" />
     </LineIds>
   </POU>
 </TcPlcObject>

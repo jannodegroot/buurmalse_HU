@@ -11,6 +11,16 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"577"</v>
+              <v n="TextDefault">"ActueelToerental: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"128"</v>
+              <v n="TextDefault">"analog out %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"781"</v>
               <v n="TextDefault">"Auto"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -23,6 +33,16 @@
             <o>
               <v n="TextID">"403"</v>
               <v n="TextDefault">"Bedrijfstoestand: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"441"</v>
+              <v n="TextDefault">"Bedrijftoestand: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"564"</v>
+              <v n="TextDefault">"dig in p2011"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -56,6 +76,21 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"932"</v>
+              <v n="TextDefault">"DoelToerental: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"547"</v>
+              <v n="TextDefault">"DoelToerentall: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"247"</v>
+              <v n="TextDefault">"InputSensor"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"249"</v>
               <v n="TextDefault">"Manual"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -71,13 +106,58 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"811"</v>
+              <v n="TextDefault">"Manualtoerental"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"868"</v>
+              <v n="TextDefault">"Noodstop"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"59"</v>
               <v n="TextDefault">"Off"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"591"</v>
+              <v n="TextDefault">"Ontluchtingskleppen"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"184"</v>
+              <v n="TextDefault">"Open/Dicht kleppen"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"605"</v>
+              <v n="TextDefault">"Output"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"225"</v>
+              <v n="TextDefault">"P2011"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"113"</v>
+              <v n="TextDefault">"P2021"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"206"</v>
+              <v n="TextDefault">"P2099"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"991"</v>
               <v n="TextDefault">"Position: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"432"</v>
+              <v n="TextDefault">"Regelschuif"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -126,6 +206,21 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"347"</v>
+              <v n="TextDefault">"Terugmelding"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"933"</v>
+              <v n="TextDefault">"TerugmeldingSensor"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"228"</v>
+              <v n="TextDefault">"Toerental SP (rpm)"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"493"</v>
               <v n="TextDefault">"V2012"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -143,6 +238,11 @@
             <o>
               <v n="TextID">"69"</v>
               <v n="TextDefault">"V2012 State: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"322"</v>
+              <v n="TextDefault">"V2014"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -170,11 +270,26 @@
               <v n="TextDefault">"V2024"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
+            <o>
+              <v n="TextID">"884"</v>
+              <v n="TextDefault">"V2025"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"533"</v>
+              <v n="TextDefault">"V2026"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"308"</v>
+              <v n="TextDefault">"Visvriendelijk"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
           </l>
           <l n="Languages" t="ArrayList" />
-          <v n="GuidInit">{a00452ef-7c22-4ad0-a637-5510733b4ed2}</v>
-          <v n="GuidReInit">{f738308d-18d8-4ec2-9199-4016ab0cc606}</v>
-          <v n="GuidExitX">{22d94ac9-df5a-4063-ae7e-1a6f3d7597ab}</v>
+          <v n="GuidInit">{16b0cf7a-c8f9-49a8-bf7f-62993507b9b8}</v>
+          <v n="GuidReInit">{2d3297c3-b333-4c27-8119-4c93f1ea3214}</v>
+          <v n="GuidExitX">{493be23f-0cad-4968-8b70-08e584a3b6c7}</v>
         </o>
       </Data>
       <TypeList>

@@ -32,6 +32,9 @@
     <Compile Include="DUTs\E_Besturingsmodus.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FB_AlarmHandler.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GlobalTextList.TcGTLO">
       <SubType>Code</SubType>
     </Compile>
@@ -71,9 +74,6 @@
     <Compile Include="POUs\DeviceLayer\ITF_Pomp.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FB_AlarmHandler.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\FieldLayer\OpenDichtKlep\FB_SimulatedDigIn.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -84,6 +84,60 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FieldLayer\OpenDichtKlep\ITF_DigOut.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FieldLayer\Pomp\FB_simulatedpompdigin.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FieldLayer\Pomp\FB_simulatedpompdigout.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FieldLayer\Pomp\FB_simulatiepompangout.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FieldLayer\Pomp\ITF_pompangout.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FieldLayer\Pomp\ITF_pompdigin.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FieldLayer\Pomp\ITF_pompdigout.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FieldLayer\Regelschuif_AFO\FB_SimulatedAnaIn_AFO.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FieldLayer\Regelschuif_AFO\FB_SimulatedDigOutClose_AFO.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FieldLayer\Regelschuif_AFO\FB_SimulatedDigOutOpen_AFO.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FieldLayer\Regelschuif_AFO\ITF_Schuif_AnaIn_AFO.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FieldLayer\Regelschuif_AFO\ITF_Schuif_DigOutClose_AFO.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FieldLayer\Regelschuif_AFO\ITF_Schuif_DigOutOpen_AFO.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FieldLayer\Regelschuif_DG_1\FB_SimulatedIn_DG.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FieldLayer\Regelschuif_DG_1\FB_SimulatedOutClose_DG.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FieldLayer\Regelschuif_DG_1\FB_SimulatedOutOpen_DG.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FieldLayer\Regelschuif_DG_1\ITF_Regelschuif_In_DG.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FieldLayer\Regelschuif_DG_1\ITF_Regelschuif_OutClose_DG.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FieldLayer\Regelschuif_DG_1\ITF_Regelschuif_OutOpen_DG.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
@@ -104,6 +158,9 @@
     <Folder Include="POUs\DeviceLayer" />
     <Folder Include="POUs\FieldLayer" />
     <Folder Include="POUs\FieldLayer\OpenDichtKlep" />
+    <Folder Include="POUs\FieldLayer\Pomp" />
+    <Folder Include="POUs\FieldLayer\Regelschuif_AFO" />
+    <Folder Include="POUs\FieldLayer\Regelschuif_DG_1" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>

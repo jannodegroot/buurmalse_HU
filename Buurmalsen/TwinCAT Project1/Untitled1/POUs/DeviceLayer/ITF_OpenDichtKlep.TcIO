@@ -9,7 +9,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="Open" Id="{296b4c6c-e3a0-49b2-9950-040b11a920d2}">
+    <Method Name="Open" Id="{4fc3a83e-a820-4ba7-b24c-f0b2e4be8d0f}">
       <Declaration><![CDATA[METHOD Open : BOOL
 VAR_INPUT
 END_VAR
