@@ -192,12 +192,12 @@ digOutOpeningV2013();
 digOutClosingV2013();
 AnaInV2013();
 V2013_AFO();
-V2013_AFO.RegelSchuifGoTo(AFOTarget);
+V2013_AFO.RegelSchuifGoTo(AFOTarget); // voor handmatige test
 digOutOpeningV2022();
 digOutClosingV2022();
 AnaInV2022();
 V2022_AFO();
-V2022_AFO.RegelSchuifGoTo(AFOTarget2);
+V2022_AFO.RegelSchuifGoTo(AFOTarget2); // voor handmatige test
 
 //DG
 V2013_DG();
@@ -220,7 +220,7 @@ V2022_DG.RegelSchuifGoToManual(ManKlepstand2022_DG);]]></ST>
       <LineId Id="35" Count="2" />
       <LineId Id="59" Count="0" />
       <LineId Id="38" Count="1" />
-      <LineId Id="62" Count="8" />
+      <LineId Id="80" Count="8" />
       <LineId Id="48" Count="0" />
       <LineId Id="50" Count="0" />
       <LineId Id="49" Count="0" />
