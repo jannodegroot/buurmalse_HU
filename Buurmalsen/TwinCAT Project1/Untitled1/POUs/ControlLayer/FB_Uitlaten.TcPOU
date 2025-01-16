@@ -25,7 +25,7 @@ END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[Stand2013 := main.Regelingen.RegelschuifStandV2013;
 Stand2022 := main.Regelingen.RegelschuifStandV2022;
-IF Besturing = E_Besturingsmodus.uitlaten THEN
+IF main.Regelingen.BestuurMode = E_Besturingsmodus.uitlaten THEN
 	
 	KlepV2012.Open();
 	KlepV2021.Open();
@@ -85,15 +85,7 @@ Pompstatus21:= Pomp2021; ]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_Uitlaten">
-      <LineId Id="36" Count="1" />
-      <LineId Id="6" Count="11" />
-      <LineId Id="39" Count="0" />
-      <LineId Id="35" Count="0" />
-      <LineId Id="22" Count="0" />
-      <LineId Id="40" Count="0" />
-      <LineId Id="25" Count="0" />
-      <LineId Id="34" Count="0" />
-      <LineId Id="3" Count="0" />
+      <LineId Id="1" Count="20" />
     </LineIds>
     <LineIds Name="FB_Uitlaten.FB_Init">
       <LineId Id="1" Count="0" />
